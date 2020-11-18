@@ -1,24 +1,31 @@
 const newYears = '1 Jan 2021';
 
+var isNotNaN = R.complement( Number.isNaN );
+// N miliseconds -> ? days
+//                  ? hours
+//                  ? mins
+//                  ? secs
 function countdown() {
   var newYearsDate = new Date(newYears);
-  var currentDate = new Date();
+  var currentDate  = new Date();
+  var milliseconds = newYearsDate - currentDate;
 
-  var seconds = (newYearsDate - currentDate) / 1000;
+  var constants = [
+    { unit: 'second', convert: 1000             , remain: 60  },
+    { unit: 'minute', convert: 60 * 1000        , remain: 60  },
+    { unit: 'hour'  , convert: 60 * 60 * 1000   , remain: 24  },
+    { unit: 'day'   , convert: 24 * 3600 * 1000 , remain: NaN },
+  ];
 
-  var days = Math.floor(seconds / 3600 / 24);
+  var getRemain = ({ name, convert, remain }) => R.pipe(
+    R.divide(milliseconds),
+    Math.floor,
+    R.when( R.curryN(2, isNotNaN )(remain), R.modulo( R.__, remain ) )
+  )( convert );
 
-  console.log(days);
-
-  // sec -> min -> hour -> days
-  var range = [60, 3600, 3600 * 24];
-
-  // N secs -> ? days
-  //           ? hours
-  //           ? mins
-  //           ? secs
+  var [days, hours, mins, seconds] = R.map( getRemain, constants );
+  console.log(days, hours, mins, seconds);
 }
 
+// countdown();
 setInterval(countdown, 1000)
-
-countdown();
