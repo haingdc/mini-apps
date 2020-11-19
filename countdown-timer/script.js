@@ -1,15 +1,17 @@
 const newYears = '1 Jan 2021';
 
 var isNotNaN = R.complement( Number.isNaN );
+
+var daysEl = document.getElementById('days');
+var hoursEl = document.getElementById('hours');
+var minsEl = document.getElementById('mins');
+var secondsEl = document.getElementById('seconds');
+
 // N miliseconds -> ? days
 //                  ? hours
 //                  ? mins
 //                  ? secs
-function countdown() {
-  var newYearsDate = new Date(newYears);
-  var currentDate  = new Date();
-  var milliseconds = newYearsDate - currentDate;
-
+function getRemainData(milliseconds) {
   var constants = [
     { unit: 'second', convert: 1000             , remain: 60  },
     { unit: 'minute', convert: 60 * 1000        , remain: 60  },
@@ -23,9 +25,33 @@ function countdown() {
     R.when( R.curryN(2, isNotNaN )(remain), R.modulo( R.__, remain ) )
   )( convert );
 
-  var [days, hours, mins, seconds] = R.map( getRemain, constants );
-  console.log(days, hours, mins, seconds);
+  var [seconds, mins, hours, days] = R.map( getRemain, constants );
+
+  return [seconds, mins, hours, days];
+}
+
+// SIDE EFFECTS!!
+function updateUI(seconds, mins, hours, days) {
+  daysEl.innerHTML = days;
+  hoursEl.innerHTML = formatTime( hours );
+  minsEl.innerHTML = formatTime(mins);
+  secondsEl.innerHTML = formatTime(seconds);
+}
+
+function countDown() {
+  var newYearsDate = new Date(newYears);
+  var currentDate  = new Date();
+  var milliseconds = newYearsDate - currentDate;
+  R.pipe(
+    getRemainData,
+    R.apply( updateUI )
+  )( milliseconds );
+
+}
+
+function formatTime(time) {
+  return time < 10 ? `0${time}` : time;
 }
 
 // countdown();
-setInterval(countdown, 1000)
+setInterval(countDown, 1000)
