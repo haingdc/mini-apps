@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+  <title>Script-based animation using requestAnimationFrame</title>
+  <style>
+    #animated {
+      position: absolute;
+      left: 50px;
+      top: 185px;
+      width: 30px;
+      height: 23px;
+      background-image: url('frog.png');
+      background-position: 0px 0px;
+    }
+    #pond {
+      width: 640px;
+      height: 429px;
+      background-image: url('pond.jpg');
+    }
+  </style>
+</head>
+<body>
+  <button onclick="start()">Click me to start!</button>
+  <button onclick="stop()">Click me to stop!</button>
+  <div id="pond">
+    <div id="animated"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
