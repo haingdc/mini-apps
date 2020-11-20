@@ -12,3 +12,9 @@
 - select answer
 - at the end show score
 
+3. Recipe app
+
+- https://uidesigndaily.com/posts/sketch-recipe-app-food-mobile-day-615
+- list of recipes
+- recipe info on click
+- fav recipe (w/ localStorage)
