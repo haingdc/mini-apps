@@ -52,19 +52,20 @@ header input {
   background-color: #eee;
   border: none;
   border-radius: 3px;
+  font-family: inherit;
 }
 
 header button {
   background-color: transparent;
   border: none;
-  color: #aaa;
+  color: rgb(138,128,141);
   font-size: 1.5rem;
   margin-left: 10px;
 }
 
 .fav-container {
   background-color: rgb(233, 199,255);
-  padding: 1rem;
+  padding: 0.25rem 1rem;
   text-align: center;
 }
 
