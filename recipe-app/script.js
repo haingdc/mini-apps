@@ -1,3 +1,10 @@
+var composeM = chainMethod => (...ms) => (
+  ms.reduce((f, g) => x => g(x)[chainMethod](f))
+);
+var composePromises = composeM('then');
+
+var appendChild = R.invoker(1, 'appendChild')
+
 const APIs = {
   random_meal: 'https://www.themealdb.com/api/json/v1/1/random.php',
   look_up_meal_details_by_id: ' https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
@@ -10,11 +17,8 @@ async function getRandomMeal() {
   var resp = await fetch(APIs.random_meal)
   var respData = await resp.json();
   var randomMeal = respData.meals[0];
-  console.log(randomMeal);
-
-  addMeal(randomMeal, true);
+  return Promise.resolve(randomMeal);
 }
-getRandomMeal();
 
 async function getMealById(id) {
   var meal = await fetch(APIs.look_up_meal_details_by_id + id);
@@ -26,7 +30,7 @@ async function getMealsBySearch(term) {
 
 
 
-function addMeal(mealData, random = false) {
+function createMealElement(mealData, random = false) {
   var meal = document.createElement('div');
   meal.classList.add('meal');
 
@@ -48,6 +52,12 @@ function addMeal(mealData, random = false) {
     btn.classList.toggle('active');
   });
 
-  meals.appendChild(meal);
+  return Promise.resolve(meal);
 }
 
+var appendRandomMeal = composePromises(
+  R.curry( createMealElement )(R.__, true),
+  getRandomMeal
+);
+
+appendRandomMeal().then( appendChild(R.__, meals) );
