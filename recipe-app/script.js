@@ -6,9 +6,9 @@ var composePromises = composeM('then');
 var appendChild = R.invoker(1, 'appendChild')
 
 const APIs = {
-  random_meal: 'https://www.themealdb.com/api/json/v1/1/random.php',
+  random_meal               : 'https://www.themealdb.com/api/json/v1/1/random.php'    ,
   look_up_meal_details_by_id: ' https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
-  search: ' https://www.themealdb.com/api/json/v1/1/search.php?s=',
+  search                    : ' https://www.themealdb.com/api/json/v1/1/search.php?s=',
 };
 var favoriteMeals = document.getElementById('fav-meals')
 var meals = document.getElementById('meals');
@@ -67,13 +67,6 @@ function createMealElement(mealData, random = false) {
   return Promise.resolve(meal);
 }
 
-var appendRandomMeal = composePromises(
-  R.curry( createMealElement )(R.__, true),
-  getRandomMeal
-);
-
-appendRandomMeal().then( appendChild(R.__, meals) );
-
 function addMealLS(mealId) {
   var mealIds = getMealsLS();
 
@@ -121,4 +114,10 @@ function addMealFav(mealData) {
   favoriteMeals.appendChild(favMeal);
 }
 
+var appendRandomMeal = composePromises(
+  R.curry( createMealElement )(R.__, true),
+  getRandomMeal
+);
+
 fetchFavMeals();
+appendRandomMeal().then( appendChild(R.__, meals) );

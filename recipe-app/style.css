@@ -94,7 +94,7 @@ header button {
   border: none;
 }
 
-.fav-meals li .clear:hover {
+.fav-meals li:hover .clear {
   opacity: 1;
 }
 
@@ -109,6 +109,11 @@ header button {
 
 .fav-meals li span {
   font-size: 0.9rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 75px;
+  display: inline-block;
 }
 
 .meal {
