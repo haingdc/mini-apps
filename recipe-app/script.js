@@ -7,11 +7,13 @@ var appendChild = R.invoker(1, 'appendChild')
 
 const APIs = {
   random_meal               : 'https://www.themealdb.com/api/json/v1/1/random.php'    ,
-  look_up_meal_details_by_id: ' https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
-  search                    : ' https://www.themealdb.com/api/json/v1/1/search.php?s=',
+  look_up_meal_details_by_id: 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
+  search                    : 'https://www.themealdb.com/api/json/v1/1/search.php?s=',
 };
 var favoriteMeals = document.getElementById('fav-meals')
 var meals = document.getElementById('meals');
+var searchTerm = document.getElementById('search-term');
+var searchBtn = document.getElementById('search');
 
 
 async function getRandomMeal() {
@@ -29,7 +31,10 @@ async function getMealById(id) {
 }
 
 async function getMealsBySearch(term) {
-  var meals = await fetch(APIs.search + term)
+  var resp = await fetch(APIs.search + term);
+  var respData = await resp.json();
+  var meals = respData.meals;
+  return meals === null ? [] : meals;
 }
 
 
@@ -121,3 +126,12 @@ var appendRandomMeal = composePromises(
 
 fetchFavMeals();
 appendRandomMeal().then( appendChild(R.__, meals) );
+
+
+searchBtn.addEventListener('click', async function searchMeal() {
+  var search = searchTerm.value;
+  var mealList = await getMealsBySearch(search);
+  mealList.forEach(meal => {
+    createMealElement(meal).then( appendChild(R.__, meals) );
+  });
+});
