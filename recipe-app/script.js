@@ -11,9 +11,12 @@ const APIs = {
   search                    : 'https://www.themealdb.com/api/json/v1/1/search.php?s=',
 };
 var favoriteMeals = document.getElementById('fav-meals')
-var meals = document.getElementById('meals');
+var mealsEl = document.getElementById('meals');
 var searchTerm = document.getElementById('search-term');
 var searchBtn = document.getElementById('search');
+var mealPopup = document.getElementById('meal-popup');
+var popupCloseBtn = document.getElementById('close-popup');
+var mealInfo = document.getElementById('meal-info');
 
 
 async function getRandomMeal() {
@@ -56,7 +59,12 @@ function createMealElement(mealData, random = false) {
     </div>
   `;
 
-  var btn = meal.querySelector('.meal-body .fav-btn');
+  return Promise.resolve({ mealData, mealEl: meal });
+}
+
+function addHeartHandler(data) {
+  var { mealData, mealEl } = data;
+  var btn = mealEl.querySelector('.meal-body .fav-btn');
   btn.addEventListener('click', function click() {
     if (btn.classList.contains('active')) {
       removeMealLS(mealData.idMeal);
@@ -65,11 +73,9 @@ function createMealElement(mealData, random = false) {
       addMealLS(mealData.idMeal);
       btn.classList.add('active');
     }
-
     fetchFavMeals();
   });
-
-  return Promise.resolve(meal);
+  return data;
 }
 
 function addMealLS(mealId) {
@@ -119,19 +125,33 @@ function addMealFav(mealData) {
   favoriteMeals.appendChild(favMeal);
 }
 
-var appendRandomMeal = composePromises(
-  R.curry( createMealElement )(R.__, true),
+var appendNewMeal = R.pipe(
+  R.prop('mealEl'),
+  appendChild( R.__, mealsEl )
+);
+
+var getMealElement = composePromises(
+  addHeartHandler,
+  R.curryN( 2, createMealElement )(R.__, true)
+);
+
+var getRandomMealElement = composePromises(
+  getMealElement,
   getRandomMeal
 );
 
 fetchFavMeals();
-appendRandomMeal().then( appendChild(R.__, meals) );
-
+getRandomMealElement().then(appendNewMeal);
 
 searchBtn.addEventListener('click', async function searchMeal() {
+  mealsEl.innerHTML = '';
   var search = searchTerm.value;
   var mealList = await getMealsBySearch(search);
   mealList.forEach(meal => {
-    createMealElement(meal).then( appendChild(R.__, meals) );
+    getMealElement(meal).then(appendNewMeal);
   });
+});
+
+popupCloseBtn.addEventListener('click', () => {
+  mealPopup.classList.add('hidden');
 });
