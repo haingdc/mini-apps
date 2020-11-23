@@ -59,14 +59,18 @@ function createMealElement(mealData, random = false) {
     </div>
   `;
 
-  meal.addEventListener('click', () => {
-    showMealInfo(mealData);
-  });
-
   return Promise.resolve({ mealData, mealEl: meal });
 }
 
-function addHeartHandler(data) {
+function clickMealInfoViewing(data) {
+  var { mealData, mealEl } = data;
+  mealEl.addEventListener('click', () => {
+    showMealInfo(mealData);
+  });
+  return Promise.resolve(data);
+}
+
+function clickLike(data) {
   var { mealData, mealEl } = data;
   var btn = mealEl.querySelector('.meal-body .fav-btn');
   btn.addEventListener('click', function click(evt) {
@@ -80,7 +84,7 @@ function addHeartHandler(data) {
     }
     fetchFavMeals();
   });
-  return data;
+  return Promise.resolve(data);
 }
 
 function addMealLS(mealId) {
@@ -141,7 +145,8 @@ var appendNewMeal = R.pipe(
 );
 
 var getMealElement = composePromises(
-  addHeartHandler,
+  clickLike,
+  clickMealInfoViewing,
   R.curryN( 2, createMealElement )(R.__, true)
 );
 
