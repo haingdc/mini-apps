@@ -18,6 +18,23 @@ var mealPopup = document.getElementById('meal-popup');
 var popupCloseBtn = document.getElementById('close-popup');
 var mealInfoEl = document.getElementById('meal-info');
 
+function addMealLS(mealId) {
+  var mealIds = getMealsLS();
+
+  localStorage.setItem('mealIds', JSON.stringify( [...mealIds, mealId] ));
+}
+
+function getMealsLS() {
+  var mealIds = JSON.parse( localStorage.getItem('mealIds') );
+  return mealIds === null ? [] : mealIds;
+}
+
+function removeMealLS(mealId) {
+  var mealIds = getMealsLS();
+  localStorage.setItem('mealIds', JSON.stringify( mealIds.filter(id => id !== mealId) ));
+}
+
+///////// Start APIs
 
 async function getRandomMeal() {
   var resp = await fetch(APIs.random_meal)
@@ -40,7 +57,24 @@ async function getMealsBySearch(term) {
   return meals === null ? [] : meals;
 }
 
+//////////
+////////// End APIs
 
+var appendNewMeal = R.pipe(
+  R.prop('mealEl'),
+  appendChild( R.__, mealsEl )
+);
+
+var getMealElement = composePromises(
+  clickLike,
+  clickMealInfoViewing,
+  R.curryN( 2, createMealElement )(R.__, true)
+);
+
+var getRandomMealElement = composePromises(
+  getMealElement,
+  getRandomMeal
+);
 
 function createMealElement(mealData, random = false) {
   var meal = document.createElement('div');
@@ -87,22 +121,6 @@ function clickLike(data) {
   return Promise.resolve(data);
 }
 
-function addMealLS(mealId) {
-  var mealIds = getMealsLS();
-
-  localStorage.setItem('mealIds', JSON.stringify( [...mealIds, mealId] ));
-}
-
-function getMealsLS() {
-  var mealIds = JSON.parse( localStorage.getItem('mealIds') );
-  return mealIds === null ? [] : mealIds;
-}
-
-function removeMealLS(mealId) {
-  var mealIds = getMealsLS();
-  localStorage.setItem('mealIds', JSON.stringify( mealIds.filter(id => id !== mealId) ));
-}
-
 async function fetchFavMeals() {
   favoriteMeals.innerHTML = '';
   var mealIds = getMealsLS();
@@ -110,14 +128,14 @@ async function fetchFavMeals() {
   for(let i=0; i<mealIds.length; i++) {
     var mealId = mealIds[i];
     meal = await getMealById(mealId);
-    addMealFav(meal);
+    getMealFav(meal).then(appendMealFav);
   }
 }
 
-function addMealFav(mealData) {
-  var favMeal = document.createElement('li');
+function createMealFav(mealData) {
+  var favMealEl = document.createElement('li');
 
-  favMeal.innerHTML = `
+  favMealEl.innerHTML = `
     <img src="${mealData.strMealThumb}" alt="">
     <span>${mealData.strMeal}</span>
     <button class="clear">
@@ -125,38 +143,38 @@ function addMealFav(mealData) {
     </button>
   `;
 
-  var btn = favMeal.querySelector('.clear');
+  return Promise.resolve({ favMealEl, mealData });
+}
+
+function clickPopupHiding(data) {
+  var { favMealEl, mealData } = data;
+  var btn = favMealEl.querySelector('.clear');
   btn.addEventListener('click', function clear(evt) {
     evt.stopPropagation();
     removeMealLS(mealData.idMeal);
     fetchFavMeals();
   });
-
-  favMeal.addEventListener('click', (evt) => {
-    showMealInfo(mealData);
-  });
-
-  favoriteMeals.appendChild(favMeal);
+  return Promise.resolve(data);
 }
 
-var appendNewMeal = R.pipe(
-  R.prop('mealEl'),
-  appendChild( R.__, mealsEl )
+function clickPopupViewing(data) {
+  var { favMealEl, mealData } = data;
+  favMealEl.addEventListener('click', () => {
+    showMealInfo(mealData);
+  });
+  return Promise.resolve(data);
+}
+
+var getMealFav = composePromises(
+  clickPopupViewing,
+  clickPopupHiding,
+  createMealFav
 );
 
-var getMealElement = composePromises(
-  clickLike,
-  clickMealInfoViewing,
-  R.curryN( 2, createMealElement )(R.__, true)
+var appendMealFav = R.pipe(
+  R.prop('favMealEl'),
+  appendChild( R.__, favoriteMeals )
 );
-
-var getRandomMealElement = composePromises(
-  getMealElement,
-  getRandomMeal
-);
-
-fetchFavMeals();
-getRandomMealElement().then(appendNewMeal);
 
 searchBtn.addEventListener('click', async function searchMeal() {
   mealsEl.innerHTML = '';
@@ -174,6 +192,12 @@ popupCloseBtn.addEventListener('click', () => {
 function showMealInfo(mealData) {
   mealInfoEl.innerHTML = '';
 
+  var mealEl = createMealInfo(mealData) ;
+  mealInfoEl.appendChild(mealEl);
+  mealPopup.classList.remove('hidden');
+}
+
+function createMealInfo(mealData) {
   var mealEl = document.createElement('div');
 
   var ingredients = [];
@@ -200,6 +224,10 @@ function showMealInfo(mealData) {
       }
     </ul>
   `;
-  mealInfoEl.appendChild(mealEl);
-  mealPopup.classList.remove('hidden');
+
+  return mealEl;
 }
+
+
+fetchFavMeals();
+getRandomMealElement().then(appendNewMeal);
