@@ -21,7 +21,7 @@ body {
   flex-wrap: wrap;
 }
 
-.notes {
+.note {
   background-color: var(--sixth-color);
   height: 400px;
   width: 400px;
@@ -29,26 +29,28 @@ body {
   flex-direction: column;
 }
 
-.notes .tools {
+.note .tools {
   background-color: var(--third-color);
   display: flex;
   justify-content: flex-end;
   padding: 0.5em;
 }
 
-.notes .tools button {
+.note .tools button {
   background-color: transparent;
   border: none;
   color: var(--sixth-color);
   font-size: 1rem;
   margin-left: 0.5rem;
+  cursor: pointer;
 }
 
-.notes .main {
+.note .main {
   flex: 1 0 auto;
+  background-color: var(--sixth-color);
 }
 
-.notes textarea {
+.note textarea {
   width: 100%;
   height: 100%;
   border:none;
@@ -56,6 +58,18 @@ body {
   outline: none;
 }
 
-.notes .hidden {
+.note .hidden {
   display: none;
+}
+
+.add {
+  background-color: var(--third-color);
+  color: var(--sixth-color);
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  border: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
 }
