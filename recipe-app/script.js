@@ -231,3 +231,32 @@ function createMealInfo(mealData) {
 
 fetchFavMeals();
 getRandomMealElement().then(appendNewMeal);
+
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+favoriteMeals.addEventListener('mousedown', function todo(evt) {
+  isDown = true;
+  favoriteMeals.classList.add('active');
+  startX = evt.pageX - favoriteMeals.offsetLeft;
+  scrollLeft = favoriteMeals.scrollLeft;
+});
+favoriteMeals.addEventListener('mouseleave', function todo() {
+  isDown = false;
+  favoriteMeals.classList.remove('active');
+});
+favoriteMeals.addEventListener('mouseup', function todo() {
+  isDown = false;
+  favoriteMeals.classList.remove('active');
+});
+favoriteMeals.addEventListener('mousemove', function todo(evt) {
+  if (!isDown) {
+    return;
+  }
+  evt.preventDefault();
+  var x= evt.pageX - favoriteMeals.offsetLeft;
+  var walk = ( x - startX ) * 2.34;
+  favoriteMeals.scrollLeft = scrollLeft - walk;
+});

@@ -71,17 +71,23 @@ header button {
 
 .fav-meals {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow: auto hidden;
   list-style-type: none;
   padding: 0;
+}
+
+.fav-meals.active {
+  cursor: grab;
+  background-color: rgba(255,255,255,0.3);
 }
 
 .fav-meals li {
   cursor: pointer;
   position: relative;
   margin: 5px;
-  width: 75px
+  width: 75px;
+  user-select: none;
 }
 
 .fav-meals li .clear {
@@ -106,6 +112,7 @@ header button {
   object-fit: cover;
   height: 75px;
   width : 75px;
+  pointer-events: none;
 }
 
 .fav-meals li span {
