@@ -18,3 +18,10 @@
 - list of recipes
 - recipe info on click
 - fav recipe (w/ localStorage)
+
+4. Notes App
+
+- https://uidesigndaily.com/posts/photoshop-notes-widget-day-65
+- CRUD note
+- markdown
+- localstorage
