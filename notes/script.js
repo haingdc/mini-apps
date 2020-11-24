@@ -1,10 +1,17 @@
 var addBtn = document.getElementById('add');
+var notes = JSON.parse(localStorage.getItem('notes'));
+
+if (notes) {
+  notes.forEach(note => {
+    addNewNote(note);
+  });
+}
 
 addBtn.addEventListener('click', () => {
   addNewNote();
 });
 
-function addNewNote() {
+function addNewNote(text = '') {
   var note =document.createElement('div');
   note.classList.add('note');
   note.innerHTML = `
@@ -21,19 +28,37 @@ function addNewNote() {
   var deleteBtn = note.querySelector('.delete');
 
   var main = note.querySelector('.main');
-  var textArea = note.querySelector('textarea');
+  var textarea = note.querySelector('textarea');
+  textarea.value = text;
+  main.innerHTML = marked(text);
 
   editBtn.addEventListener('click', () => {
     main.classList.toggle('hidden');
-    textArea.classList.toggle('hidden');
+    textarea.classList.toggle('hidden');
   });
 
-  textArea.addEventListener('input', function todo(e) {
+  textarea.addEventListener('input', function todo(e) {
     var { value } = e.target;
     main.innerHTML = marked(value);
+    updateLS();
   });
 
   deleteBtn.addEventListener('click', () => {
     note.remove();
+    updateLS();
   });
+}
+
+function updateLS() {
+  var notesText = document.querySelectorAll('textarea');
+  var notes = [];
+  notesText.forEach(note => {
+    notes.push(note.value);
+  });
+
+  localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+function retrieveLS() {
+
 }
