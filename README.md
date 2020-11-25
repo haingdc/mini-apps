@@ -25,3 +25,9 @@
 - CRUD note
 - markdown
 - localstorage
+
+5. ToDo
+
+- https://todomvc.com/examples/react/#
+- CRUD todos
+- localStorage

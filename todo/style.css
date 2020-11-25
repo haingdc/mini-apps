@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #f5f5f5;
+  --second-color : rgb(179,131,226);
+  --third-color  : #d5d5d5;
+  --fourth-color : #fff;
+  --fifth-color  : #e5e5e5;
+  --sixth-color  : #d6d6d6;
+  --seventh-color: #b5b5b5;
+  --eight-color  : #444;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: var(--eight-color);
+}
+
+h1 {
+  color: var(--second-color);
+  font-size: 10rem;
+  opacity: 0.4;
+  text-align: center;
+}
+
+form {
+  max-width: 100%;
+  width: 400px;
+  margin: auto;
+}
+
+.input {
+  width: 100%;
+  display: block;
+  padding: 1rem 2rem;
+  border: none;
+  font-size: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  color: var(--eight-color);
+}
+
+.input::placeholder {
+  color: var(--third-color);
+}
+
+
+.todos {
+  background-color: var(--fourth-color);
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.todos li {
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--fifth-color);
+  cursor: pointer;
+}
+
+.todos li.completed {
+  text-decoration: line-through;
+  color: var(--sixth-color);
+}
+
+small {
+  color: var(--seventh-color);
+  margin-top: 3rem;
+  text-align: center;
+}
