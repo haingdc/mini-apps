@@ -3,7 +3,7 @@ var composeM = chainMethod => (...ms) => (
 );
 var composePromises = composeM('then');
 
-var appendChild = R.invoker(1, 'appendChild')
+var appendChild = R.invoker(1, 'appendChild');
 
 const APIs = {
   random_meal               : 'https://www.themealdb.com/api/json/v1/1/random.php'    ,
