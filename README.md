@@ -31,3 +31,13 @@
 - https://todomvc.com/examples/react/#
 - CRUD todos
 - localStorage
+
+6. Movie
+
+- https://uidesigndaily.com/posts/photoshop-movie-app-mobile-day-193
+- list of movies
+- movie info
+- fav movie
+- actors
+
+![Movie app](./img/movie-app.jpg "Movie App")
