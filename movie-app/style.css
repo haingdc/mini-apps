@@ -60,6 +60,7 @@ main {
   border-bottom-right-radius: 3px;
   box-shadow: 0 4px 5px rgba(0,0,0,0.2);
   overflow: hidden;
+  position: relative;
 }
 
 .movie img {
@@ -96,4 +97,29 @@ main {
 }
 .movie-info span.red {
   color: rgb(189,42,42);
+}
+
+.overview {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: var(--fifth-color);
+  padding: 2rem 2rem 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in;
+  max-height: 70%;
+  overflow: auto;
+}
+
+.overview h4 {
+  margin: 0;
+}
+
+.overview p {
+  padding-bottom: 2rem;
+}
+
+.movie:hover .overview {
+  transform: translateY(0);
 }

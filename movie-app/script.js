@@ -35,7 +35,7 @@ form.addEventListener('submit', (e) => {
 function showMovies(movies) {
   main.innerHTML = '';
   movies.forEach(movie => {
-    var { poster_path, title, vote_average } = movie;
+    var { poster_path, title, vote_average, overview } = movie;
     var movieEl = document.createElement('div');
     movieEl.classList.add('movie');
     movieEl.innerHTML = `
@@ -43,6 +43,10 @@ function showMovies(movies) {
       <div class="movie-info">
         <h3>${title}</h3>
         <span class="${getClassByRate(vote_average)}">${vote_average}</span>
+      </div>
+      <div class="overview">
+        <h4>Overview:</h4>
+        <p>${overview}</p>
       </div>
     `;
     main.appendChild(movieEl);
