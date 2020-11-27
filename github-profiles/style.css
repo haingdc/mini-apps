@@ -6,6 +6,7 @@
   --third-color  : #4c2885;
   --four-color   : #4c11ac;
   --fifth-color  : #fff;
+  --sixth-color  : #bbb;
   --gradient: linear-gradient(315deg, var(--primary-color) 0%, var(--second-color) 74%);
 }
 
@@ -26,7 +27,23 @@ body {
 }
 
 input {
+  background-color: var(--third-color);
+  border-radius: 10px;
+  border: none;
+  color: var(--fifth-color);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 10px rgba(154,160,185,0.05), 0 15px 40px rgba(0,0,0,0.1);
+}
 
+input::placeholder {
+  color: var(--sixth-color);
+}
+
+input:focus {
+  outline: none;
 }
 
 .card {
@@ -37,12 +54,6 @@ input {
   display: FLEX;
   padding: 3rem;
   max-width: 800px;
-}
-
-.img-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .avatar {
@@ -67,4 +78,26 @@ input {
   padding: 0;
   max-width: 300px;
   list-style-type: none;
+}
+
+.user-info ul li {
+  display: flex;
+  align-items: center;
+}
+
+.user-info ul li strong {
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+
+.repo {
+  background-color: var(--primary-color);
+  display: inline-block;
+  color: var(--fifth-color);
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  word-break: break-all;
 }
