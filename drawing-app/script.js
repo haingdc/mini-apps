@@ -1,5 +1,8 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var increaseBtn = document.getElementById('increase');
+var decreaseBtn = document.getElementById('decrease');
+var sizeEl = document.getElementById('size');
 var isPressed = false;
 
 canvas.addEventListener('mousemove', (e) => {
@@ -19,7 +22,7 @@ canvas.addEventListener('mouseup', function() {
   isPressed = false;
 });
 
-var size = 4;
+var size = 30;
 var x    = 50;
 var y    = 50;
 
@@ -33,4 +36,23 @@ function draw() {
   ctx.clearReact(0, 0, canvas.width, canvas.height);
   drawCircle(x, y);
   requestAnimationFrame(draw)
+}
+
+increaseBtn.addEventListener('click', function() {
+  size += 5;
+  if (size > 50) {
+    size = 50;
+  }
+  updateSizeOnScreen();
+});
+decreaseBtn.addEventListener('click', function() {
+  size -= 5;
+  if (size < 5) {
+    size = 5;
+  }
+  updateSizeOnScreen();
+});
+
+function updateSizeOnScreen() {
+  sizeEl.innerText = size;
 }
