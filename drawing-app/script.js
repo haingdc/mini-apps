@@ -4,6 +4,7 @@ var increaseBtn = document.getElementById('increase');
 var decreaseBtn = document.getElementById('decrease');
 var colorEl = document.getElementById('color');
 var sizeEl = document.getElementById('size');
+var clearEl = document.getElementById('clear');
 var isPressed = false;
 var color = colorEl.value || 'black';
 
@@ -42,12 +43,6 @@ function drawCircle(x, y) {
   ctx.fill();
 }
 
-function draw() {
-  ctx.clearReact(0, 0, canvas.width, canvas.height);
-  drawCircle(x, y);
-  requestAnimationFrame(draw)
-}
-
 increaseBtn.addEventListener('click', function() {
   size += 5;
   if (size > 50) {
@@ -75,7 +70,11 @@ function drawLine(x1,y1,x2,y2) {
   ctx.beginPath();
   ctx.moveTo(x1,y1);
   ctx.lineTo(x2,y2);
-  ctx.lineWidth = size;
+  ctx.lineWidth = size
   ctx.strokeStyle = color;
   ctx.stroke();
 }
+
+clearEl.addEventListener('click', function clear() {
+  ctx.clearRect(0,0, canvas.width, canvas.clientHeight);
+});
