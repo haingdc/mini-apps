@@ -9,23 +9,31 @@ var color = colorEl.value || 'black';
 
 canvas.addEventListener('mousemove', (e) => {
   if (isPressed) {
-    var x = e.offsetX;
-    var y = e.offsetY;
-    drawCircle(x, y);
+    var x2 = e.offsetX;
+    var y2 = e.offsetY;
+    drawCircle(x2, y2);
+    drawLine(x, y, x2, y2);
+    x = x2;
+    y = y2;
   }
 });
 
-canvas.addEventListener('mousedown', function() {
+canvas.addEventListener('mousedown', function(e) {
   isPressed = true;
+  x = e.offsetX;
+  y = e.offsetY;
 });
 
-canvas.addEventListener('mouseup', function() {
+canvas.addEventListener('mouseup', function(e) {
   isPressed = false;
+  x = undefined;
+  y = undefined;
 });
 
 var size = 30;
-var x    = 50;
-var y    = 50;
+var x;
+var y;
+
 
 function drawCircle(x, y) {
   ctx.beginPath();
@@ -62,3 +70,12 @@ function updateSizeOnScreen() {
 colorEl.addEventListener('change', function changeColor(e) {
   color = e.target.value;
 });
+
+function drawLine(x1,y1,x2,y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1,y1);
+  ctx.lineTo(x2,y2);
+  ctx.lineWidth = size;
+  ctx.strokeStyle = color;
+  ctx.stroke();
+}
