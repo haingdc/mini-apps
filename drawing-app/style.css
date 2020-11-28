@@ -21,13 +21,15 @@ body {
 }
 
 canvas {
-  border: 1px solid #111;
+  border: 2px solid rebeccapurple;
 }
 
 .toolbox {
-  width: 800px;
+  width: 804px;
   background-color: rebeccapurple;
   padding: 1rem;
+  display: flex;
+  gap: 0.25rem;
 }
 .toolbox > * {
   padding: 0.25rem;
@@ -40,4 +42,3 @@ canvas {
   align-items: center;
   justify-content: center;
 }
-
