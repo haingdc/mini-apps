@@ -18,6 +18,7 @@
 - list of recipes
 - recipe info on click
 - fav recipe (w/ localStorage)
+- horizontal drag to scroll
 
 4. Notes App
 
@@ -41,3 +42,22 @@
 - actors
 
 ![Movie app](./img/movie-app.jpg "Movie App")
+
+7. Github Profile
+
+- https://uidesigndaily.com/posts/photoshop-profile-card-user-day-286
+- search for user
+- get and show data
+
+8. Drawing App
+
+- canvas
+- size
+- color
+
+10. Weather app
+
+- https://uidesigndaily.com/posts/photoshop-weather-prognosis-day-156
+- enter location
+- get weather
+- have some icons
