@@ -21,7 +21,7 @@ async function getWeatherByLocation_OpenWeatherMap(location) {
 }
 
 function KtoC(K) {
-  return (K - 273.15).toFixed(2);
+  return Math.floor(K - 273.15);
 }
 
 function addWeatherToPage(data) {
@@ -30,8 +30,12 @@ function addWeatherToPage(data) {
   weather.classList.add('weather');
   console.log({data})
   weather.innerHTML = `
-    <h2>${temp}°C</h2>
-    <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png" />
+    <h2>
+      <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+      ${temp}°C
+      <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+    </h2>
+    <small>${data.weather[0].main}</small>
   `;
 
   main.innerHTML = '';
