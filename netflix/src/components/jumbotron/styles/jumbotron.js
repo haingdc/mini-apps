@@ -14,6 +14,13 @@ export var Inner = styled.div`
   }
 `;
 
-export var Container = styled.div`
-  
+export var Pane = styled.div`
+  width: 50%;
 `;
+export var Title = styled.h1`
+`;
+export var SubTitle = styled.h2``;
+
+export var Image = styled.image``;
+
+export var Container = styled.div``;
