@@ -55,4 +55,10 @@ export var Image = styled.img`
   height: auto;
 `;
 
-export var Container = styled.div``;
+export var Container = styled.div`
+  @media (max-width: 1000px) {
+    ${Item}:last-of-type h2 {
+      margin-bottom: 50px;
+    }
+  }
+`;

@@ -4,8 +4,8 @@ import { Inner, Item, Container, Pane, Image, Title, SubTitle } from './styles/j
 export default function Jumbotron(props) {
   const { children, direction = 'row', ...restProps } = props;
   return (
-    <Item direction={direction}>
-      <Inner>
+    <Item {...restProps}>
+      <Inner direction={direction}>
         {children}
       </Inner>
     </Item>
