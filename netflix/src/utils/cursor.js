@@ -39,7 +39,6 @@ export default class Cursor {
     render() {
         this.renderedStyles['tx'].current = mouse.x - this.bounds.width/2;
         this.renderedStyles['ty'].current = mouse.y - this.bounds.height/2;
-        console.log({ tx: this.renderedStyles.tx.current, ty: this.renderedStyles.ty.current});
 
         for (const key in this.renderedStyles ) {
             this.renderedStyles[key].previous = lerp(this.renderedStyles[key].previous, this.renderedStyles[key].current, this.renderedStyles[key].amt);
