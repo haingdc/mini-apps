@@ -16,6 +16,7 @@ export var Inner = styled.div`
 export var Item = styled.div`
   color: #fff;
   margin-bottom: 10px;
+  max-width: 670px;
   &::first-of-type {
     margin-top: 3em;
   }
@@ -47,7 +48,19 @@ export var Header = styled.div`
 `;
 
 export var Body = styled.div`
-
+  max-height: 1200px;
+  transition: max-height 0.25s cubic-bezier(0.5,0, 0.1, 1);
+  font-size: 26px;
+  font-weight: normal;
+  line-height: normal;
+  background-color: #303030;
+  padding: 0.8em 2.2em 1.2em;
+  white-space: pre-wrap;
+  user-select: none;
+  @media(max-width: 600px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
 `;
 
 export var Frame = styled.div`
