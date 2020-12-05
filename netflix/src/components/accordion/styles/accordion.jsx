@@ -54,9 +54,13 @@ export var Body = styled.div`
   font-weight: normal;
   line-height: normal;
   background-color: #303030;
-  padding: 0.8em 2.2em 1.2em;
   white-space: pre-wrap;
   user-select: none;
+  overflow: hidden;
+
+  & > div {
+    padding: 0.8em 2.2em 1.2em;
+  }
   @media(max-width: 600px) {
     font-size: 16px;
     line-height: 22px;

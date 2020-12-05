@@ -1,5 +1,6 @@
-import React , { createContext, useContext, useState } from 'react';
+import React , { createContext, useContext, useState, useLayoutEffect } from 'react';
 import { Container, Title, Frame, Item, Inner, Header, Body } from './styles/accordion';
+import { gsap } from 'gsap';
 
 var ToggleContext = createContext();
 
@@ -46,5 +47,15 @@ Accordion.Header = function AccordionHeader({ children, ...rest }) {
 
 Accordion.Body = function AccordionBody({ children, ...rest }) {
   var { toggleShow } = useContext(ToggleContext);
-  return toggleShow ? <Body {...rest}>{children}</Body> : null;
+  var ref = React.useRef(null);
+  useLayoutEffect(() => {
+    if (ref) {
+      if (toggleShow) {
+        gsap.to(ref.current, { duration: 0.35, height: 'auto'});
+      } else {
+        gsap.to(ref.current, { duration: 0.35, height: '0'});
+      }
+    }
+  });
+  return <Body ref={ref} {...rest}>{ children }</Body>
 }

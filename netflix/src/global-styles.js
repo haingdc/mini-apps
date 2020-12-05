@@ -1,6 +1,9 @@
 import { createGlobalStyle } from 'styled-components/macro';
 
 export var GlobalStyles = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
   html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
