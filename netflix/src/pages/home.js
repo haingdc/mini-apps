@@ -8,10 +8,11 @@ export default function Home () {
   return (
     <>
       <HeaderContainer>
-        <JumbotronContainer />
-        <FaqsContainer />
-        <FooterContainer/>
+        <p>Hello</p>
       </HeaderContainer>
+      <JumbotronContainer />
+      <FaqsContainer />
+      <FooterContainer/>
     </>
   );
 }
