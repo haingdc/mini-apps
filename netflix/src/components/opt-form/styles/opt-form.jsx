@@ -19,6 +19,7 @@ export var Input = styled.input`
   border: 0;
   padding: 10px;
   height: 70px;
+  border-radius: 0;
 `;
 
 export var Button = styled.button`
@@ -31,6 +32,7 @@ export var Button = styled.button`
   padding: 0 32px;
   font-size: 26px;
   border: none;
+  border-radius: 0;
   cursor: pointer;
   &:hover {
     background-color: #f40612;
