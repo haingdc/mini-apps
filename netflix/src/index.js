@@ -4,14 +4,18 @@ import App from './app';
 import 'normalize.css';
 import { GlobalStyles } from './global-styles';
 import Cursor from './utils/cursor';
+import { firebase } from './lib/firebase.prod';
+import { FirebaseContext } from './context/firebase';
 
 render(
   <>
-    <GlobalStyles />
-    <App />
-    <svg className="cursor" width="30" height="30" viewBox="0 0 30 30">
-      <circle className="cursor__inner" cx="15" cy="15" r="7.5" />
-    </svg>
+    <FirebaseContext.Provider value={{ firebase }}>
+      <GlobalStyles />
+      <App />
+      <svg className="cursor" width="30" height="30" viewBox="0 0 30 30">
+        <circle className="cursor__inner" cx="15" cy="15" r="7.5" />
+      </svg>
+    </FirebaseContext.Provider>
   </>,
   document.getElementById('root')
 );
