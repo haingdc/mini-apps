@@ -1,9 +1,6 @@
-import React , { createContext, useContext, useState, useLayoutEffect } from 'react';
+import React , { useLayoutEffect } from 'react';
 import { Container, Title, Frame, Item, Inner, Header, Body } from './styles/accordion';
 import { gsap } from 'gsap';
-
-var ToggleContext = createContext();
-
 export default function Accordion({ children, ...rest }) {
   return (
     <Container {...rest}>
@@ -21,20 +18,17 @@ Accordion.Frame = function AccordionFrame({ children, ...rest }) {
 }
 
 Accordion.Item = function AccordionItem({ children, ...rest }) {
-  var [toggleShow, setToggleShow] = useState(false);
-  return (
-    <ToggleContext.Provider value={{ toggleShow, setToggleShow}}>
-      <Item {...rest}>{ children }</Item>
-    </ToggleContext.Provider>
-  );
+  return <Item {...rest}>{ children }</Item>;
 }
 
-Accordion.Header = function AccordionHeader({ children, ...rest }) {
-  var { toggleShow, setToggleShow } = useContext(ToggleContext);
+Accordion.Header = function AccordionHeader({ toggleShow, id, onToggle, children, ...rest }) {
+  function setToggleShow() {
+    onToggle(id);
+  }
   return (
     <Header
       { ...rest }
-      onClick={() => setToggleShow(toggleShow => !toggleShow)}
+      onClick={setToggleShow}
       >
       {children}
       {toggleShow ?
@@ -45,8 +39,7 @@ Accordion.Header = function AccordionHeader({ children, ...rest }) {
   );
 }
 
-Accordion.Body = function AccordionBody({ children, ...rest }) {
-  var { toggleShow } = useContext(ToggleContext);
+Accordion.Body = function AccordionBody({ toggleShow, children, ...rest }) {
   var ref = React.useRef(null);
   useLayoutEffect(() => {
     if (ref) {
