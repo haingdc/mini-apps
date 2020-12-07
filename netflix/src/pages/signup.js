@@ -15,8 +15,28 @@ export default function Signup() {
   var [error     , setError     ] = useState('');
 
   var isInvalid = firstName === '' || password === '' || email === '';
-  function handleSignup(event) {
+  function signUp(event) {
     event.preventDefault();
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(result => {
+        result.user
+        .updateProfile({
+          displayName: firstName,
+          photoURL: Math.floor(Math.random() * 5) + 1,
+        })
+        .then(() => {
+          history.push(ROUTES.BROWSE);
+        })
+      })
+      .catch(error => {
+        setFirstName('');
+        setPassword('');
+        setEmail('');
+        setError(error.message);
+      });
   }
   return (
     <>
@@ -24,26 +44,28 @@ export default function Signup() {
         <Form>
           <Form.Title>Sign Up</Form.Title>
           {error && <Form.Error>{error}</Form.Error>}
-          <Form.Input
-            placeholder="First Name"
-            value={firstName}
-            onChange={({ target }) => setFirstName(target.value)}
-          />
-          <Form.Input
-            placeholder="Email address"
-            value={email}
-            onChange={({ target }) => setEmail(target.value)}
-          />
-          <Form.Input
-            type="password"
-            autoComplete="off"
-            placeholder="Password"
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
-          <Form.Submit disabled={isInvalid} type="submit">
-            Sign Up
-          </Form.Submit>
+          <Form.Base onSubmit={signUp} method="POST">
+            <Form.Input
+              placeholder="First Name"
+              value={firstName}
+              onChange={({ target }) => setFirstName(target.value)}
+            />
+            <Form.Input
+              placeholder="Email address"
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+            />
+            <Form.Input
+              type="password"
+              autoComplete="off"
+              placeholder="Password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
+            <Form.Submit disabled={isInvalid} type="submit">
+              Sign Up
+            </Form.Submit>
+          </Form.Base>
           <Form.Text>
             Already a user?&nbsp;
             <Form.Link to="/signin">Sign in now.</Form.Link>
