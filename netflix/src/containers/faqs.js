@@ -5,7 +5,7 @@ import FAQs from '../fixtures/faqs.json';
 export function FaqsContainer () {
   var [openId, setOpenId] = React.useState(-1);
   function handleToggle(id) {
-    if (id == openId) {
+    if (id === openId) {
       setOpenId(-1);
     } else {
       setOpenId(id);
@@ -15,11 +15,11 @@ export function FaqsContainer () {
     <Accordion>
       <Accordion.Title>Frequently Asked Questions</Accordion.Title>
       {FAQs.map(item =>
-        <Accordion.Item key={item.id}>
-          <Accordion.Header toggleShow={openId == item.id} id={item.id} onToggle={handleToggle}>
+        <Accordion.Item key={item.id} toggleShow={openId === item.id} onToggle={handleToggle} id={item.id}>
+          <Accordion.Header>
             {item.header}
           </Accordion.Header>
-          <Accordion.Body toggleShow={openId == item.id}>
+          <Accordion.Body>
             <div>
               {item.body}
             </div>
