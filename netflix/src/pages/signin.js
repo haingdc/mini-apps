@@ -11,7 +11,7 @@ export default function Signin() {
   var { firebase } = useContext(FirebaseContext);
   var [email   , setEmail   ] = useState('');
   var [password, setPassword] = useState('');
-  var [error   , setError   ] = useState('')
+  var [error   , setError   ] = useState('');
 
   var isInvalid = password === '' || email === '';
   function signIn(event) {
@@ -27,7 +27,7 @@ export default function Signin() {
         setPassword('');
         setError(error.message);
       });
-  } 
+  }
   return (
     <>
       <HeaderContainer>
@@ -52,7 +52,7 @@ export default function Signin() {
             </Form.Submit>
           </Form.Base>
           <Form.Text>
-            New to Netflix?
+            New to Netflix?&nbsp;
             <Form.Link to="/signup">Sign up now.</Form.Link>
           </Form.Text>
           <Form.TextSmall>
