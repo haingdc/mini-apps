@@ -17,3 +17,21 @@ export function IsUserRedirect(props) {
 		/>
 	);
 }
+
+export function ProtectedRoute(props) {
+	var { user, children, ...rest } = props;
+	return (
+		<Route
+			{...rest}
+			render={value => {
+				var { location } = value;
+				if (user) {
+					return children;
+				}
+				return (
+					<Redirect to={{ pathname: 'signin', state: { from : location } }} />
+				);
+			}}
+		/>
+	);
+}
