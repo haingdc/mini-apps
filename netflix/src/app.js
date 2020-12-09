@@ -8,7 +8,6 @@ import { useAuthListener } from './hooks';
 function App() {
   var user = useAuthListener();
   // user = undefined;
-  console.log(user)
   return (
     <Router>
       <Switch>
