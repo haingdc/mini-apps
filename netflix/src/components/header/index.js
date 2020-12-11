@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { Profile, Picture, Dropdown, Group, Feature, FeatureCallOut, Text, Link, ButtonLink, Background, Container, Logo, Search, SearchIcon, SearchInput } from './styles/header';
+import { Profile, Picture, Dropdown, Group, Feature, FeatureCallOut, Text, Link, ButtonLink, Background, Container, Logo, Search, SearchIcon, PlayButton, SearchInput } from './styles/header';
 
 export default function Header(props) {
   var { bg = true, children, ...rest } = props;
@@ -81,4 +81,9 @@ Header.Search = function HeaderSearch(props) {
       />
     </Search>
   );
+}
+
+Header.PlayButton = function HeaderPlayButton(props) {
+  var { children, ...rest } = props;
+  return <PlayButton {...rest}>{children}</PlayButton>
 }
