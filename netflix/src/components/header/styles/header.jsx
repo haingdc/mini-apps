@@ -8,6 +8,14 @@ export var Background = styled.div`
   background-position: top left;
   background-repeat: no-repeat;
   background-size: cover;
+  @media(max-width: 1100px) {
+    ${({ dontShowOnSmallViewPort }) => dontShowOnSmallViewPort && 'background-image: none;'}
+  }
+`;
+
+export var Group = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export var Container = styled.div`
@@ -71,6 +79,20 @@ export var Text = styled.p`
   margin: 0;
 `;
 
+export var Link = styled.p`
+  color: #fff;
+  text-decoration: none;
+  margin-right: 30px;
+  font-weight: ${({ active }) => (active === 'true' ? '700' : 'normal')};
+  cursor: pointer;
+  &:hover {
+    font-weight: bold;
+  }
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
 export var FeatureCallOut = styled.h2`
   color: #fff;
   font-size: 50px;
@@ -79,4 +101,37 @@ export var FeatureCallOut = styled.h2`
   text-shadow: 2px 2px 4px rgba(0,0,0,0.45);
   margin: 0;
   margin-bottom: 20px;
+`;
+
+export var Picture = styled.div`
+  background-image: url(${({ src }) => src});
+  background-size: contain;
+  border: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+`;
+
+export var Dropdown = styled.div`
+  display: none;
+  background-color: black;
+  position: absolute;
+  padding: 10px;
+  width: 100px;
+  top: 32px;
+  right: 10px;
+`;
+
+export var Profile = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  position: relative;
+  button {
+    cursor: pointer;
+  }
+  &:hover > ${Dropdown} {
+    display: flex;
+    flex-direction: column;
+  }
 `;
