@@ -4,6 +4,7 @@ import { FirebaseContext } from '../context/firebase';
 import { Card, Header, Loading } from '../components';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
+import { FooterContainer } from './footer';
 
 export function BrowseContainer({ slides }) {
   var [category, setCategory] = useState('series');
@@ -70,7 +71,6 @@ export function BrowseContainer({ slides }) {
           <Header.PlayButton>Play</Header.PlayButton>
         </Header.Feature>
       </Header>
-
       <Card.Group>
         {slideRows.map(slideItem => (
           <Card key={`${category}-${slideItem.title.toLowerCase()}`}>
@@ -96,6 +96,7 @@ export function BrowseContainer({ slides }) {
           </Card>
         ))}
       </Card.Group>
+      <FooterContainer />
     </>
   ) : (
     <SelectProfileContainer user={user} setProfile={setProfile} />

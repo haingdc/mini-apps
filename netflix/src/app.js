@@ -11,31 +11,16 @@ function App() {
   return (
     <Router>
       <Switch>
-        <IsUserRedirect
-          user={user}
-          path={ROUTES.SIGN_UP}
-          loggedInPath={ROUTES.BROWSE}
-          exact
-        >
+        <IsUserRedirect user={user} path={ROUTES.SIGN_UP} loggedInPath={ROUTES.BROWSE} exact >
           <Signup />
         </IsUserRedirect>
-        <IsUserRedirect
-          user={user}
-          path={ROUTES.SIGN_IN}
-          loggedInPath={ROUTES.BROWSE}
-          exact
-        >
+        <IsUserRedirect user={user} path={ROUTES.SIGN_IN} loggedInPath={ROUTES.BROWSE} exact >
           <Signin />
         </IsUserRedirect>
         <ProtectedRoute user={user} path={ROUTES.BROWSE} exact>
           <Browse />
         </ProtectedRoute>
-        <IsUserRedirect
-          user={user}
-          path={ROUTES.HOME}
-          loggedInPath={ROUTES.BROWSE}
-          exact
-        >
+        <IsUserRedirect user={user} path={ROUTES.HOME}    loggedInPath={ROUTES.BROWSE} exact >
           <Home />
         </IsUserRedirect>
       </Switch>
