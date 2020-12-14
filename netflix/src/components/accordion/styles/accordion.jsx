@@ -50,6 +50,7 @@ export var Header = styled.div`
 `;
 
 export var Body = styled.div`
+  height: 0;
   font-size: 26px;
   font-weight: normal;
   line-height: normal;
