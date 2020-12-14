@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import Fuse from 'fuse.js';
 import { SelectProfileContainer } from './profiles';
 import { FirebaseContext } from '../context/firebase';
-import { Card, Header, Loading, Player } from '../components';
+import { Card, Frog, Header, Loading, Player } from '../components';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
 import { FooterContainer } from './footer';
@@ -24,6 +25,18 @@ export function BrowseContainer({ slides }) {
   useEffect(() => {
     setSlideRows(slides[category]);
   }, [slides, category]);
+
+  useEffect(() => {
+    var fuse = new Fuse(slideRows, {
+      keys: ['data.description', 'data.title', 'data.genre'],
+    });
+    var results = fuse.search(searchTerm).map(({ item }) => item);
+    if (slideRows.length && searchTerm.length > 3 && results.length) {
+      setSlideRows( results );
+    } else {
+      setSlideRows(slides[category]);
+    }
+  }, [searchTerm]);
 
   return profile.displayName ? (
     <>
@@ -48,6 +61,8 @@ export function BrowseContainer({ slides }) {
             >
               Films
             </Header.TextLink>
+            <Header.TextLink> <Frog.StartButton /> </Header.TextLink>
+            <Header.TextLink> <Frog.PauseButton /> </Header.TextLink>
           </Header.Group>
           <Header.Group>
             <Header.Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
