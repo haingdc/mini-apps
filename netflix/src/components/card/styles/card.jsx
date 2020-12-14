@@ -15,7 +15,7 @@ export var Meta = styled.div`
   position: absolute;
   bottom: 0;
   padding: 10px;
-  background-color: #0000000f;
+  background-color: #0000008f;
 `;
 
 export var Title = styled.p`
