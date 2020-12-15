@@ -3,7 +3,7 @@ import { Container, Title, SubTitle } from './styles/feature';
 
 export default function Feature(props) {
   var { children, ...rest } = props;
-  return <Container {...props}>{children}</Container>;
+  return <Container {...rest}>{children}</Container>;
 }
 
 Feature.Title = function FeatureTitle(props) {
