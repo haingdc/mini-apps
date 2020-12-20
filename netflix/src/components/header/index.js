@@ -4,7 +4,7 @@ import { Profile, Picture, Dropdown, Group, Feature, FeatureCallOut, Text, Link,
 
 export default function Header(props) {
   var { bg = true, children, ...rest } = props;
-  return bg ? <Background {...rest}>{children}</Background> : children;
+  return bg ? <Background data-testid="header-bg" {...rest}>{children}</Background> : children;
 }
 
 Header.Feature = function HeaderFeature(props) {
@@ -70,7 +70,7 @@ Header.Search = function HeaderSearch(props) {
   var [searchActive, setSearchActive] = useState(false);
   return (
     <Search {...rest}>
-      <SearchIcon onClick={() => setSearchActive(searchActive => !searchActive)}>
+      <SearchIcon onClick={() => setSearchActive(searchActive => !searchActive)} data-testid="search-click">
         <img src="/images/icons/search.png" alt="Search" />
       </SearchIcon>
       <SearchInput
@@ -78,6 +78,7 @@ Header.Search = function HeaderSearch(props) {
         onChange={({ target }) => setSearchTerm(target.value)}
         placeholder="Search films and series"
         active={searchActive}
+        data-testid="search-input"
       />
     </Search>
   );
