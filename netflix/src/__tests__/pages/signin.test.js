@@ -7,7 +7,9 @@ import { FirebaseContext } from '../../context/firebase';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({}),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 const firebase = {
