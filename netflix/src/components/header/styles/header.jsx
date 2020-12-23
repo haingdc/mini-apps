@@ -87,7 +87,6 @@ export var FeatureCallOut = styled.h2`
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.45);
   margin: 0;
-  margin-bottom: 20px;
 `;
 
 export var Picture = styled.button`
@@ -210,4 +209,10 @@ export var PlayButton = styled.button`
     background-color: #ff1e1e;
     color: #fff;
   }
+`;
+
+export var Box = styled.div`
+  overflow: hidden;
+  flex: 0 0 auto;
+  margin-bottom: 20px;
 `;

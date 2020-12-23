@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
-import { Profile, Picture, Dropdown, Group, Feature, FeatureCallOut, Text, Link, ButtonLink, Background, Container, Logo, Search, SearchIcon, PlayButton, SearchInput } from './styles/header';
+import { Box, Profile, Picture, Dropdown, Group, Feature, FeatureCallOut, Text, Link, ButtonLink, Background, Container, Logo, Search, SearchIcon, PlayButton, SearchInput } from './styles/header';
+import { gsap, Expo } from 'gsap';
 
 export default function Header(props) {
   var { bg = true, children, ...rest } = props;
@@ -13,8 +14,22 @@ Header.Feature = function HeaderFeature(props) {
 }
 
 Header.FeatureCallOut = function HeaderFeatureCallOut(props) {
+  var textRef = React.useRef();
   var { children, ...rest } = props;
-  return <FeatureCallOut {...rest}>{children}</FeatureCallOut>
+  React.useLayoutEffect(() => {
+    gsap.from(textRef.current, {
+      duration: 1.5,
+      delay: 6,
+      y: '100%',
+      ease: Expo.easeInOut,
+    });
+  }, [])
+  return <FeatureCallOut {...rest} ref={textRef}>{children}</FeatureCallOut>
+}
+
+Header.Box = function HeaderBox(props) {
+  var { children, width, height, ...rest } = props;
+  return <Box {...rest}>{children}</Box>;
 }
 
 Header.Text = function HeaderText(props) {
