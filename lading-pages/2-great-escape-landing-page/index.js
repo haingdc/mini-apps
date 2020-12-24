@@ -1,3 +1,8 @@
+var openAnimation = [
+  { opacity: '0' },
+  { opacity: '1' },
+];
+
 function animate() {
   TweenMax.to(".bg", 2, {
     width: "100%",
@@ -72,7 +77,16 @@ function animate() {
   });
 }
 
-animate();
+// animate();
 
 var clicks = rxjs.fromEvent(document, 'click');
 clicks.subscribe(animate);
+
+// $('.img-wrapper01 .img01').animate(
+// 	openAnimation, {
+//     delay: 2200,
+//     duration: 100, // 1s
+//       iterations: 1, // single iteration
+//       easing: 'ease-in' // easing function
+//   }
+// )

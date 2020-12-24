@@ -30,7 +30,7 @@ ul {
 
 /* NAVBAR
 =========================== */
-/* .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   height: 80px;
@@ -61,16 +61,16 @@ ul {
 
 .navbar .menu {
   margin-right: 50px;
-} */
+}
 
 
 /* SOCIAL MEDIA
 =========================== */
-/* .media {
+.media {
   position: absolute;
   top: 350px;
   right: -90px;
-  transform: rotate(-90deg);
+  rotate: -90deg;
 }
 
 .media ul li {
@@ -79,12 +79,12 @@ ul {
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 1px;
-} */
+}
 
 
 /* IMAGES
 =========================== */
-/* .img-wrapper01 {
+.img-wrapper01 {
   position: absolute;
   top: 120px;
   left: 200px;
@@ -97,18 +97,18 @@ ul {
   height: 500px;
   width: 350px;
 
-  opacity: 0;
-  animation: image-appear 0.0001s linear forwards;
-  animation-delay: 2.2s;
+  /* opacity: 0; */
+  /* animation: image-appear 0.0001s linear forwards; */
+  /* animation-delay: 2.2s; */
 }
 
-.img-wrapper02 {
+/* .img-wrapper02 {
   position: absolute;
   top: 0;
   left: 650px;
-}
+} */
 
-.img-wrapper02 .img02 {
+/* .img-wrapper02 .img02 {
   background: url('./images/image02.png') no-repeat;
   background-position: 50%;
   background-size: cover;
