@@ -10,12 +10,16 @@ function animate() {
   })
   
   // NAVBAR
-  TweenMax.from(".navbar", 1.5, {
+  TweenMax.fromTo(".navbar", {
     delay: 2.5,
     opacity: 0,
     y: 20,
+  }, {
+    duration: 1.5,
+    opacity: 1,
+    y: 0,
     ease: Expo.easeInOut
-  })
+  });
   
   // SOCIAL MEDIA
   TweenMax.staggerFrom(".media ul li", 1.5, {
@@ -77,7 +81,7 @@ function animate() {
   });
 }
 
-// animate();
+animate();
 
 var clicks = rxjs.fromEvent(document, 'click');
 clicks.subscribe(animate);
