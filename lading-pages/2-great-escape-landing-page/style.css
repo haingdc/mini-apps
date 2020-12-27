@@ -9,7 +9,6 @@
 body {
   font-family: 'Poppins';
   color: #fff;
-  background: #8C6C79;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -19,14 +18,14 @@ ul {
   list-style: none;
 }
 
-/* .bg {
+.bg {
   position: absolute;
   left: 0%;
   width: 0%;
   height: 100%;
   background: #8C6C79;
   z-index: -1;
-} */
+}
 
 /* NAVBAR
 =========================== */
@@ -185,14 +184,14 @@ ul {
   font-weight: lighter;
   letter-spacing: 5px;
 
-  /* position: relative;
+  position: relative;
   overflow: hidden;
   height: 150px;
-  width: 100%; */
+  width: 100%;
 }
-/* .text h1 .hidetext {
+.text h1 .hidetext {
   position: absolute;
-} */
+}
 
 .text p {
   font-size: 40px;
@@ -201,14 +200,14 @@ ul {
   letter-spacing: 5px;
   font-weight: lighter;
 
-  /* position: relative;
+  position: relative;
   overflow: hidden;
   height: 50px;
-  width: 100%; */
+  width: 100%;
 }
-/* .text p .hidetext {
+.text p .hidetext {
   position: absolute;
-} */
+}
 
 
 /* DESC

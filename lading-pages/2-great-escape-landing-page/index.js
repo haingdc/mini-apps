@@ -4,30 +4,33 @@ var openAnimation = [
 ];
 
 function animate() {
-  TweenMax.to(".bg", 2, {
-    width: "100%",
-    ease: Expo.easeInOut
-  })
-  
-  // NAVBAR
-  TweenMax.fromTo(".navbar", {
-    opacity: 0,
-    y: 20,
+  TweenMax.fromTo('.bg', {
+    width: '0%',
   }, {
-    delay: 2.5,
-    duration: 1.5,
-    opacity: 1,
-    y: 0,
-    ease: Expo.easeInOut
+    duration: 2,
+    width: '100%',
+    ease: Expo.easeInOut,
   });
-  
+
+  // NAVBAR
+  // TweenMax.fromTo(".navbar", {
+  //   opacity: 0,
+  //   y: 20,
+  // }, {
+  //   delay: 2.5,
+  //   duration: 1.5,
+  //   opacity: 1,
+  //   y: 0,
+  //   ease: Expo.easeInOut
+  // });
+
   // SOCIAL MEDIA
-  TweenMax.staggerFrom(".media ul li", 1.5, {
-    delay: 2.8,
-    opacity: 0,
-    x: -30,
-    ease: Expo.easeInOut
-  }, 0.08)
+  // TweenMax.staggerFrom(".media ul li", 1.5, {
+  //   delay: 2.8,
+  //   opacity: 0,
+  //   x: -30,
+  //   ease: Expo.easeInOut
+  // }, 0.08)
   
   // TEXT
   // TweenMax.from(".text h1 .hidetext", 1.5, {
@@ -66,19 +69,19 @@ function animate() {
   // })
   
   // BOTTOMNAV
-  TweenMax.from(".bottomnav", 1.5, {
-    delay: 3.2,
-    opacity: 0,
-    y: 30,
-    ease: Expo.easeInOut
-  })
-  
-  TweenMax.from(".bottomnav .next", 1.5, {
-    delay: 3.5,
-    opacity: 0,
-    x: -20,
-    ease: Expo.easeInOut
-  });
+  // TweenMax.from(".bottomnav", 1.5, {
+  //   delay: 3.2,
+  //   opacity: 0,
+  //   y: 30,
+  //   ease: Expo.easeInOut
+  // })
+
+  // TweenMax.from(".bottomnav .next", 1.5, {
+  //   delay: 3.5,
+  //   opacity: 0,
+  //   x: -20,
+  //   ease: Expo.easeInOut
+  // });
 }
 
 animate();
