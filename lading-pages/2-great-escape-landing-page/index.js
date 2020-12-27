@@ -46,19 +46,19 @@ function animate() {
   });
   
   // DESC
-  // TweenMax.staggerFrom(".desc ul li", 1.5, {
-  //   delay: 2,
-  //   opacity: 0,
-  //   y: 20,
-  //   ease: Expo.easeInOut
-  // }, 0.1)
+  TweenMax.staggerFrom(".desc ul li", 1.5, {
+    delay: 2,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+  }, 0.1)
 
-  // TweenMax.from(".desc p", 1.5, {
-  //   delay: 2.3,
-  //   opacity: 0,
-  //   y: 20,
-  //   ease: Expo.easeInOut
-  // })
+  TweenMax.from(".desc p", 1.5, {
+    delay: 2.3,
+    opacity: 0,
+    y: 20,
+    ease: Expo.easeInOut
+  })
   
   // SCROLLDOWN
   // TweenMax.from(".scrolldown", 1.5, {
