@@ -25,12 +25,12 @@ function animate() {
   });
 
   // SOCIAL MEDIA
-  // TweenMax.staggerFrom(".media ul li", 1.5, {
-  //   delay: 2.8,
-  //   opacity: 0,
-  //   x: -30,
-  //   ease: Expo.easeInOut
-  // }, 0.08)
+  TweenMax.staggerFrom(".media ul li", 1.5, {
+    delay: 2.8,
+    opacity: 0,
+    x: -30,
+    ease: Expo.easeInOut
+  }, 0.08);
   
   // TEXT
   // TweenMax.from(".text h1 .hidetext", 1.5, {
