@@ -13,16 +13,16 @@ function animate() {
   });
 
   // NAVBAR
-  // TweenMax.fromTo(".navbar", {
-  //   opacity: 0,
-  //   y: 20,
-  // }, {
-  //   delay: 2.5,
-  //   duration: 1.5,
-  //   opacity: 1,
-  //   y: 0,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".navbar", {
+    opacity: 0,
+    y: 20,
+  }, {
+    delay: 2.5,
+    duration: 1.5,
+    opacity: 1,
+    y: 0,
+    ease: Expo.easeInOut
+  });
 
   // SOCIAL MEDIA
   // TweenMax.staggerFrom(".media ul li", 1.5, {
