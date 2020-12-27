@@ -61,12 +61,12 @@ function animate() {
   })
   
   // SCROLLDOWN
-  // TweenMax.from(".scrolldown", 1.5, {
-  //   delay: 2.7,
-  //   opacity: 0,
-  //   y: 200,
-  //   ease: Expo.easeInOut
-  // })
+  TweenMax.from(".scrolldown", 1.5, {
+    delay: 2.7,
+    opacity: 0,
+    y: 200,
+    ease: Expo.easeInOut
+  })
   
   // BOTTOMNAV
   // TweenMax.from(".bottomnav", 1.5, {
