@@ -33,17 +33,17 @@ function animate() {
   }, 0.08);
   
   // TEXT
-  // TweenMax.from(".text h1 .hidetext", 1.5, {
-  //   delay: 1.6,
-  //   y: "100%",
-  //   ease: Expo.easeInOut
-  // })
+  TweenMax.from(".text h1 .hidetext", 1.5, {
+    delay: 1.6,
+    y: "100%",
+    ease: Expo.easeInOut
+  });
 
-  // TweenMax.from(".text p .hidetext", 1.5, {
-  //   delay: 2,
-  //   y: "100%",
-  //   ease: Expo.easeInOut
-  // })
+  TweenMax.from(".text p .hidetext", 1.5, {
+    delay: 2,
+    y: "100%",
+    ease: Expo.easeInOut
+  });
   
   // DESC
   // TweenMax.staggerFrom(".desc ul li", 1.5, {

@@ -192,6 +192,7 @@ ul {
 }
 .text h1 .hidetext {
   position: absolute;
+  height: 100%;
 }
 
 .text p {
@@ -208,6 +209,7 @@ ul {
 }
 .text p .hidetext {
   position: absolute;
+  height: 100%;
 }
 
 
