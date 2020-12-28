@@ -150,13 +150,13 @@ ul {
 
 @keyframes block-appear {
   0% {
-    left: 0;
-    /* transform: translateX(0); */
+    left: 0;                          /* depend on parent width */
+    /* transform: translateX(0%); */  /* depend on element width itself */
     width: 0%;
   }
   50% {
     left: 0;
-    /* transform: translateX(0); */
+    /* transform: translateX(0%); */
     width: 100%;
   }
   100% {
