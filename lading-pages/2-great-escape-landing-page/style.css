@@ -149,9 +149,11 @@ ul {
 }
 
 @keyframes block-appear {
+  /*       left use percent will depend on parent width */
+  /* translateX use percent will depend on element width itself */
   0% {
-    left: 0;                          /* depend on parent width */
-    /* transform: translateX(0%); */  /* depend on element width itself */
+    left: 0;
+    /* transform: translateX(0%); */
     width: 0%;
   }
   50% {
