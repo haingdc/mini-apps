@@ -1,0 +1,29 @@
+.box {
+  background: turquoise;
+  width: 300px;
+  height: 300px;
+  transition: opacity 500ms ease-in-out;
+  opacity: 0.5;
+  animation: flash 7s 0s infinite;
+}
+.box:hover {
+  opacity: 1;
+}
+
+@keyframes flash {
+  0%, 100% {
+    background: #4f60f6;
+  }
+  20% {
+    background: #f64f4f;
+  }
+  40% {
+    background: #4fecf6;
+  }
+  60% {
+    background: #f6db4f;
+  }
+  80% {
+    background: #f64fe5;
+  }
+}
