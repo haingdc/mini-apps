@@ -82,9 +82,9 @@ ul {
   padding: 50px 0;
 }
 
-/* .swiper-wrapper {
+.swiper-wrapper {
   transition-delay: .5s;
-} */
+}
 
 .swiper-slide {
   width: 800px;
@@ -175,24 +175,24 @@ ul {
 
 /* FOOTER
 =========================== */
-/* .footer {
+.footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 30px;
-} */
+}
 
-/* .footer-wrapper {
+.footer-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-} */
+}
 
-/* .footer .scroll p::after {
+.footer .scroll p::after {
   content: "";
   display: inline-block;
   border: 1px solid #fff;
   width: 60px;
   margin: 0 0 0 10px;
   transform: translateY(-4px);
-} */
+}
