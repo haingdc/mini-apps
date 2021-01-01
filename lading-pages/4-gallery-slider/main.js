@@ -21,20 +21,20 @@ slider.on('slideChangeTransitionEnd', function () {
   console.log('slideChangeTransitionEnd')
 
   TweenMax.to('.slide-text span', .2, {
-    y: 0,
+    y: '0px',
     delay: .5
   })
   TweenMax.to('.slide-text span', 0, {
     y: '100px',
   })
 
-//   TweenMax.to('.slide-number span', .2, {
-//     x: 0,
-//     delay: .7
-//   })
-//   TweenMax.to('.slide-number span', 0, {
-//     x: '100px',
-//   })
+  TweenMax.to('.slide-number span', .2, {
+    x: 0,
+    delay: .7
+  })
+  TweenMax.to('.slide-number span', 0, {
+    x: '100px',
+  })
 
 //   TweenMax.to('.swiper-slide-active', .5, {
 //     scale: 1,
