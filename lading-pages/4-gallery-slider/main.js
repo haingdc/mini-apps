@@ -17,15 +17,16 @@ slider.on('slideChange', function () {
   })
 })
 
-// slider.on('slideChangeTransitionEnd', function () {
+slider.on('slideChangeTransitionEnd', function () {
+  console.log('slideChangeTransitionEnd')
 
-//   TweenMax.to('.slide-text span', .2, {
-//     y: 0,
-//     delay: .5
-//   })
-//   TweenMax.to('.slide-text span', 0, {
-//     y: '100px',
-//   })
+  TweenMax.to('.slide-text span', .2, {
+    y: 0,
+    delay: .5
+  })
+  TweenMax.to('.slide-text span', 0, {
+    y: '100px',
+  })
 
 //   TweenMax.to('.slide-number span', .2, {
 //     x: 0,
@@ -60,7 +61,7 @@ slider.on('slideChange', function () {
 //   TweenMax.to('.swiper-slide-prev .slide-number', 0, {
 //     autoAlpha: 0
 //   })
-// })
+})
 
 // TweenMax.to('.swiper-slide-next .slide-text', 0, {
 //   autoAlpha: 0
