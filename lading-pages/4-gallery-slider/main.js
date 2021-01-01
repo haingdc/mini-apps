@@ -36,10 +36,10 @@ slider.on('slideChangeTransitionEnd', function () {
     x: '100px',
   })
 
-//   TweenMax.to('.swiper-slide-active', .5, {
-//     scale: 1,
-//     ease: Power4.easeOut,
-//   })
+  TweenMax.to('.swiper-slide-active', .5, {
+    scale: 1,
+    ease: Power4.easeOut,
+  })
 
 //   TweenMax.to('.swiper-slide-active .slide-text', 0, {
 //     autoAlpha: 1
