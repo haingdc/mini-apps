@@ -17,18 +17,18 @@ function animate() {
     ease: Power3.easeInOut
   })
 
-  // TweenMax.from('.nav', 2, {
-  //   delay: .8,
-  //   opacity: 0,
-  //   ease: Expo.easeInOut
-  // })
+  TweenMax.from('.nav', 2, {
+    delay: .8,
+    opacity: 0,
+    ease: Expo.easeInOut
+  })
   
   // TweenMax.from('.text h1', 2, {
   //   delay: .6,
   //   x: 1000,
   //   ease: Circ.easeInOut
   // })
-  
+
   // TweenMax.from('.text p', 2, {
   //   delay: .7,
   //   x: 1000,
