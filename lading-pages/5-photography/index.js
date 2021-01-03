@@ -29,11 +29,11 @@ function animate() {
     ease: Circ.easeInOut
   })
 
-  // TweenMax.from('.text p', 2, {
-  //   delay: .7,
-  //   x: 1000,
-  //   ease: Circ.easeInOut
-  // })
+  TweenMax.from('.text p', 2, {
+    delay: .7,
+    x: 1000,
+    ease: Circ.easeInOut
+  })
   
   // TweenMax.to('.karina', 2, {
   //   delay: 1.5,
