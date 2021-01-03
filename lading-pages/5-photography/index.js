@@ -50,17 +50,17 @@ function animate() {
     ease: Circ.easeInOut
   }, 0.08)
   
-  // TweenMax.from('.info', 2, {
-  //   delay: 1.5,
-  //   y: 100,
-  //   ease: Circ.easeInOut
-  // })
+  TweenMax.from('.info', 2, {
+    delay: 1.5,
+    y: 100,
+    ease: Circ.easeInOut
+  })
   
-  // TweenMax.from('.name', 2, {
-  //   delay: 1.5,
-  //   x: -600,
-  //   ease: Circ.easeInOut
-  // })
+  TweenMax.from('.name', 2, {
+    delay: 1.5,
+    x: -600,
+    ease: Circ.easeInOut
+  })
 }
 
 
