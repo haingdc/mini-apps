@@ -44,11 +44,11 @@ function animate() {
     ease: Power2.easeInOut
   })
 
-  // TweenMax.staggerFrom('.bottomnav ul li', 2, {
-  //   delay: 1,
-  //   x: 1000,
-  //   ease: Circ.easeInOut
-  // }, 0.08)
+  TweenMax.staggerFrom('.bottomnav ul li', 2, {
+    delay: 1,
+    x: 1000,
+    ease: Circ.easeInOut
+  }, 0.08)
   
   // TweenMax.from('.info', 2, {
   //   delay: 1.5,
