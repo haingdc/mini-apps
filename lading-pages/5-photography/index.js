@@ -35,12 +35,15 @@ function animate() {
     ease: Circ.easeInOut
   })
   
-  // TweenMax.to('.karina', 2, {
-  //   delay: 1.5,
-  //   width: '800px',
-  //   ease: Power2.easeInOut
-  // })
-  
+  TweenMax.fromTo('.karina', {
+    width: '0',
+  }, {
+    duration: 2,
+    delay: 1.5,
+    width: '800px',
+    ease: Power2.easeInOut
+  })
+
   // TweenMax.staggerFrom('.bottomnav ul li', 2, {
   //   delay: 1,
   //   x: 1000,
