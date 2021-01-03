@@ -41,47 +41,47 @@ slider.on('slideChangeTransitionEnd', function () {
     ease: Power4.easeOut,
   })
 
-//   TweenMax.to('.swiper-slide-active .slide-text', 0, {
-//     autoAlpha: 1
-//   })
-//   TweenMax.to('.swiper-slide-active .slide-number', 0, {
-//     autoAlpha: 1
-//   })
+  TweenMax.to('.swiper-slide-active .slide-text', 0, {
+    autoAlpha: 1
+  })
+  TweenMax.to('.swiper-slide-active .slide-number', 0, {
+    autoAlpha: 1
+  })
 
-//   TweenMax.to('.swiper-slide-next .slide-text', 0, {
-//     autoAlpha: 0
-//   })
-//   TweenMax.to('.swiper-slide-prev .slide-text', 0, {
-//     autoAlpha: 0
-//   })
+  TweenMax.to('.swiper-slide-next .slide-text', 0, {
+    autoAlpha: 0
+  })
+  TweenMax.to('.swiper-slide-prev .slide-text', 0, {
+    autoAlpha: 0
+  })
 
-//   TweenMax.to('.swiper-slide-next .slide-number', 0, {
-//     autoAlpha: 0
-//   })
-//   TweenMax.to('.swiper-slide-prev .slide-number', 0, {
-//     autoAlpha: 0
-//   })
+  TweenMax.to('.swiper-slide-next .slide-number', 0, {
+    autoAlpha: 0
+  })
+  TweenMax.to('.swiper-slide-prev .slide-number', 0, {
+    autoAlpha: 0
+  })
+}); // transition end
+
+TweenMax.to('.swiper-slide-next .slide-text', 0, {
+  autoAlpha: 0
+})
+TweenMax.to('.swiper-slide-prev .slide-text', 0, {
+  autoAlpha: 0
 })
 
-// TweenMax.to('.swiper-slide-next .slide-text', 0, {
-//   autoAlpha: 0
-// })
-// TweenMax.to('.swiper-slide-prev .slide-text', 0, {
-//   autoAlpha: 0
-// })
+TweenMax.to('.swiper-slide-next .slide-number', 0, {
+  autoAlpha: 0
+})
+TweenMax.to('.swiper-slide-prev .slide-number', 0, {
+  autoAlpha: 0
+})
 
-// TweenMax.to('.swiper-slide-next .slide-number', 0, {
-//   autoAlpha: 0
-// })
-// TweenMax.to('.swiper-slide-prev .slide-number', 0, {
-//   autoAlpha: 0
-// })
+TweenMax.to('.swiper-slide', 0, {
+  scale: .85,
+})
 
-// TweenMax.to('.swiper-slide', 0, {
-//   scale: .85,
-// })
-
-// TweenMax.to('.swiper-slide-active', 0, {
-//   scale: 1,
-// })
+TweenMax.to('.swiper-slide-active', 0, {
+  scale: 1,
+})
 
