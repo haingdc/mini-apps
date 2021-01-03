@@ -23,11 +23,11 @@ function animate() {
     ease: Expo.easeInOut
   })
   
-  // TweenMax.from('.text h1', 2, {
-  //   delay: .6,
-  //   x: 1000,
-  //   ease: Circ.easeInOut
-  // })
+  TweenMax.from('.text h1', 2, {
+    delay: .6,
+    x: 1000,
+    ease: Circ.easeInOut
+  })
 
   // TweenMax.from('.text p', 2, {
   //   delay: .7,
