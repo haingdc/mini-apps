@@ -86,6 +86,91 @@ body {
   padding-right: 3px;
 }
 
+.newsfeed {
+  padding: 0 20px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  background: #242C39;
+  box-shadow: 0 0 12px 2px rgba(0, 0, 0, .5);
+  margin-bottom: 20px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.card .picture {
+  background-image: url('https://images.unsplash.com/photo-1508166785545-c2dd4c113c66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+  background-position: 50%;
+  background-size: cover;
+  height: 200px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card .content {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 10px;
+}
+
+.card .header {
+  display: flex;
+  align-items: center;
+}
+
+.card .profile-pic {
+  background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+  background-position: 50%;
+  background-size: cover;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.card .detail {
+  margin-left: 10px;
+}
+
+.card .posted {
+  font-size: 10px;
+  padding-top: 3px;
+}
+
+.card .desc {
+  padding-top: 10px;
+  line-height: 1.5;
+}
+
+.card .tags {
+  font-size: 12px;
+  color: #FFDF3B;
+  padding-top: 10px;
+}
+
+.card .footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.card .footer .like {
+  flex: 0 0 25%;
+}
+
+.card .footer .comment {
+  flex: 1;
+}
+
+.card .footer .share {
+  flex: 0 0 18%;
+}
+
+.card .footer i {
+  padding-right: 3px;
+}
 
 .nav {
   background: #242C39;
