@@ -49,6 +49,14 @@ function animate() {
     delay: 1400
   })
 
+  anime({
+    targets: '.newsfeed .card',
+    translateY: [300, 0],
+    easing: 'easeOutExpo',
+    opacity: [0, 1],
+    delay: (el, i) => 700 + 300 * i
+  })
+
 }
 
 animate();
