@@ -33,6 +33,21 @@ function animate() {
     delay: 1200
   })
 
+  anime({
+    targets: '.comment i',
+    easing: 'easeOutExpo',
+    scale: [2, 1],
+    opacity: [0, 1],
+    delay: 1300
+  })
+
+  anime({
+    targets: '.share i',
+    easing: 'easeOutExpo',
+    scale: [2, 1],
+    opacity: [0, 1],
+    delay: 1400
+  })
 
 }
 
