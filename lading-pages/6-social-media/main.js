@@ -25,6 +25,13 @@ function animate() {
     },
   })
 
+  anime({
+    targets: '.like i',
+    easing: 'easeOutExpo',
+    scale: [2, 1],
+    opacity: [0, 1],
+    delay: 1200
+  })
 
 
 }
