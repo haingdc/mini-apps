@@ -16,6 +16,16 @@ function animate() {
     delay: 700
   })
 
+  anime({
+    targets: '.live .person',
+    translateY: [100, 0],
+    duration: 1200,
+    delay: (el, i) => {
+      return 1000 + 100 * i;
+    },
+  })
+
+
 
 }
 
