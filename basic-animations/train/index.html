@@ -12,9 +12,11 @@
 
 <body>
 
-  <img id="train" src="train.gif">
+  <img id="train" src="train.gif"><br>
+  <button id="animeBtn">Anime</button>
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
   <script>
     train.onclick = function() {
       let start = Date.now();
@@ -28,8 +30,19 @@
 
       }, 20);
     }
-  </script>
 
+    animeBtn.onclick = function() {
+      anime({
+        targets: '#train',
+        translateX: [0, 300],
+        duration: 1200,
+        opacity: [0.2, 1],
+        delay: (el, i) => {
+          return 300 + 100 * i;
+        },
+      });
+    }
+  </script>
 
 </body>
 
