@@ -4,12 +4,22 @@
 <head>
   <meta charset="utf-8">
   <style>
+    body {
+      padding: 30px
+    }
     progress {
       width: 5%;
     }
     body h6 {
       text-transform: uppercase;
       font-family: Arial;
+    }
+
+    #elem4 {
+      width: 20px;
+      height: 10px;
+      background: burlywood;
+      position: relative;
     }
 
   </style>
@@ -26,9 +36,15 @@
   <h6>Quad:</h6>
   <progress id="elem2"></progress>
 
+  <h6>Curl</h6>
+  <progress id="elem3"></progress>
+
+  <h6>Back Shooting</h6>
+  <div id="elem4"></div>
+
   <script>
     elemAll.onclick = function() {
-      [elem1, elem2].forEach(el => el.click());
+      [elem1, elem2, elem3, elem4].forEach(el => el.click());
     }
 
     elem1.onclick = function () {
@@ -54,6 +70,33 @@
         }
       });
     };
+
+    elem3.onclick = function() {
+      animate({
+        duration: 1000,
+        timing: function circ(timeFraction) {
+          return 1 - Math.sin(Math.acos(timeFraction));
+        },
+        draw: function (progress) {
+          elem3.style.width = progress * 100 + '%';
+        }
+      });
+    }
+
+    elem4.onclick = function() {
+      animate({
+        duration: 1000,
+        timing: function back(x, timeFraction) {
+          return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x)
+        }.bind(null, 1.5),
+        draw: function(progress) {
+          if (progress < 0) {
+            elem4.style.transform = `translateX(${progress * 10}px)`;
+          }
+          elem4.style.left = `calc(${progress * 100}% - 20px)`;
+        }
+      });
+    }
   </script>
 
 
