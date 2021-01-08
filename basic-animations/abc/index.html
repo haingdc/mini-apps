@@ -7,24 +7,50 @@
     progress {
       width: 5%;
     }
+    body h6 {
+      text-transform: uppercase;
+      font-family: Arial;
+    }
+
   </style>
   <script src="animate.js"></script>
 </head>
 
 <body>
 
+  <button id="elemAll">Click All</button>
 
-  <progress id="elem"></progress>
+  <h6>Linear:</h6>
+  <progress id="elem1"></progress>
+
+  <h6>Quad:</h6>
+  <progress id="elem2"></progress>
 
   <script>
-    elem.onclick = function () {
+    elemAll.onclick = function() {
+      [elem1, elem2].forEach(el => el.click());
+    }
+
+    elem1.onclick = function () {
       animate({
         duration: 1000,
         timing: function (timeFraction) {
           return timeFraction;
         },
+        draw: function linear(progress) {
+          elem1.style.width = progress * 100 + '%';
+        }
+      });
+    };
+
+    elem2.onclick = function () {
+      animate({
+        duration: 1000,
+        timing: function quad(timeFraction) {
+          return Math.pow(timeFraction, 2)
+        },
         draw: function (progress) {
-          elem.style.width = progress * 100 + '%';
+          elem2.style.width = progress * 100 + '%';
         }
       });
     };
