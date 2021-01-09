@@ -15,7 +15,7 @@
       font-family: Arial;
     }
 
-    #elem4 {
+    #elem4, #elem6 {
       width: 20px;
       height: 10px;
       background: burlywood;
@@ -45,10 +45,13 @@
   <h6>Bounce</h6>
   <progress id="elem5"></progress>
 
+  <h6>Elastic</h6>
+  <div id="elem6"></div>
+
   <script>
     var duration = 3000;
     elemAll.onclick = function() {
-      [elem1, elem2, elem3, elem4, elem5].forEach(el => el.click());
+      [elem1, elem2, elem3, elem4, elem5, elem6].forEach(el => el.click());
     }
 
     elem1.onclick = function () {
@@ -114,6 +117,18 @@
         },
         draw: function(progress) {
           elem5.style.width = progress * 100 + '%';
+        }
+      });
+    }
+
+    elem6.onclick = function(){
+      animate({
+        duration,
+        timing: function elastic(x, timeFraction) {
+          return Math.pow(2, 10 * (timeFraction - 1)) * Math.cos(20 * Math.PI * x / 3 * timeFraction)
+        }.bind(null, 1.5),
+        draw: function(progress) {
+          elem6.style.left = `calc(${progress * 100}% - 20px)`;
         }
       });
     }
