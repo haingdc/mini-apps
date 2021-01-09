@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <style>
     body {
-      padding: 30px
+      padding: 30px;
     }
     progress {
       width: 5%;
@@ -20,6 +20,10 @@
       height: 10px;
       background: burlywood;
       position: relative;
+    }
+
+    #outterWrapper6 {
+      overflow: hidden;
     }
 
   </style>
@@ -46,7 +50,11 @@
   <progress id="elem5"></progress>
 
   <h6>Elastic</h6>
-  <div id="elem6"></div>
+  <div id="outterWrapper6">
+    <div id="wrapper6">
+      <div id="elem6"></div>
+    </div>
+  </div>
 
   <script>
     var duration = 3000;
@@ -128,7 +136,7 @@
           return Math.pow(2, 10 * (timeFraction - 1)) * Math.cos(20 * Math.PI * x / 3 * timeFraction)
         }.bind(null, 1.5),
         draw: function(progress) {
-          elem6.style.left = `calc(${progress * 100}% - 20px)`;
+          wrapper6.style.transform = `translateX(calc(${progress * 100}% - 20px))`;
         }
       });
     }
