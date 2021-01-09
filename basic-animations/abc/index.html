@@ -42,14 +42,18 @@
   <h6>Back Shooting</h6>
   <div id="elem4"></div>
 
+  <h6>Bounce</h6>
+  <progress id="elem5"></progress>
+
   <script>
+    var duration = 3000;
     elemAll.onclick = function() {
-      [elem1, elem2, elem3, elem4].forEach(el => el.click());
+      [elem1, elem2, elem3, elem4, elem5].forEach(el => el.click());
     }
 
     elem1.onclick = function () {
       animate({
-        duration: 1000,
+        duration,
         timing: function (timeFraction) {
           return timeFraction;
         },
@@ -61,7 +65,7 @@
 
     elem2.onclick = function () {
       animate({
-        duration: 1000,
+        duration,
         timing: function quad(timeFraction) {
           return Math.pow(timeFraction, 2)
         },
@@ -73,7 +77,7 @@
 
     elem3.onclick = function() {
       animate({
-        duration: 1000,
+        duration,
         timing: function circ(timeFraction) {
           return 1 - Math.sin(Math.acos(timeFraction));
         },
@@ -85,7 +89,7 @@
 
     elem4.onclick = function() {
       animate({
-        duration: 1000,
+        duration,
         timing: function back(x, timeFraction) {
           return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x)
         }.bind(null, 1.5),
@@ -94,6 +98,22 @@
             elem4.style.transform = `translateX(${progress * 10}px)`;
           }
           elem4.style.left = `calc(${progress * 100}% - 20px)`;
+        }
+      });
+    }
+
+    elem5.onclick = function() {
+      animate({
+        duration,
+        timing: function bounce(timeFraction) {
+          for (let a = 0, b = 1, result; 1; a += b, b /= 2) {
+            if (timeFraction >= (7 - 4 * a) / 11) {
+              return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+            }
+          }
+        },
+        draw: function(progress) {
+          elem5.style.width = progress * 100 + '%';
         }
       });
     }
