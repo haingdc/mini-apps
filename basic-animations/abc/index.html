@@ -87,10 +87,31 @@
     }
   </script>
 
+  <h6>Quad (Ease Out)</h6>
+  <progress id="elem8"></progress>
+
+  <script>
+    function quad(timeFraction) {
+      return Math.pow(timeFraction, 2)
+    }
+
+    var quadEaseOut = makeEaseOut(quad);
+
+    elem8.onclick = function() {
+      animate({
+        duration,
+        timing: quadEaseOut,
+        draw: function (progress) {
+          elem8.style.width = progress * 100 + '%';
+        }
+      });
+    }
+  </script>
+
   <script>
     var duration = 3000;
     elemAll.onclick = function() {
-      [elem1, elem2, elem3, elem4, elem5, elem6, elem7].forEach(el => el.click());
+      [elem1, elem2, elem3, elem4, elem5, elem6, elem7, elem8].forEach(el => el.click());
     }
 
     elem1.onclick = function () {
