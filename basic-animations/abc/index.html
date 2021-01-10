@@ -15,7 +15,7 @@
       font-family: Arial;
     }
 
-    #elem4, #elem6 {
+    #elem4, #elem6, #elem9 {
       width: 20px;
       height: 10px;
       background: burlywood;
@@ -108,19 +108,46 @@
     }
   </script>
 
+  <h6>Bounce (Ease-in-out)</h6>
+  <div id="elem9"></div>
+
+  <script>
+    function makeEaseInOut(timing) {
+      return function(timeFraction) {
+        if (timeFraction < .5)
+          return timing(2 * timeFraction) / 2;
+        else
+          return (2 - timing(2 * (1 - timeFraction))) / 2;
+      }
+    }
+    
+    var bounceEaseInOut = makeEaseInOut(bounce);
+
+    elem9.onclick = function() {
+      animate({
+        duration,
+        timing: bounceEaseInOut,
+        draw: function (progress) {
+          elem9.style.left = `calc(${progress * 100}% - 20px)`;
+        }
+      });
+    }
+  </script>
+
+
   <script>
     var duration = 3000;
     elemAll.onclick = function() {
-      [elem1, elem2, elem3, elem4, elem5, elem6, elem7, elem8].forEach(el => el.click());
+      [elem1, elem2, elem3, elem4, elem5, elem6, elem7, elem8, elem9].forEach(el => el.click());
     }
 
     elem1.onclick = function () {
       animate({
         duration,
-        timing: function (timeFraction) {
+        timing: function linear (timeFraction) {
           return timeFraction;
         },
-        draw: function linear(progress) {
+        draw: function(progress) {
           elem1.style.width = progress * 100 + '%';
         }
       });
