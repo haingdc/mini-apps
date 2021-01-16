@@ -1,11 +1,10 @@
-import logo from './logo.svg';
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import './App.css';
 
 export default function App() {
   const [showing, setShowing] = useState(false);
-  const [heightRef, height] = useHeight();
+  const [elemRef, height] = useHeight();
 
   const slideInStyles = useSpring({
     from: { opacity: 0, height: 0 },
@@ -17,8 +16,10 @@ export default function App() {
 
   return (
     <div>
+      <button onClick={() => setShowing(val => !val)}>Toggle</button>
+      <hr />
       <animated.div style={{ ...slideInStyles, overflow: "hidden" }}>
-        <div ref={heightRef}>
+        <div ref={elemRef}>
           This content will fade in and fade out with sliding
 
           Where does it come from?
@@ -29,32 +30,30 @@ export default function App() {
 
         </div>
       </animated.div>
-      <button onClick={() => setShowing(val => !val)}>Toggle</button>
-      <hr />
     </div>
   );
 }
 
 export function useHeight({ on = true /* no value means on */ } = {}) {
-  const ref = useRef();
-  const [height, set] = useState(0);
+  const elemRef = useRef();
+  const [height, setHeight] = useState(0);
   const heightRef = useRef(height);
   const [ro] = useState(
     () =>
       new ResizeObserver(packet => {
-        if (ref.current && heightRef.current !== ref.current.offsetHeight) {
-          heightRef.current = ref.current.offsetHeight;
-          set(ref.current.offsetHeight);
+        if (elemRef.current && heightRef.current !== elemRef.current.offsetHeight) {
+          heightRef.current = elemRef.current.offsetHeight;
+          setHeight(elemRef.current.offsetHeight);
         }
       })
   );
   useLayoutEffect(() => {
-    if (on && ref.current) {
-      set(ref.current.offsetHeight);
-      ro.observe(ref.current, {});
+    if (on && elemRef.current) {
+      setHeight(elemRef.current.offsetHeight);
+      ro.observe(elemRef.current, {});
     }
     return () => ro.disconnect();
-  }, [on, ref.current]);
+  }, [on, elemRef.current]);
 
-  return [ref, height];
+  return [elemRef, height];
 }
