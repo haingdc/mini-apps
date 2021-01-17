@@ -4,6 +4,9 @@ import * as ROUTES from './constants/routes';
 import { IsUserRedirect, ProtectedRoute } from './helpers/routes';
 import { Home, Browse, SignIn, SignUp } from './pages';
 import { useAuthListener } from './hooks';
+import { Route } from 'react-router-dom';
+import Experimental from './pages/experimental';
+import "@reach/dialog/styles.css";
 
 function App() {
   var user = useAuthListener();
@@ -23,6 +26,9 @@ function App() {
         <IsUserRedirect user={user} path={ROUTES.HOME}    loggedInPath={ROUTES.BROWSE} exact >
           <Home />
         </IsUserRedirect>
+        <Route path={ROUTES.EXPERIMENTAL} exact>
+          <Experimental />
+        </Route>
       </Switch>
     </Router>
   );
