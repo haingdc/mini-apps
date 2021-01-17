@@ -1,5 +1,5 @@
 import { useState, useRef, useLayoutEffect, useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, config, useTransition } from 'react-spring';
 import './App.css';
 
 export default function App() {
@@ -7,11 +7,23 @@ export default function App() {
   const [elemRef, height] = useHeight();
 
   const slideInStyles = useSpring({
+    config: { ...config.stiff },
     from: { opacity: 0, height: 0 },
     to: {
       opacity: showing ? 1 : 0,
       height: showing ? height : 0
     }
+  });
+
+  const [list, setList] = useState([]);
+  const newItemRef = useRef(null);
+
+  const listTransitions = useTransition(list, {
+    config: config.gentle,
+    from: { opacity: 0, transform: "translate3d(-25%, 0px, 0px)" },
+    enter: { opacity: 1, transform: "translate3d(0%, 0px, 0px)" },
+    leave: { opacity: 0, height: 0, transform: "translate3d(25%, 0px, 0px)" },
+    keys: list.map((item, index) => item.id)
   });
 
   return (
@@ -30,6 +42,36 @@ export default function App() {
 
         </div>
       </animated.div>
+
+      <hr />
+      <h2>Transition Demo</h2>
+
+      <input ref={newItemRef} />
+      <button
+        onClick={() =>
+          setList(list => {
+            var newItem = ({
+              id: generateId(),
+              value: newItemRef.current.value || "<empty>",
+            });
+            return list.concat(newItem);
+          })
+        }
+      >
+        Add item
+      </button>
+      <button
+        onClick={() =>
+          setList(list => list.filter((x, i) => i < list.length - 1))
+        }
+      >
+        Remove last item
+      </button>
+      <ul>
+        {listTransitions((styles, item) => (
+          <animated.li id={item.id} style={styles}>{item.value}</animated.li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -41,6 +83,7 @@ export function useHeight({ on = true /* no value means on */ } = {}) {
   const [ro] = useState(
     () =>
       new ResizeObserver(packet => {
+        console.trace();
         if (elemRef.current && heightRef.current !== elemRef.current.offsetHeight) {
           heightRef.current = elemRef.current.offsetHeight;
           setHeight(elemRef.current.offsetHeight);
@@ -56,4 +99,10 @@ export function useHeight({ on = true /* no value means on */ } = {}) {
   }, [on, elemRef.current]);
 
   return [elemRef, height];
+}
+
+function generateId() {
+  return Array.from({ length: 10 }, () =>
+    String.fromCharCode(65 + Math.floor(Math.random() * 26))
+  ).join("");
 }
