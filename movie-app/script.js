@@ -7,6 +7,13 @@ var form = document.getElementById('form');
 getMovies(APIURL);
 var search = document.getElementById('search');
 
+TweenMax.from("#search", 1, {
+  delay: 0.7,
+  opacity: 0,
+  x: -20,
+  ease: Expo.easeInOut
+})
+
 async function getMovies(url) {
   var resp = await fetch(url);
   var respData = await resp.json();
@@ -34,6 +41,7 @@ form.addEventListener('submit', (e) => {
 
 function showMovies(movies) {
   main.innerHTML = '';
+  var list = [];
   movies.forEach(movie => {
     var { poster_path, title, vote_average, overview } = movie;
     var movieEl = document.createElement('div');
@@ -49,6 +57,13 @@ function showMovies(movies) {
         <p>${overview}</p>
       </div>
     `;
+    list.push(movieEl)
     main.appendChild(movieEl);
   });
+
+  TweenMax.staggerFrom(list, 2, {
+    opacity: 0,
+    x: -20,
+    ease: Power3.easeInOut
+  }, 0.08)
 }
