@@ -12,7 +12,15 @@ TweenMax.from("#search", 1, {
   opacity: 0,
   x: -20,
   ease: Expo.easeInOut
-})
+});
+
+
+var appendChildToMain = appendChild(R.__, main);
+
+var appendNewMovie = R.pipe(
+  createNewElement,
+  appendChildToMain
+);
 
 async function getMovies(url) {
   var resp = await fetch(url);
@@ -40,30 +48,14 @@ form.addEventListener('submit', (e) => {
 });
 
 function showMovies(movies) {
-  main.innerHTML = '';
-  var list = [];
-  movies.forEach(movie => {
-    var { poster_path, title, vote_average, overview } = movie;
-    var movieEl = document.createElement('div');
-    movieEl.classList.add('movie');
-    movieEl.innerHTML = `
-      <img src="${IMGPATH + poster_path}" />
-      <div class="movie-info">
-        <h3>${title}</h3>
-        <span class="${getClassByRate(vote_average)}">${vote_average}</span>
-      </div>
-      <div class="overview">
-        <h4>Overview:</h4>
-        <p>${overview}</p>
-      </div>
-    `;
-    list.push(movieEl)
-    main.appendChild(movieEl);
-  });
-
-  TweenMax.staggerFrom(list, 2, {
-    opacity: 0,
-    x: -20,
-    ease: Power3.easeInOut
-  }, 0.08)
+  innerHTML('', main);
+  R.pipe(
+    R.map(appendNewMovie),
+    R.curryN(4, staggerFrom)(R.__, 0.9, {
+      opacity: 0,
+      x: -20,
+      ease: Power3.easeInOut
+    }, 0.08)
+  )(movies);
 }
+
