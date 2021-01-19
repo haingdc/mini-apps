@@ -125,11 +125,13 @@ async function fetchFavMeals() {
   favoriteMeals.innerHTML = '';
   var mealIds = getMealsLS();
 
-  for(let i=0; i<mealIds.length; i++) {
-    var mealId = mealIds[i];
-    meal = await getMealById(mealId);
-    getMealFav(meal).then(appendMealFav);
-  }
+  var mealPromises = R.map(getMealById)(mealIds)
+  Promise.all(mealPromises)
+    .then(meals => {
+      R.map(meal => {
+        getMealFav(meal).then(appendMealFav);
+      })(meals)
+    });
 }
 
 function createMealFav(mealData) {
