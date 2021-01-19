@@ -122,12 +122,12 @@ function clickLike(data) {
 }
 
 async function fetchFavMeals() {
-  favoriteMeals.innerHTML = '';
   var mealIds = getMealsLS();
 
   var mealPromises = R.map(getMealById)(mealIds)
   Promise.all(mealPromises)
-    .then(meals => {
+  .then(meals => {
+      favoriteMeals.innerHTML = '';
       R.map(meal => {
         getMealFav(meal).then(appendMealFav);
       })(meals)
