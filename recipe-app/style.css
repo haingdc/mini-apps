@@ -23,7 +23,6 @@ body {
     #ece9e6
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: FLEX;
-  align-items: center;
   justify-content: center;
   min-height: 100vh;
 }
@@ -34,6 +33,10 @@ body {
   box-shadow: 0 0 10px 2px #3333331a;
   overflow: hidden;
   border-radius: 3px;
+}
+
+.mobile-container h3 {
+  margin-bottom: 0;
 }
 
 img {
@@ -74,7 +77,8 @@ header button {
   flex-wrap: nowrap;
   overflow: auto hidden;
   list-style-type: none;
-  padding: 0;
+  padding: 32px 0 16px;
+  margin: 0;
 }
 
 .fav-meals.active {

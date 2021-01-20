@@ -126,11 +126,23 @@ async function fetchFavMeals() {
 
   var mealPromises = R.map(getMealById)(mealIds)
   Promise.all(mealPromises)
-  .then(meals => {
+    .then(meals => {
       favoriteMeals.innerHTML = '';
-      R.map(meal => {
-        getMealFav(meal).then(appendMealFav);
-      })(meals)
+      var mealElemPromises = R.map(meal => {
+        return getMealFav(meal).then(appendMealFav);
+      })(meals);
+
+      Promise.all(mealElemPromises)
+        .then(mealElems => {
+          anime({
+            targets: mealElems,
+            translateY: [200, 0],
+            duration: 1200,
+            delay: (el, i) => {
+              return 100 * i;
+            },
+          })
+        });
     });
 }
 
