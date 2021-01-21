@@ -200,7 +200,18 @@ searchBtn.addEventListener('click', async function searchMeal() {
 });
 
 popupCloseBtn.addEventListener('click', () => {
-  mealPopup.classList.add('hidden');
+  anime({
+    targets: mealPopup,
+    translateX: [0, 300],
+    opacity: [1, 0],
+    easing: 'easeInOutQuad',
+    duration: 250,
+    complete: function(anim) {
+      mealPopup.style.transform = ''
+      mealPopup.style.opacity = ''
+      mealPopup.classList.add('hidden');
+    }
+  });
 });
 
 function showMealInfo(mealData) {
@@ -209,6 +220,14 @@ function showMealInfo(mealData) {
   var mealEl = createMealInfo(mealData) ;
   mealInfoEl.appendChild(mealEl);
   mealPopup.classList.remove('hidden');
+  anime({
+    targets: mealPopup,
+    translateX: [300, 0],
+    opacity: [0.5, 1],
+    easing: 'easeOutExpo',
+    duration: 700,
+    delay: 0,
+  })
 }
 
 function createMealInfo(mealData) {

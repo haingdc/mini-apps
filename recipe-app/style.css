@@ -6,6 +6,7 @@
 
 :root {
   --primary-color: #fff;
+  --second-color : #bee8ff;
 }
 
 body {
@@ -67,7 +68,7 @@ header button {
 }
 
 .fav-container {
-  background-color: rgb(233, 199,255);
+  background-color: var(--second-color);
   padding: 0.25rem 1rem;
   text-align: center;
 }
