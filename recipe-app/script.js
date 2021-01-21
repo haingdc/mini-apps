@@ -123,6 +123,10 @@ function clickLike(data) {
 
 async function fetchFavMeals() {
   var mealIds = getMealsLS();
+  if (!mealIds.length) {
+    favoriteMeals.innerText = 'There is no favorite meal.'
+    return;
+  }
 
   var mealPromises = R.map(getMealById)(mealIds)
   Promise.all(mealPromises)
@@ -261,11 +265,6 @@ function createMealInfo(mealData) {
   return mealEl;
 }
 
-
-fetchFavMeals();
-getRandomMealElement().then(appendNewMeal);
-
-
 let isDown = false;
 let startX;
 let scrollLeft;
@@ -293,3 +292,6 @@ favoriteMeals.addEventListener('mousemove', function todo(evt) {
   var walk = ( x - startX ) * 2.34;
   favoriteMeals.scrollLeft = scrollLeft - walk;
 });
+
+fetchFavMeals();
+getRandomMealElement().then(appendNewMeal);
