@@ -104,7 +104,7 @@ main {
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: var(--fifth-color);
+  background-color: hsl(205.5, 38.8%, 16.7%);
   padding: 2rem 2rem 0;
   transform: translateY(100%);
   transition: transform 0.3s ease-in;
@@ -112,12 +112,29 @@ main {
   overflow: auto;
 }
 
+.overview:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+  filter: blur(40px);
+  z-index: -1;
+}
+
 .overview h4 {
+  color: hsl(0, 7%, 89.2%);
+  font-size: 20px;
+  line-height: 1;
   margin: 0;
 }
 
 .overview p {
   padding-bottom: 2rem;
+  font-size: 14px;
+  color: #b6abab;
 }
 
 .movie:hover .overview {
