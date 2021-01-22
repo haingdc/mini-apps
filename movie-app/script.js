@@ -50,12 +50,41 @@ form.addEventListener('submit', (e) => {
 function showMovies(movies) {
   innerHTML('', main);
   R.pipe(
-    R.map(appendNewMovie),
-    R.curryN(4, staggerFrom)(R.__, 0.9, {
-      opacity: 0,
-      x: -20,
-      ease: Power3.easeInOut
-    }, 0.08)
+    R.map(appendNewMovie)
+    // ,R.curryN(4, staggerFrom)(R.__, 0.9, {
+    //   opacity: 0,
+    //   x: -20,
+    //   ease: Power3.easeInOut
+    // }, 0.08)
   )(movies);
+
+  var elements = document.querySelectorAll('.movie');
+
+  io.disconnect();
+  io = createIntersectionObserver()
+  elements.forEach(n => {
+    io.observe(n);
+  });
 }
 
+function createIntersectionObserver() {
+  return new IntersectionObserver(
+    entries => {
+  //     console.log(entries);
+
+      var intersectElements = entries.filter(e => e.isIntersecting).map(n => n.target);
+
+      console.log(intersectElements)
+      R.curryN(4, staggerFrom)(R.__, 0.9, {
+        opacity: 0,
+        x: -20,
+        ease: Power3.easeInOut
+      }, 0.08)(intersectElements)
+    },
+    {
+      /* Using default options. Details below */
+    }
+  );
+}
+
+var io = createIntersectionObserver();
