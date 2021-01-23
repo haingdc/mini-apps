@@ -27,6 +27,37 @@ function animate() {
     ease: Expo.easeInOut
   })
 
+  TweenMax.fromTo('.subtitle', {
+    x: -20,
+    opacity: 0,
+  }, {
+    duration: 1,
+    delay: 2.8,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  })
+
+  TweenMax.fromTo('.title', {
+    width: 0,
+  }, {
+    duration: 1,
+    delay: 2.2,
+    width: '100%',
+    ease: Expo.easeInOut
+  })
+
+  TweenMax.fromTo('.desc', {
+    x: -20,
+    opacity: 0,
+  }, {
+    duration: 1,
+    delay: 2.8,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  })
+
   TweenMax.fromTo('.first', {
     x: 0,
   }, {
