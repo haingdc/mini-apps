@@ -27,6 +27,15 @@ function animate() {
     ease: Expo.easeInOut
   })
 
+  TweenMax.fromTo('.border-bottom', {
+    width: 0
+  }, {
+    duration: 1,
+    delay: 1.4,
+    width: '100%',
+    ease: Expo.easeInOut
+  })
+
   TweenMax.fromTo('.subtitle', {
     x: -20,
     opacity: 0,
@@ -55,6 +64,26 @@ function animate() {
     delay: 2.8,
     opacity: 1,
     x: 0,
+    ease: Expo.easeInOut
+  })
+
+  TweenMax.fromTo('.readmore', {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: 1,
+    delay: 2.8,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  })
+
+  TweenMax.fromTo('.slider', {
+    opacity: 0,
+  }, {
+    duration: 1,
+    delay: 3,
+    opacity: 1,
     ease: Expo.easeInOut
   })
 
