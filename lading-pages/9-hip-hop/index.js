@@ -58,6 +58,33 @@ function animate() {
     ease: Expo.easeInOut
   })
 
+  TweenMax.fromTo('.img-1', {
+    width: 0,
+  }, {
+    duration: 1,
+    delay: 2.2,
+    width: '450px',
+    ease: Expo.easeInOut
+  })
+
+  TweenMax.fromTo('.img-2', {
+    width: 0,
+  }, {
+    duration: 1,
+    delay: 2.2,
+    width: '300px',
+    ease: Expo.easeInOut
+  })
+
+  TweenMax.fromTo('.img-3', {
+    width: 0,
+  }, {
+    duration: 1,
+    delay: 2.2,
+    width: '300px',
+    ease: Expo.easeInOut
+  })
+
   TweenMax.fromTo('.first', {
     x: 0,
   }, {
