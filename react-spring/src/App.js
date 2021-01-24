@@ -5,7 +5,7 @@ import './App.css';
 export default function App() {
   const [showing, setShowing] = useState(false);
   const [on, setOn] = useState(false);
-  const [elemRef, height] = useHeight(on);
+  const [elemRef, height] = useHeight();
 
   const slideInStyles = useSpring({
     config: { ...config.stiff },
