@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { useSpring, animated, config, useTransition } from 'react-spring';
 import './App.css';
 
@@ -97,10 +97,15 @@ export function useHeight({ on = true /* no value means on */ } = {}) {
     return function cleanUp() {
       ro.disconnect();
     };
-  }, [on, elemRef.current]);
+  }, [on/* , elemRef.current */, ro]);
 
   return [elemRef, height];
 }
+
+
+
+
+
 
 function generateId() {
   return Array.from({ length: 10 }, () =>
