@@ -99,7 +99,6 @@ export default function App() {
   );
 }
 
-window.todoList = [];
 export function useHeight({ on = true /* no value means on */ } = {}) {
   const elemRef = useRef();
   const [height, setHeight] = useState(0);
@@ -113,7 +112,6 @@ export function useHeight({ on = true /* no value means on */ } = {}) {
     });
     return roInner;
   });
-  window.todoList.push(ro)
   useLayoutEffect(function layout() {
     if (on && elemRef.current) {
       setHeight(elemRef.current.offsetHeight);
