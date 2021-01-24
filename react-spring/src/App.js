@@ -80,22 +80,23 @@ export function useHeight({ on = true /* no value means on */ } = {}) {
   const elemRef = useRef();
   const [height, setHeight] = useState(0);
   const heightRef = useRef(height);
-  const [ro] = useState(
-    () =>
-      new ResizeObserver(packet => {
-        console.trace();
-        if (elemRef.current && heightRef.current !== elemRef.current.offsetHeight) {
-          heightRef.current = elemRef.current.offsetHeight;
-          setHeight(elemRef.current.offsetHeight);
-        }
-      })
-  );
-  useLayoutEffect(() => {
+  const [ro] = useState(function createRO() {
+    var roInner = new ResizeObserver(function onResize(entries) {
+      if (elemRef.current && elemRef.current.offsetHeight !== heightRef.current) {
+        heightRef.current = elemRef.current.offsetHeight;
+        setHeight(elemRef.current.offsetHeight);
+      }
+    });
+    return roInner;
+  });
+  useLayoutEffect(function layout() {
     if (on && elemRef.current) {
       setHeight(elemRef.current.offsetHeight);
       ro.observe(elemRef.current, {});
     }
-    return () => ro.disconnect();
+    return function cleanUp() {
+      ro.disconnect();
+    };
   }, [on, elemRef.current]);
 
   return [elemRef, height];
