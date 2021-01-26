@@ -39,26 +39,38 @@ function animate() {
     ease: Expo.easeInOut
   });
 
-  // TweenMax.from(".categories", 1, {
-  //   delay: 1.4,
-  //   opacity: 0,
-  //   x: -150,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".categories", {
+    opacity: 0,
+    x: -150,
+  }, {
+    duration: 1,
+    delay: 1.4,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
-  // TweenMax.from(".search", .8, {
-  //   delay: 1.6,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".search", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: .8,
+    delay: 1.6,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
-  // TweenMax.from(".bag", 1, {
-  //   delay: 1.6,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".bag", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: 1,
+    delay: 1.6,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
   // TweenMax.staggerFrom(".media ul li", 1, {
   //   delay: 2,
