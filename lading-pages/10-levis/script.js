@@ -72,19 +72,26 @@ function animate() {
     ease: Expo.easeInOut
   });
 
-  // TweenMax.staggerFrom(".media ul li", 1, {
-  //   delay: 2,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Power3.easeInOut
-  // }, 0.08);
+  TweenMax.staggerFromTo(".media ul li", 1, {
+    opacity: 0,
+    x: -20,
+  }, {
+    delay: 2,
+    opacity: 1,
+    x: 0,
+    ease: Power3.easeInOut
+  }, 0.08);
 
-  // TweenMax.from(".size", 1, {
-  //   delay: 1.8,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".size", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: 1,
+    delay: 1.8,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
   // TweenMax.staggerFrom(".size ul li", .3, {
   //   delay: 2,
