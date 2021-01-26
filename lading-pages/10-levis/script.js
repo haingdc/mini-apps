@@ -93,40 +93,58 @@ function animate() {
     ease: Expo.easeInOut
   });
 
-  // TweenMax.staggerFrom(".size ul li", .3, {
-  //   delay: 2,
-  //   opacity: 0,
-  //   y: 20,
-  //   ease: Power3.easeInOut
-  // }, 0.08);
+  TweenMax.staggerFromTo(".size ul li", .3, {
+    opacity: 0,
+    y: 20,
+  }, {
+    delay: 2,
+    opacity: 1,
+    y: 0,
+    ease: Power3.easeInOut
+  }, 0.08);
 
-  // TweenMax.staggerFrom(".dot", 1, {
-  //   delay: 2.4,
-  //   opacity: 0,
-  //   x: 20,
-  //   ease: Power3.easeInOut
-  // }, 0.08);
+  TweenMax.staggerFromTo(".dot", 1, {
+    opacity: 0,
+    x: 20,
+  }, {
+    delay: 2.4,
+    opacity: 1,
+    x: 0,
+    ease: Power3.easeInOut
+  }, 0.08);
 
-  // TweenMax.from(".bottomnav", 1, {
-  //   delay: 2.4,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".bottomnav", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: 1,
+    delay: 2.4,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
-  // TweenMax.from(".bottomnav ul li:first-child", .5, {
-  //   delay: 2.4,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".bottomnav ul li:first-child", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: .5,
+    delay: 2.4,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
-  // TweenMax.from(".bottomnav ul li:last-child", .6, {
-  //   delay: 2.4,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo;(".bottomnav ul li:last-child", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: .6,
+    delay: 2.4,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
   // TweenMax.from(".product-img", 3, {
   //   delay: 2,

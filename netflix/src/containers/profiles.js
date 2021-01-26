@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
-import { Header, Profiles } from '../components';
+import { Frog, Header, Profiles } from '../components';
 
 export function SelectProfileContainer(props) {
   var { user, setProfile } = props;
@@ -9,7 +9,11 @@ export function SelectProfileContainer(props) {
     <>
       <Header bg={false}>
         <Header.Frame>
-          <Header.Logo to={ROUTES.HOME} src={logo} alt="Netflix" />
+          <Header.Group>
+            <Header.Logo to={ROUTES.HOME} src={logo} alt="Netflix" />
+            <Header.TextLink> <Frog.StartButton /> </Header.TextLink>
+            <Header.TextLink> <Frog.PauseButton /> </Header.TextLink>
+          </Header.Group>
         </Header.Frame>
       </Header>
       <Profiles>

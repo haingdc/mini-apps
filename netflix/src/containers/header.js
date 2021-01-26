@@ -4,7 +4,7 @@ import * as ROUTES from '../constants/routes';
 import logo from '../logo.svg';
 
 export function HeaderContainer(props) {
-  var { children, ...rest } = props;
+  var { children } = props;
   return (
     <Header>
       <Header.Frame>

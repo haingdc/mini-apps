@@ -87,7 +87,7 @@ const SearchBooksContent = props => {
     },
     leave: {
       opacity: 0,
-      position: "absolute",
+      // position: "absolute",
       transform: "translate3d(90%, 0px, 0px)"
     }
   });

@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import { useTransition, config, animated } from "react-spring";
 
 import { DialogOverlay, DialogContent } from "@reach/dialog";
@@ -27,17 +27,17 @@ export const StandardModalHeader = props => {
 const AnimatedDialogOverlay = animated(DialogOverlay);
 const AnimatedDialogContent = animated(DialogContent);
 
-function Modal (props) {
+export default function Modal (props) {
   let { isOpen, onHide, headerCaption, focusRef = null, children } = props;
 
-  const modalTransition = useTransition(!!isOpen, {
-    config: isOpen ? { ...config.stiff } : { duration: 150 },
+  const transitions = useTransition(!!isOpen, {
+    config: config.stiff,
     from: { opacity: 0, transform: `translate3d(0px, -10px, 0px)` },
     enter: { opacity: 1, transform: `translate3d(0px, 0px, 0px)` },
     leave: { opacity: 0, transform: `translate3d(0px, 10px, 0px)` }
   });
 
-  return modalTransition(
+  return transitions(
     (styles, isOpen) =>
       isOpen && (
         <AnimatedDialogOverlay
@@ -48,6 +48,7 @@ function Modal (props) {
           style={{ opacity: styles.opacity }}
         >
           <AnimatedDialogContent
+            aria-labelledby="test-label"
             style={{
               border: "4px solid hsla(0, 0%, 0%, 0.5)",
               borderRadius: 10,
@@ -66,5 +67,3 @@ function Modal (props) {
       )
   );
 };
-
-export default Modal;
