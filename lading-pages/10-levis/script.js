@@ -17,19 +17,27 @@ function animate() {
     ease: Expo.easeInOut
   })
 
-  // TweenMax.from(".logo", 1, {
-  //   delay: 1,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // })
+  TweenMax.fromTo(".logo", {
+    opacity: 0,
+    x: -20,
+  }, {
+    duration: 1,
+    delay: 1,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  })
 
-  // TweenMax.from(".menu", 1, {
-  //   delay: 1.2,
-  //   opacity: 0,
-  //   x: -20,
-  //   ease: Expo.easeInOut
-  // });
+  TweenMax.fromTo(".menu", {
+    opacity: 0,
+    x: -20
+  }, {
+    duration: 1,
+    delay: 1.2,
+    opacity: 1,
+    x: 0,
+    ease: Expo.easeInOut
+  });
 
   // TweenMax.from(".categories", 1, {
   //   delay: 1.4,
