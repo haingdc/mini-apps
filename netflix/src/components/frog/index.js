@@ -4,25 +4,17 @@ import { Container } from './styles/frog'
 export var FrogContext = createContext();
 
 export default function Frog(props) {
-  var { mode, animationStartTime, setMode } = useContext(FrogContext);
+  var { mode, animationStartTime } = useContext(FrogContext);
   var [left, setLeft] = useState(55);
   var [top, setTop] = useState(205);
   var [backgroundPosition, setBackgroundPosition] = useState(0);
-  var [stamina, setStamina] = useState(200);
 
   useLayoutEffect(() => {
     if (mode === 'play') {
       var timerId = window.requestAnimationFrame(animate);
 
       function animate(time) {
-        if (stamina < 0) {
-          window.cancelAnimationFrame(timerId);
-          setMode('stop');
-          setStamina(1000);
-          return;
-        }
-        setStamina(u => u - 1);
-        var left = (55 + (time - animationStartTime)/10 % 600);
+        var left = (55 + (time - animationStartTime)/10 % 300);
         var top = (205 - 10 * ((time - animationStartTime)/100 % 10) + ((time - animationStartTime)/100 % 10) * ((time - animationStartTime)/100 % 10) );
         var t = (time - animationStartTime)/10 % 100;
         var backgroundPosition = - Math.floor(t / (100/2)) * 60;
