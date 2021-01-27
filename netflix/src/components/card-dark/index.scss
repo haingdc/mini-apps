@@ -1,0 +1,46 @@
+.card-dark {
+  background: #3d3c40;
+  display: inline-block;
+  border-radius: 15px;
+  padding: 20px;
+  font-size: 10px;
+  line-height: 1;
+  width: 300px;
+  &__label {
+    font-size: 16px;
+    color: #9b98a6;
+    &--main {
+      color: white;
+      font-size: 20px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+  }
+  &__title {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #4f4e52;
+    width: 100%;
+    color: hsl(252.9, 7.3%, 70%);
+    caret-color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding: 9px 0;
+    &::placeholder {
+      color: hsl(252.9, 7.3%, 60%);
+    }
+  }
+  &__row {
+    display: flex;
+    &__label {
+      flex: 0 0 50px;
+    }
+    &__colors {
+      flex: 1 1 auto;
+      input[name=color] {
+        background-color: red;
+      }
+    }
+  }
+}

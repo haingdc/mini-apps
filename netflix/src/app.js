@@ -1,3 +1,4 @@
+import "@reach/dialog/styles.css";
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
@@ -6,7 +7,7 @@ import { Home, Browse, SignIn, SignUp } from './pages';
 import { useAuthListener } from './hooks';
 import { Route } from 'react-router-dom';
 import Experimental from './pages/experimental';
-import "@reach/dialog/styles.css";
+import CardDark from './components/card-dark';
 
 function App() {
   var user = useAuthListener();
@@ -28,6 +29,9 @@ function App() {
         </IsUserRedirect>
         <Route path={ROUTES.EXPERIMENTAL} exact>
           <Experimental />
+        </Route>
+        <Route path="/card" exact>
+          <CardDark></CardDark>
         </Route>
       </Switch>
     </Router>
