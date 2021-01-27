@@ -1,0 +1,28 @@
+body {
+  background-color: rgba(240, 242, 245, 0.74);
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.panel {
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 40px;
+  font-size: 16px;
+  line-height: 19px;
+  display: inline-flex;
+  gap: 42px;
+  flex-wrap: wrap;
+  box-shadow: 0px 16px 35px #F55951;
+}
+
+.panel__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.panel__item img {
+  width: 36px;
+}
