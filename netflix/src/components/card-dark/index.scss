@@ -147,4 +147,9 @@ input[name=color] {
 
 .checkmark__ico {
   font-size: 15px;
+  opacity: 0;
+}
+
+.container input:checked ~ .checkmark .checkmark__ico {
+  opacity: 1;
 }

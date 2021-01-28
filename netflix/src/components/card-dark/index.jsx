@@ -17,23 +17,33 @@ export default function CardDark() {
           </label>
           <label className="container">
             <input name="color" type="radio" value="orange"/>
-            <span className="checkmark"></span>
+            <span className="checkmark">
+              <IoCheckmarkOutline className="checkmark__ico" />
+            </span>
           </label>
           <label className="container">
             <input name="color" type="radio" value="yellow"/>
-            <span className="checkmark"></span>
+            <span className="checkmark">
+              <IoCheckmarkOutline className="checkmark__ico" />
+            </span>
           </label>
           <label className="container">
             <input name="color" type="radio" value="green"/>
-            <span className="checkmark"></span>
+            <span className="checkmark">
+              <IoCheckmarkOutline className="checkmark__ico" />
+            </span>
           </label>
           <label className="container">
             <input name="color" type="radio" value="blue"/>
-            <span className="checkmark"></span>
+            <span className="checkmark">
+              <IoCheckmarkOutline className="checkmark__ico" />
+            </span>
           </label>
           <label className="container">
             <input name="color" type="radio" value="purple"/>
-            <span className="checkmark"></span>
+            <span className="checkmark">
+              <IoCheckmarkOutline className="checkmark__ico" />
+            </span>
           </label>
         </div>
       </div>
