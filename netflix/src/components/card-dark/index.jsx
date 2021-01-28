@@ -7,12 +7,30 @@ export default function CardDark() {
       <div className="card-dark__row">
         <div className="card-dark__label card-dark__row__label">Color</div>
         <div className="card-dark__row__colors">
-          <input name="color" type="radio" value="red" />
-          <input name="color" type="radio" value="orange"/>
-          <input name="color" type="radio" value="yellow"/>
-          <input name="color" type="radio" value="green"/>
-          <input name="color" type="radio" value="blue"/>
-          <input name="color" type="radio" value="purple"/>
+          <label class="container">
+            <input name="color" type="radio" value="red" />
+            <span class="checkmark"></span>
+          </label>
+          <label className="container">
+            <input name="color" type="radio" value="orange"/>
+            <span className="checkmark"></span>
+          </label>
+          <label className="container">
+            <input name="color" type="radio" value="yellow"/>
+            <span className="checkmark"></span>
+          </label>
+          <label className="container">
+            <input name="color" type="radio" value="green"/>
+            <span className="checkmark"></span>
+          </label>
+          <label className="container">
+            <input name="color" type="radio" value="blue"/>
+            <span className="checkmark"></span>
+          </label>
+          <label className="container">
+            <input name="color" type="radio" value="purple"/>
+            <span className="checkmark"></span>
+          </label>
         </div>
       </div>
     </div>
