@@ -1,4 +1,6 @@
 import './index.scss';
+import { IoCheckmarkOutline } from 'react-icons/io5';
+
 export default function CardDark() {
   return (
     <div className="card-dark">
@@ -7,9 +9,11 @@ export default function CardDark() {
       <div className="card-dark__row">
         <div className="card-dark__label card-dark__row__label">Color</div>
         <div className="card-dark__row__colors">
-          <label class="container">
+          <label className="container">
             <input name="color" type="radio" value="red" />
-            <span class="checkmark"></span>
+            <span className="checkmark">
+              <IoCheckmarkOutline className="checkmark__ico" />
+            </span>
           </label>
           <label className="container">
             <input name="color" type="radio" value="orange"/>

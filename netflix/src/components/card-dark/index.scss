@@ -64,22 +64,46 @@ input[name=color] {
 }
 
 
+
 .checkmark {
+  --radio-background: #eee;
   position: absolute;
   top: 0;
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+  background-color: var(--radio-background);
   border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container:nth-child(1) & {
+    --radio-background: #f9371c;
+  }
+  .container:nth-child(2) & {
+    --radio-background: #f97c1c;
+  }
+  .container:nth-child(3) & {
+    --radio-background: #f9c81c;
+  }
+  .container:nth-child(4) & {
+    --radio-background: #41d0b6;
+  }
+  .container:nth-child(5) & {
+    --radio-background: #2cadf6;
+  }
+  .container:nth-child(6) & {
+    --radio-background: #6562fc;
+  }
 }
 
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  // background-color: #ccc;
 }
 
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  // background-color: #2196F3;
 }
 
 .checkmark:after {
@@ -93,10 +117,34 @@ input[name=color] {
 }
 
 .container .checkmark:after {
-  top: 9px;
-	left: 9px;
-	width: 8px;
-	height: 8px;
+  --border-color: hsl(206.6, 49.7%, 39.1%);
 	border-radius: 50%;
-	background: white;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: 3px solid var(--border-color);
+}
+
+.container:nth-child(1) .checkmark:after {
+  --border-color: hsl(13.3, 100%, 33.13%)
+;
+}
+.container:nth-child(2) .checkmark:after {
+  --border-color: hsl(26.1, 64.8%, 40.3%);
+}
+.container:nth-child(3) .checkmark:after {
+  --border-color: hsl(26.7, 34.8%, 44.3%);
+}
+.container:nth-child(4) .checkmark:after {
+  --border-color: hsl(160, 30%, 40%);
+}
+.container:nth-child(5) .checkmark:after {
+  --border-color: hsl(206.6, 49.7%, 39.1%);
+}
+.container:nth-child(6) .checkmark:after {
+  --border-color: hsl(248, 40%, 46%);
+}
+
+.checkmark__ico {
+  font-size: 15px;
 }
