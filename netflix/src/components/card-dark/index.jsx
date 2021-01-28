@@ -33,6 +33,25 @@ export default function CardDark() {
           </label>
         </div>
       </div>
+      <div className="card-dark__row">
+        <div className="card-dark__label card-dark__row__label">Date</div>
+        <div className="card-dark__row__date">
+          <input type="date"/>
+        </div>
+        <div className="card-dark__row"></div>
+      </div>
+      <div className="card-dark__row">
+        <div className="card-dark__row__start">
+          <input type="time"/>
+        </div>
+        <div className="card-dark__row__end">
+          <input type="time"/>
+        </div>
+      </div>
+      <div className="card-dark__row">
+        <button>Cancel</button>
+        <button>Create</button>
+      </div>
     </div>
   );
 }
