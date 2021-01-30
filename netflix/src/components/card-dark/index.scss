@@ -1,11 +1,17 @@
-.card-dark {
+:root {
+  --color-white-1: #fff;
+}
+.card {
   background: #3d3c40;
   display: inline-block;
   border-radius: 15px;
-  padding: 20px;
   font-size: 10px;
   line-height: 1;
-  width: 300px;
+  width: 328px;
+  margin-left: 50px;
+  margin-top: 50px;
+  overflow: hidden;
+
   &__label {
     font-size: 16px;
     color: #9b98a6;
@@ -13,7 +19,8 @@
       color: white;
       font-size: 20px;
       line-height: 1.7;
-      margin-bottom: 20px;
+      margin-bottom: 13px;
+      padding: 20px 20px 0;
     }
   }
   &__title {
@@ -31,8 +38,36 @@
       color: hsl(252.9, 7.3%, 60%);
     }
   }
+  &__date {
+    flex: 1 1 auto;
+    input {
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      height: 32px;
+      background-color: #313033;
+      color: #fff;
+      padding-left: 10px;
+    }
+  }
+  &__time {
+    flex: 1 1 50%;
+    input {
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      height: 32px;
+      padding-left: 10px;
+      background-color: #4d4b52;
+      color: #fff;
+    }
+  }
   &__row {
     display: flex;
+    margin-top: 10px;
+    &:first-child {
+      margin-top: 0;;
+    }
     &__label {
       flex: 0 0 50px;
     }
@@ -41,6 +76,40 @@
       input[name=color] {
         background-color: red;
       }
+    }
+    &--time {
+      gap: 5px;
+    }
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  &__footer {
+    background-color: #313033;
+    padding: 20px;
+    > div {
+      justify-content: flex-end;
+    }
+  }
+  .buttons-group {
+    display: flex;
+    gap: 8px;
+  }
+  &__button {
+    --background-color: #6562fc;
+    --color: #fff;
+    background-color: var(--background-color);
+    color: var(--color);
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 10px 19px;
+    font-weight: 500;
+    &--cancel {
+      --background-color: #3e3d40;
+      --color: #9b98a6;
     }
   }
 }
