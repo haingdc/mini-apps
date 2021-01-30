@@ -1,12 +1,16 @@
 import { IoCheckmarkOutline } from 'react-icons/io5';
 import { DialogOverlay, DialogContent } from "@reach/dialog";
+import { CgNotes } from 'react-icons/cg'
 import "./styles/reach-modal-overrides.scss";
 import './index.scss';
 
 export default function CardDark() {
   return (
     <div className="card">
-      <div className="card__label--main">Create an Event</div>
+      <div className="card__header">
+        <div className="card__label--main">Create an Event</div>
+        <CgNotes style={{ color: '#8b8894', fontSize: '19px' }} />
+      </div>
       <div className="card__body">
         <div className="card__row">
           <input type="text" className="card__title" placeholder="Title" value="Drink a capuchino" />
@@ -82,7 +86,12 @@ export default function CardDark() {
 }
 
 export function Modal(props) {
-  var { isOpen, onHide, style = { maxWidth: '328px', padding: 0, borderRadius: 15 } } = props;
+  var { isOpen, onHide, style = {
+    maxWidth: '328px',
+    padding: 0,
+    borderRadius: 15,
+    boxShadow: '-1px 2px 4px rgba(0,0,0,0.2), 1px -1px 4px rgba(0,0,0,0.2)',
+  } } = props;
 
   return (
     isOpen && (
