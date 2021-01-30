@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
 import { useTransition, config, animated } from "react-spring";
-
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 
+import { useHeight } from '../../utils/useHeight';
 import "./styles/reach-modal-overrides.scss";
 
 export const StandardModalHeader = props => {

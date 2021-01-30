@@ -1,5 +1,7 @@
-import './index.scss';
 import { IoCheckmarkOutline } from 'react-icons/io5';
+import { DialogOverlay, DialogContent } from "@reach/dialog";
+import "./styles/reach-modal-overrides.scss";
+import './index.scss';
 
 export default function CardDark() {
   return (
@@ -76,5 +78,23 @@ export default function CardDark() {
         </div>
       </div>
     </div>
+  );
+}
+
+export function Modal(props) {
+  var { isOpen, onHide } = props;
+
+  return (
+    isOpen && (
+      <DialogOverlay
+        allowPinchZoom={true}
+        onDismiss={onHide}
+        isOpen={isOpen}
+      >
+        <DialogContent>
+          <CardDark />
+        </DialogContent>
+      </DialogOverlay>
+    )
   );
 }

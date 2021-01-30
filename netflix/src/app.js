@@ -7,7 +7,7 @@ import { Home, Browse, SignIn, SignUp } from './pages';
 import { useAuthListener } from './hooks';
 import { Route } from 'react-router-dom';
 import Experimental from './pages/experimental';
-import CardDark from './components/card-dark';
+import { CardPage } from './pages/card'
 
 function App() {
   var user = useAuthListener();
@@ -31,7 +31,7 @@ function App() {
           <Experimental />
         </Route>
         <Route path="/card" exact>
-          <CardDark></CardDark>
+          <CardPage></CardPage>
         </Route>
       </Switch>
     </Router>
