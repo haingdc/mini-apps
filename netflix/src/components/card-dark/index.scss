@@ -3,13 +3,12 @@
 }
 .card {
   background: #3d3c40;
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   border-radius: 15px;
   font-size: 10px;
   line-height: 1;
   width: 328px;
-  margin-left: 50px;
-  margin-top: 50px;
   overflow: hidden;
 
   &__label {

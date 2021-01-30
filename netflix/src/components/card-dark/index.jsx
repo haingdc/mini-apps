@@ -82,7 +82,7 @@ export default function CardDark() {
 }
 
 export function Modal(props) {
-  var { isOpen, onHide } = props;
+  var { isOpen, onHide, style = { maxWidth: '328px', padding: 0, borderRadius: 15 } } = props;
 
   return (
     isOpen && (
@@ -91,7 +91,11 @@ export function Modal(props) {
         onDismiss={onHide}
         isOpen={isOpen}
       >
-        <DialogContent>
+        <DialogContent
+          style={{
+            ...style,
+          }}
+        >
           <CardDark />
         </DialogContent>
       </DialogOverlay>
