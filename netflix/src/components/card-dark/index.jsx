@@ -69,9 +69,9 @@ export default function CardDark() {
       </div>
       <div className="card__footer">
         <div className="card__row">
-          <div class="buttons-group">
-            <button class="card__button card__button--cancel">Cancel</button>
-            <button class="card__button">Create</button>
+          <div className="buttons-group">
+            <button className="card__button card__button--cancel">Cancel</button>
+            <button className="card__button">Create</button>
           </div>
         </div>
       </div>

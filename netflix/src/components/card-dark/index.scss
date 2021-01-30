@@ -48,6 +48,10 @@
       background-color: #313033;
       color: #fff;
       padding-left: 10px;
+      outline: none;
+      &:focus-visible {
+        box-shadow: 0 0 0 1px #6562fc;
+      }
     }
   }
   &__time {
@@ -60,6 +64,10 @@
       padding-left: 10px;
       background-color: #4d4b52;
       color: #fff;
+      outline: none;
+      &:focus-visible {
+        box-shadow: 0 0 0 1px #6562fc;
+      }
     }
   }
   &__row {
@@ -84,11 +92,11 @@
   &__body {
     display: flex;
     flex-direction: column;
-    padding: 0 20px;
+    padding: 0 20px 30px;
   }
   &__footer {
     background-color: #313033;
-    padding: 20px;
+    padding: 16px;
     > div {
       justify-content: flex-end;
     }
