@@ -94,7 +94,7 @@ var AnimatedDialogOverlay = animated(DialogOverlay);
 var AnimatedDialogContent = animated(DialogContent);
 
 export function Modal(props) {
-  var { isOpen, onHide, title, onChangeTitle } = props;
+  var { isOpen, onHide, children } = props;
 
   var modalTransition = useTransition(!!isOpen, {
     config: isOpen ? { ...config.stiff } : { duration: 150 },
@@ -104,31 +104,29 @@ export function Modal(props) {
   });
 
   return modalTransition(
-    (styles, isOpen) => (
-      isOpen && (
-        <AnimatedDialogOverlay
-          allowPinchZoom={true}
-          onDismiss={onHide}
-          isOpen={isOpen}
-        >
-          <AnimatedDialogContent
-            aria-label="Content todo"
-            style={{
-              maxWidth: '328px',
-              padding: 0,
-              borderRadius: 15,
-              boxShadow: '-1px 2px 4px rgba(0,0,0,0.2), 1px -1px 4px rgba(0,0,0,0.2)',
-              ...styles,
-            }}
+    (styles, isOpen ) => {
+      return (
+        isOpen && (
+          <AnimatedDialogOverlay
+            allowPinchZoom={true}
+            onDismiss={onHide}
+            isOpen={isOpen}
           >
-            <CardDark
-              onHide={onHide}
-              title={title}
-              onChangeTitle={onChangeTitle}
-            />
-          </AnimatedDialogContent>
-        </AnimatedDialogOverlay>
-      )
-    )
+            <AnimatedDialogContent
+              aria-label="Content todo"
+              style={{
+                maxWidth: '328px',
+                padding: 0,
+                borderRadius: 15,
+                boxShadow: '-1px 2px 4px rgba(0,0,0,0.2), 1px -1px 4px rgba(0,0,0,0.2)',
+                ...styles,
+              }}
+            >
+              {children}
+            </AnimatedDialogContent>
+          </AnimatedDialogOverlay>
+        )
+      );
+    }
   );
 }
