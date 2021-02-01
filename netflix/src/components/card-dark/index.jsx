@@ -1,10 +1,12 @@
 import { IoCheckmarkOutline } from 'react-icons/io5';
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { CgNotes } from 'react-icons/cg'
+import { useTransition, config, animated } from 'react-spring';
 import "./styles/reach-modal-overrides.scss";
 import './index.scss';
 
-export default function CardDark() {
+export default function CardDark(props) {
+  var { onHide, title, onChangeTitle } = props;
   return (
     <div className="card">
       <div className="card__header">
@@ -13,7 +15,7 @@ export default function CardDark() {
       </div>
       <div className="card__body">
         <div className="card__row">
-          <input type="text" className="card__title" placeholder="Title" value="Drink a capuchino" />
+          <input type="text" className="card__title" placeholder="Title" value={title} onChange={onChangeTitle} />
         </div>
         <div className="card__row">
           <div className="card__label card__row__label">Color</div>
@@ -76,7 +78,10 @@ export default function CardDark() {
       <div className="card__footer">
         <div className="card__row">
           <div className="buttons-group">
-            <button className="card__button card__button--cancel">Cancel</button>
+            <button
+              className="card__button card__button--cancel"
+              onClick={onHide}
+            >Cancel</button>
             <button className="card__button">Create</button>
           </div>
         </div>
@@ -85,29 +90,45 @@ export default function CardDark() {
   );
 }
 
-export function Modal(props) {
-  var { isOpen, onHide, style = {
-    maxWidth: '328px',
-    padding: 0,
-    borderRadius: 15,
-    boxShadow: '-1px 2px 4px rgba(0,0,0,0.2), 1px -1px 4px rgba(0,0,0,0.2)',
-  } } = props;
+var AnimatedDialogOverlay = animated(DialogOverlay);
+var AnimatedDialogContent = animated(DialogContent);
 
-  return (
-    isOpen && (
-      <DialogOverlay
-        allowPinchZoom={true}
-        onDismiss={onHide}
-        isOpen={isOpen}
-      >
-        <DialogContent
-          style={{
-            ...style,
-          }}
+export function Modal(props) {
+  var { isOpen, onHide, title, onChangeTitle } = props;
+
+  var modalTransition = useTransition(!!isOpen, {
+    config: isOpen ? { ...config.stiff } : { duration: 150 },
+    from : { opacity: 0, transform: `translate3d(0px, -10px, 0px)` },
+    enter: { opacity: 1, transform: `translate3d(0px,   0px, 0px)` },
+    leave: { opacity: 0, transform: `translate3d(0px,  10px, 0px)` },
+  });
+
+  return modalTransition(
+    (styles, isOpen) => (
+      isOpen && (
+        <AnimatedDialogOverlay
+          allowPinchZoom={true}
+          onDismiss={onHide}
+          isOpen={isOpen}
         >
-          <CardDark />
-        </DialogContent>
-      </DialogOverlay>
+          <AnimatedDialogContent
+            aria-label="Content todo"
+            style={{
+              maxWidth: '328px',
+              padding: 0,
+              borderRadius: 15,
+              boxShadow: '-1px 2px 4px rgba(0,0,0,0.2), 1px -1px 4px rgba(0,0,0,0.2)',
+              ...styles,
+            }}
+          >
+            <CardDark
+              onHide={onHide}
+              title={title}
+              onChangeTitle={onChangeTitle}
+            />
+          </AnimatedDialogContent>
+        </AnimatedDialogOverlay>
+      )
     )
   );
 }
