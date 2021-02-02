@@ -18,7 +18,7 @@ export function Tag(props) {
 export function AnimatedTag(props) {
   var { isShow, onClose } = props;
   var transitions = useTransition(!!isShow, {
-    config: { ...config.stiff },
+    config: isShow ? { ...config.stiff } : { duration: 150 },
     from : { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },
     enter: { opacity: 1, transform: `translate3d(0px, 0px, 0px)` },
     leave: { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },

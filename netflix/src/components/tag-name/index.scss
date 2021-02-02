@@ -9,7 +9,7 @@
   gap: 5px;
   background-color: var(--background-color);
   color: var(--color);
-  padding: 5px 10px 5px 5px   ;
+  padding: 5px 4px 5px 5px   ;
   border-radius: 14px;
   align-items: center;
   font-weight: 600;
@@ -22,5 +22,19 @@
     line-height: var(--width);
     text-align: center;
     font-size: calc(var(--size) - 2px);
+  }
+  &__close {
+    display: flex;
+    padding: 0 6px;
+    height: 20px;
+    align-items: center;
+    path {
+      stroke: var(--color);
+    }
+    &:hover {
+      path {
+        stroke: hsl(240, 11.8%, 83.3%);
+      }
+    }
   }
 }

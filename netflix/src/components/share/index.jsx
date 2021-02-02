@@ -4,7 +4,7 @@ import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
 
 export function Share(props) {
-  var [ isShow, setIsShow ] = useState(false);
+  var [ isShow, setIsShow ] = useState(true);
   return (
     <div className="card">
       <div className="card__header">
