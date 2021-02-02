@@ -1,9 +1,10 @@
-import { Tag } from '../tag-name';
-import { IoCheckmarkOutline } from 'react-icons/io5';
+import { useState } from 'react';
+import { AnimatedTag } from '../tag-name';
 import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
 
 export function Share(props) {
+  var [ isShow, setIsShow ] = useState(false);
   return (
     <div className="card">
       <div className="card__header">
@@ -12,7 +13,8 @@ export function Share(props) {
       </div>
       <div className="card__body">
         <div className="card__row">
-          <Tag></Tag>
+          <AnimatedTag isShow={isShow}
+          ></AnimatedTag>
         </div>
       </div>
       <div className="card__footer">
@@ -21,7 +23,7 @@ export function Share(props) {
             <button
               className="card__button card__button--cancel"
             >Cancel</button>
-            <button className="card__button">Share</button>
+            <button className="card__button" onClick={() => setIsShow(p => !p)}>Share</button>
           </div>
         </div>
       </div>
