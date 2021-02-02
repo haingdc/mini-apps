@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CardDark, { Modal } from '../components/card-dark';
+import { Share } from '../components/share';
 
 export function CardPage() {
   var [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ export function CardPage() {
           onChangeTitle={onChangeTitle}
         />
       </Modal>
+      <Share></Share>
     </>
   );
 }

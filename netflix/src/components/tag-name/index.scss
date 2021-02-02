@@ -1,0 +1,26 @@
+.tag {
+  --background-color: hsl(169, 60%, 59%);
+  --color: #1e1e20;
+  --size: 12px;
+  font-size: var(--size);
+  line-height: 1.15;
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  gap: 5px;
+  background-color: var(--background-color);
+  color: var(--color);
+  padding: 5px 10px 5px 5px   ;
+  border-radius: 14px;
+  align-items: center;
+  font-weight: 600;
+  &__avatar {
+    --width: 20px;
+    border-radius: 50%;
+    background-color: hsl(186, 53%, 50%);
+    width:  var(--width);
+    height: var(--width);
+    line-height: var(--width);
+    text-align: center;
+    font-size: calc(var(--size) - 2px);
+  }
+}
