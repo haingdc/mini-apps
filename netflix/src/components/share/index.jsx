@@ -13,7 +13,9 @@ export function Share(props) {
       </div>
       <div className="card__body">
         <div className="card__row">
-          <AnimatedTag isShow={isShow}
+          <AnimatedTag
+            isShow={isShow}
+            onClose={() => setIsShow(p => !p)}
           ></AnimatedTag>
         </div>
       </div>
