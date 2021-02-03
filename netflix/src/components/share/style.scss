@@ -4,3 +4,30 @@
     gap: 10px;
   }
 }
+
+[name='message'] {
+  width: 100%;
+  min-height: 100px;
+  color: #c3c1ce;
+  background-color: #313033;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  padding: 6px 10px;
+  font-size: 12px;
+  letter-spacing: 0.05px;
+  line-height: 1.15;
+  &::placeholder {
+    color: #9b98a6;
+    opacity: 1;
+  }
+}
+
+[name='notify'] {
+  border-color: #626166;
+  background-color: #3d3c40;
+  & + label {
+    color: #9996a4;
+    margin-left: 5px;
+  }
+}

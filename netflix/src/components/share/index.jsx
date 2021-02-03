@@ -11,7 +11,13 @@ export function Share(props) {
     <div className="card">
       <div className="card__header">
         <div className="card__label--main">Share</div>
-        <HiOutlineShare style={{ color: '#8b8894', fontSize: '19px' }} />
+        <HiOutlineShare style={{
+          color: '#8b8894',
+          fontSize: '28px',
+          borderRadius: '50%',
+          backgroundColor: '#555459',
+          padding: '6px',
+        }} />
       </div>
       <div className="card__body">
         <div className="card__row card__row--tags-group">
@@ -20,6 +26,13 @@ export function Share(props) {
             onClose={() => setIsShow(p => !p)}
           ></AnimatedTag>
           <AddButton />
+        </div>
+        <div className="card__row">
+          <textarea name="message" placeholder="Enter your message"></textarea>
+        </div>
+        <div className="card__row">
+          <input type="checkbox" name="notify" value="true" />
+          <label htmlFor="notify"> Notify people</label>
         </div>
       </div>
       <div className="card__footer">
