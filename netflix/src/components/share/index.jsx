@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatedTag } from '../tag-name';
 import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
+import './style.scss';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
@@ -12,7 +13,7 @@ export function Share(props) {
         <HiOutlineShare style={{ color: '#8b8894', fontSize: '19px' }} />
       </div>
       <div className="card__body">
-        <div className="card__row">
+        <div className="card__row card__row--tags-group">
           <AnimatedTag
             isShow={isShow}
             onClose={() => setIsShow(p => !p)}

@@ -26,7 +26,7 @@ export function AnimatedTag(props) {
   return transitions(
     (styles, isShow) => {
       return isShow && (
-        <animated.div style={{ ...styles }}>
+        <animated.div class="tag-wrapper" style={{ ...styles }}>
           <Tag avatar="A" name="Arnold Jamal" onClose={onClose} />
         </animated.div>
       )
