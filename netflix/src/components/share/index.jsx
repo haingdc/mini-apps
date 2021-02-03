@@ -3,6 +3,7 @@ import { AnimatedTag } from '../tag-name';
 import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
 import './style.scss';
+import { AddButton } from './components/add-button';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
@@ -18,6 +19,7 @@ export function Share(props) {
             isShow={isShow}
             onClose={() => setIsShow(p => !p)}
           ></AnimatedTag>
+          <AddButton />
         </div>
       </div>
       <div className="card__footer">
