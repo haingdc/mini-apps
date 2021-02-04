@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { animated, config, useTransition } from 'react-spring';
 import { GrClose as CloseIco } from 'react-icons/gr';
 import './index.scss';
@@ -16,12 +17,17 @@ export function Tag(props) {
 }
 
 export function AnimatedTag(props) {
+  var uiReady = useRef(false);
   var { isShow, onClose } = props;
   var transitions = useTransition(!!isShow, {
     config: isShow ? { ...config.stiff } : { duration: 150 },
     from : { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },
     enter: { opacity: 1, transform: `translate3d(0px, 0px, 0px)` },
     leave: { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },
+    immediate: !uiReady.current,
+    onRest() {
+      uiReady.current = true;
+    },
   });
   return transitions(
     (styles, isShow) => {
