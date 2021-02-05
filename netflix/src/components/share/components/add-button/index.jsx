@@ -2,7 +2,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import './style.scss';
 
 export function AddButton(props) {
-  const { isShowInput } = props;
+  const { isShowInput, onAdd } = props;
   return (
     <>
       <textarea
@@ -13,6 +13,13 @@ export function AddButton(props) {
         autoComplete="false"
         spellCheck="false"
         class="tag__input"
+        onKeyPress={(event) => {
+          var key = window.event.keyCode;
+          if (key === 13) {
+            event.preventDefault();
+            onAdd(event.target.value);
+          }
+        }}
       />
       <div
         className="button--add"

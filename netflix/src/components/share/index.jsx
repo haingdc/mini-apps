@@ -13,6 +13,10 @@ export function Share(props) {
     { id: '@002', name: 'Tet Chicken', avatar: 'C' },
     { id: '@003', name: 'Hubert Blaine Wolfeschlegelsteinhausenbergerdorff', avatar: 'W' },
   ]);
+  function addTag(name) {
+    var tag = { id: generateId(), name, avatar: name[0] };
+    setListTag(list => ([...list, tag]));
+  }
   return (
     <div className="card">
       <div className="card__header">
@@ -47,12 +51,12 @@ export function Share(props) {
                     return (
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }} key={id}>
                         {Tag}
-                        <AddButton isShowInput={isShowInput} />
+                        <AddButton isShowInput={isShowInput} onAdd={addTag} />
                       </div>
                     );
                   }
                   return Tag;
-                }) : <AddButton isShowInput={isShowInput} />
+                }) : <AddButton isShowInput={isShowInput} onAdd={addTag} />
             }
         </div>
         <div className="card__row">
@@ -75,4 +79,10 @@ export function Share(props) {
       </div>
     </div>
   );
+}
+
+function generateId() {
+  return Array.from({ length: 10 }, () =>
+    String.fromCharCode(65 + Math.floor(Math.random() * 26))
+  ).join("");
 }
