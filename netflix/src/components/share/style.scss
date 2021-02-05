@@ -31,3 +31,10 @@
     margin-left: 5px;
   }
 }
+
+.last-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-grow: 1;
+}

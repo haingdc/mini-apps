@@ -4,10 +4,9 @@ import './style.scss';
 export function AddButton(props) {
   const { isShowInput, onAdd } = props;
   return (
-    <>
+    <div className="add-button-wrapper">
       <textarea
         rows="1"
-        cols="10"
         autoCapitalize="none"
         autoCorrect="off"
         autoComplete="false"
@@ -15,7 +14,7 @@ export function AddButton(props) {
         className="tag__input"
         onKeyPress={(event) => {
           var key = window.event.keyCode;
-          if (key === 13) {
+          if (key === 13 && event.target.value !== '') {
             event.preventDefault();
             onAdd(event.target.value);
           }
@@ -30,6 +29,6 @@ export function AddButton(props) {
         }}>
         <AiOutlinePlus  />
       </div>
-    </>
+    </div>
   );
 }
