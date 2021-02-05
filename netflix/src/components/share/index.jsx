@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AnimatedTag } from '../tag-name';
 import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
@@ -14,7 +14,7 @@ export function Share(props) {
     { id: '@003', name: 'Hubert Blaine Wolfeschlegelsteinhausenbergerdorff', avatar: 'W' },
   ]);
   function addTag(name) {
-    var tag = { id: generateId(), name, avatar: name[0] };
+    var tag = { id: generateId(), name, avatar: name[0].toUpperCase() };
     setListTag(list => ([...list, tag]));
   }
   return (
@@ -55,7 +55,7 @@ export function Share(props) {
                       </div>
                     );
                   }
-                  return Tag;
+                  return React.cloneElement(Tag, { key: item.id });
                 }) : <AddButton isShowInput={isShowInput} onAdd={addTag} />
             }
         </div>
