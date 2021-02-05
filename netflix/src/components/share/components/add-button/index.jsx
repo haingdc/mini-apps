@@ -2,7 +2,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import './style.scss';
 
 export function AddButton(props) {
-  const { isShowInput, onAdd } = props;
+  const { isShowInput, onAdd, value, setValue } = props;
   return (
     <div className="add-button-wrapper">
       <textarea
@@ -16,9 +16,12 @@ export function AddButton(props) {
           var key = window.event.keyCode;
           if (key === 13 && event.target.value !== '') {
             event.preventDefault();
+            setValue('');
             onAdd(event.target.value);
           }
         }}
+        onChange={event => setValue(event.target.value)}
+        value={value}
       />
       <div
         className="button--add"

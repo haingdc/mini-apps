@@ -7,6 +7,7 @@ import { AddButton } from './components/add-button';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
+  var [ value, setValue ] = useState('');
   var [ isShowInput, setShowInput ] = useState(false);
   var [listTag, setListTag] = useState([
     { id: '@001', name: 'Arnold Jamal', avatar: 'A' },
@@ -33,30 +34,27 @@ export function Share(props) {
         <div className="card__row card__row--tags-group">
             {
               listTag.length ?
-                listTag.map((item, i, list) => {
-                  var { id, name, avatar } = item;
-                  var Tag = (
-                    <AnimatedTag
-                      id={id}
-                      name={name}
-                      avatar={avatar}
-                      isShow={isShow}
-                      onClose={() => {
-                        var newList = listTag.filter(n => n !== item);
-                        setListTag( newList )
-                      }}
-                    ></AnimatedTag>
-                  );
-                  if (i === list.length - 1) {
-                    return (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }} key={id}>
-                        {Tag}
-                        <AddButton isShowInput={isShowInput} onAdd={addTag} />
-                      </div>
-                    );
+                <>
+                  {
+                    listTag.map((item) => {
+                      var { id, name, avatar } = item;
+                      return (
+                        <AnimatedTag
+                          key={item.id}
+                          id={id}
+                          name={name}
+                          avatar={avatar}
+                          isShow={isShow}
+                          onClose={() => {
+                            var newList = listTag.filter(n => n !== item);
+                            setListTag( newList )
+                          }}
+                        ></AnimatedTag>
+                      );
+                    })
                   }
-                  return React.cloneElement(Tag, { key: item.id });
-                }) : <AddButton isShowInput={isShowInput} onAdd={addTag} />
+                  <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
+                </> : <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
             }
         </div>
         <div className="card__row">
