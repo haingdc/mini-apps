@@ -7,6 +7,12 @@ import { AddButton } from './components/add-button';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
+  var [ isShowInput, setShowInput ] = useState(false);
+  var [listTag, setListTag] = useState([
+    { id: '@001', name: 'Arnold Jamal', avatar: 'A' },
+    { id: '@002', name: 'Tet Chicken', avatar: 'C' },
+    { id: '@003', name: 'Hubert Blaine Wolfeschlegelsteinhausenbergerdorff', avatar: 'W' },
+  ]);
   return (
     <div className="card">
       <div className="card__header">
@@ -21,11 +27,33 @@ export function Share(props) {
       </div>
       <div className="card__body">
         <div className="card__row card__row--tags-group">
-          <AnimatedTag
-            isShow={isShow}
-            onClose={() => setIsShow(p => !p)}
-          ></AnimatedTag>
-          <AddButton />
+            {
+              listTag.length ?
+                listTag.map((item, i, list) => {
+                  var { id, name, avatar } = item;
+                  var Tag = (
+                    <AnimatedTag
+                      id={id}
+                      name={name}
+                      avatar={avatar}
+                      isShow={isShow}
+                      onClose={() => {
+                        var newList = listTag.filter(n => n !== item);
+                        setListTag( newList )
+                      }}
+                    ></AnimatedTag>
+                  );
+                  if (i === list.length - 1) {
+                    return (
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }} key={id}>
+                        {Tag}
+                        <AddButton isShowInput={isShowInput} />
+                      </div>
+                    );
+                  }
+                  return Tag;
+                }) : <AddButton isShowInput={isShowInput} />
+            }
         </div>
         <div className="card__row">
           <textarea name="message" placeholder="Enter your message"></textarea>
