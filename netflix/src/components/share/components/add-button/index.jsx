@@ -12,7 +12,7 @@ export function AddButton(props) {
         autoCorrect="off"
         autoComplete="false"
         spellCheck="false"
-        class="tag__input"
+        className="tag__input"
         onKeyPress={(event) => {
           var key = window.event.keyCode;
           if (key === 13) {
