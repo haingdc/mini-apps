@@ -18,7 +18,7 @@ export function Tag(props) {
 
 export function AnimatedTag(props) {
   var uiReady = useRef(false);
-  var { isShow, onClose } = props;
+  var { isShow, onClose, avatar, name } = props;
   var transitions = useTransition(!!isShow, {
     config: isShow ? { ...config.stiff } : { duration: 150 },
     from : { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },
@@ -33,7 +33,7 @@ export function AnimatedTag(props) {
     (styles, isShow) => {
       return isShow && (
         <animated.div className="tag-wrapper" style={{ ...styles }}>
-          <Tag avatar="A" name="Arnold Jamal" onClose={onClose} />
+          <Tag avatar={avatar} name={name} onClose={onClose} />
         </animated.div>
       )
     }

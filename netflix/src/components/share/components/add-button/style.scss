@@ -12,3 +12,17 @@
     fill: #837f93;
   }
 }
+
+.tag__input {
+  resize: none;
+  height: 26px;
+  font-size: 12px;
+  line-height: 1.15;
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid white;
+  outline: none;
+  background-color: #3d3c40;
+  color: white;
+  caret-color: white;
+}
