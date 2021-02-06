@@ -4,7 +4,6 @@ import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
 import './style.scss';
 import { AddButton } from './components/add-button';
-import { If } from '../../helpers/If';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
@@ -33,30 +32,35 @@ export function Share(props) {
       </div>
       <div className="card__body">
         <div className="card__row card__row--tags-group">
-            <If condition={listTag.length}>
-              {
-                listTag.map((item) => {
-                  var { id, name, avatar } = item;
-                  return (
-                    <AnimatedTag
-                      key={item.id}
-                      id={id}
-                      name={name}
-                      avatar={avatar}
-                      isShow={isShow}
-                      onClose={() => {
-                        var newList = listTag.filter(n => n !== item);
-                        setListTag( newList )
-                      }}
-                    ></AnimatedTag>
-                  );
-                })
-              }
-              <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
-            </If>
-            <If condition={!listTag.length}>
-              <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
-            </If>
+            {
+              listTag.length
+              ? (
+                  <>
+                    {listTag.map((item) => {
+                      var { id, name, avatar } = item;
+                      return (
+                        <AnimatedTag
+                          key={item.id}
+                          id={id}
+                          name={name}
+                          avatar={avatar}
+                          isShow={isShow}
+                          onClose={() => {
+                            var newList = listTag.filter(n => n !== item);
+                            setListTag( newList )
+                          }}
+                        ></AnimatedTag>
+                      );
+                    })}
+                    <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
+                  </>
+                )
+              : undefined
+            }
+            {!listTag.length
+              ? <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
+              : undefined
+            }
         </div>
         <div className="card__row">
           <textarea name="message" placeholder="Enter your message"></textarea>
