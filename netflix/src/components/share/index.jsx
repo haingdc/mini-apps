@@ -4,9 +4,11 @@ import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
 import './style.scss';
 import { AddButton } from './components/add-button';
+import { If } from '../../helpers/If';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
+  var [ value, setValue ] = useState('');
   var [ isShowInput, setShowInput ] = useState(false);
   var [listTag, setListTag] = useState([
     { id: '@001', name: 'Arnold Jamal', avatar: 'A' },
@@ -31,12 +33,13 @@ export function Share(props) {
       </div>
       <div className="card__body">
         <div className="card__row card__row--tags-group">
-            {
-              listTag.length ?
-                listTag.map((item, i, list) => {
+            <If condition={listTag.length}>
+              {
+                listTag.map((item) => {
                   var { id, name, avatar } = item;
-                  var Tag = (
+                  return (
                     <AnimatedTag
+                      key={item.id}
                       id={id}
                       name={name}
                       avatar={avatar}
@@ -47,17 +50,13 @@ export function Share(props) {
                       }}
                     ></AnimatedTag>
                   );
-                  if (i === list.length - 1) {
-                    return (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }} key={id}>
-                        {Tag}
-                        <AddButton isShowInput={isShowInput} onAdd={addTag} />
-                      </div>
-                    );
-                  }
-                  return React.cloneElement(Tag, { key: item.id });
-                }) : <AddButton isShowInput={isShowInput} onAdd={addTag} />
-            }
+                })
+              }
+              <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
+            </If>
+            <If condition={!listTag.length}>
+              <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
+            </If>
         </div>
         <div className="card__row">
           <textarea name="message" placeholder="Enter your message"></textarea>
