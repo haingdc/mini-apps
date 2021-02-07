@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { AnimatedTag } from '../tag-name';
+import React, { useState, useRef } from 'react';
+import { Tag } from '../tag-name';
 import { HiOutlineShare } from 'react-icons/hi';
 import '../card-dark/index.scss';
 import './style.scss';
 import { AddButton } from './components/add-button';
-import { If } from '../../helpers/If';
+import { animated, config, useTransition } from 'react-spring';
 
 export function Share(props) {
   var [ isShow, setIsShow ] = useState(true);
   var [ value, setValue ] = useState('');
-  var [ isShowInput, setShowInput ] = useState(false);
+  var [ isShowInput, setShowInput ] = useState(true);
+  var uiReady = useRef(false);
+
   var [listTag, setListTag] = useState([
     { id: '@001', name: 'Arnold Jamal', avatar: 'A' },
     { id: '@002', name: 'Tet Chicken', avatar: 'C' },
@@ -19,6 +21,17 @@ export function Share(props) {
     var tag = { id: generateId(), name, avatar: name[0].toUpperCase() };
     setListTag(list => ([...list, tag]));
   }
+
+    var resultTransition = useTransition(listTag, {
+    config: { ...config.stiff },
+    from : { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },
+    enter: { opacity: 1, transform: `translate3d( 0px, 0px, 0px)` },
+    leave: { opacity: 0, transform: `translate3d(10px, 0px, 0px)` },
+    immediate: !uiReady.current,
+    onRest() {
+      uiReady.current = true;
+    },
+  });
   return (
     <div className="card">
       <div className="card__header">
@@ -33,30 +46,37 @@ export function Share(props) {
       </div>
       <div className="card__body">
         <div className="card__row card__row--tags-group">
-            <If condition={listTag.length}>
-              {
-                listTag.map((item) => {
-                  var { id, name, avatar } = item;
-                  return (
-                    <AnimatedTag
-                      key={item.id}
-                      id={id}
-                      name={name}
-                      avatar={avatar}
-                      isShow={isShow}
-                      onClose={() => {
-                        var newList = listTag.filter(n => n !== item);
-                        setListTag( newList )
-                      }}
-                    ></AnimatedTag>
-                  );
-                })
-              }
-              <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
-            </If>
-            <If condition={!listTag.length}>
-              <AddButton isShowInput={isShowInput} onAdd={addTag} value={value} setValue={setValue} />
-            </If>
+            {
+              listTag.length
+              ? (
+                  <>
+                    {resultTransition((styles, item) => {
+                      var { id, name, avatar } = item;
+                      return (
+                        <animated.div style={styles}>
+                          <Tag
+                            key={item.id}
+                            id={id}
+                            name={name}
+                            avatar={avatar}
+                            isShow={isShow}
+                            onClose={() => {
+                              var newList = listTag.filter(n => n !== item);
+                              setListTag( newList )
+                            }}
+                          ></Tag>
+                        </animated.div>
+                      );
+                    })}
+                    <AddButton isShowInput={isShowInput} onClick={() => setShowInput(v => !v)} onAdd={addTag} value={value} setValue={setValue} />
+                  </>
+                )
+              : undefined
+            }
+            {!listTag.length
+              ? <AddButton isShowInput={isShowInput} onClick={() => setShowInput(v => !v)} onAdd={addTag} value={value} setValue={setValue} />
+              : undefined
+            }
         </div>
         <div className="card__row">
           <textarea name="message" placeholder="Enter your message"></textarea>
