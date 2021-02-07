@@ -1,7 +1,15 @@
-.card__row {
-  &--tags-group {
-    flex-wrap: wrap ;
+.card {
+  &__body {
     gap: 10px;
+  }
+  &__row {
+    &--tags-group {
+      flex-wrap: wrap ;
+      gap: 10px;
+    }
+    &--notify {
+      margin-top: 0;
+    }
   }
 }
 
@@ -10,7 +18,7 @@
   min-height: 100px;
   color: #c3c1ce;
   background-color: #313033;
-  border-radius: 3px;
+  border-radius: 5px;
   border: none;
   outline: none;
   padding: 6px 10px;

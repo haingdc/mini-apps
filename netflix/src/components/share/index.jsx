@@ -81,7 +81,7 @@ export function Share(props) {
         <div className="card__row">
           <textarea name="message" placeholder="Enter your message"></textarea>
         </div>
-        <div className="card__row">
+        <div className="card__row card__row--notify">
           <input type="checkbox" name="notify" value="true" />
           <label htmlFor="notify"> Notify people</label>
         </div>
