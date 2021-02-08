@@ -1,4 +1,5 @@
 import './styles.scss';
+import apple from '../assets/images/apple.png'
 
 export function Ministop() {
   return (
@@ -11,7 +12,9 @@ export function Ministop() {
         <input type="text" />
       </div>
       <div className="pos__cart">B</div>
-      <div className="pos__list">C</div>
+      <div className="pos__list">
+        <img src={apple} />
+      </div>
       <div className="pos__categories">D</div>
     </div>
   );
