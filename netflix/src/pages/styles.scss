@@ -1,0 +1,29 @@
+.pos {
+  --background: #f6f7fa;
+  display: grid;
+  grid-template-areas:  "header    cart"
+                        "list       cart"
+                        "categories cart";
+  background-color: var(--background);
+  border-radius: 20px;
+  width: 978px;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px;
+  &__cart {
+    grid-area: cart;
+  }
+  &__header {
+    grid-area: header;
+    &__info {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  &__list {
+    grid-area: list;
+  }
+  &__categories {
+    grid-area: categories;
+  }
+}

@@ -8,6 +8,7 @@ import { useAuthListener } from './hooks';
 import { Route } from 'react-router-dom';
 import Experimental from './pages/experimental';
 import { CardPage } from './pages/card'
+import { Ministop } from './pages/mini-stop';
 
 function App() {
   var user = useAuthListener();
@@ -32,6 +33,9 @@ function App() {
         </Route>
         <Route path="/card" exact>
           <CardPage></CardPage>
+        </Route>
+        <Route path="/ministop" exact>
+          <Ministop></Ministop>
         </Route>
       </Switch>
     </Router>
