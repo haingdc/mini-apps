@@ -22,6 +22,30 @@
   }
   &__list {
     grid-area: list;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 14px;
+  }
+  &__item {
+    --background: #ffffff;
+    --color: #404d5d;
+    background: var(--background);
+    display: flex;
+    flex-flow: column nowrap;
+    border-radius: 20px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    img {
+      width: 143px;
+      height: 143px;
+      border-radius: 14px;
+      box-shadow: 0px 8px 110px -38px rgb(122, 115, 122);
+    }
+    &__name {
+      color: var(--color);
+      padding: 12px 15px;
+      text-transform: capitalize;
+    }
   }
   &__categories {
     grid-area: categories;
