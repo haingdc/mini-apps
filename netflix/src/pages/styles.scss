@@ -1,5 +1,7 @@
 .pos {
   --background: #f6f7fa;
+  --background-item: #fff;
+  --radius: 20px;
   display: grid;
   grid-template-areas:  "header    cart"
                         "list       cart"
@@ -11,13 +13,24 @@
   padding: 20px;
   gap: 20px;
   &__cart {
+    width: 283px;
     grid-area: cart;
+    background-color: var(--background-item);
+    border-radius: var(--radius);
+    padding: 20px;
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
   }
   &__header {
     grid-area: header;
     &__info {
       display: flex;
       justify-content: space-between;
+      .date {
+        color: #8292a6;
+      }
     }
   }
   &__list {
@@ -27,17 +40,18 @@
     gap: 14px;
   }
   &__item {
-    --background: #ffffff;
     --color: #404d5d;
-    background: var(--background);
+    background: var(--background-item);
     display: flex;
     flex-flow: column nowrap;
-    border-radius: 20px;
+    border-radius: var(--radius);
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
+    flex: 1 1 auto;
+    width: 143px;
     img {
-      width: 143px;
-      height: 143px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
       border-radius: 14px;
       box-shadow: 0px 8px 110px -38px rgb(122, 115, 122);
     }

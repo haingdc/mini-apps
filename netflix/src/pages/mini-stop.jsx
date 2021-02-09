@@ -10,6 +10,7 @@ import semangka from '../assets/images/semangka.png'
 import strawberry from '../assets/images/strawberry.png'
 import terong from '../assets/images/terong.png'
 import vegetables from '../assets/images/vegetables.png'
+import moment from 'moment';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
@@ -24,16 +25,22 @@ const items = [
 ];
 
 export function Ministop() {
+  var now = moment().format('ddd, DD MMM YYYY, HH:MM A');
   return (
     <div className="pos">
       <div className="pos__header">
         <div className="pos__header__info">
           <div className="order-number">Order No. #005</div>
-          <div className="date">Mon, 23 Jul 2021, 02:34PM</div>
+          <div className="date">{now}</div>
         </div>
         <input type="text" />
       </div>
-      <div className="pos__cart">B</div>
+      <div className="pos__cart">
+        <div className="pos__cart__header">
+          <div className="post__cart__head">Cart</div>
+          <div className="post__cart__close">X</div>
+        </div>
+      </div>
       <div className="pos__list">
         {items.map(n => (
           <div className="pos__item">
