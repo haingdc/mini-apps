@@ -94,3 +94,27 @@
     grid-area: categories;
   }
 }
+
+.cart {
+  &__item {
+    display: grid;
+    grid-template-areas:  "photo name quantity"
+                          "photo price quantity";
+    &__photo {
+      grid-area: photo;
+      width: 35px;
+      img {
+        width: 100%;
+      }
+    }
+    &__name {
+      grid-area: name;
+    }
+    &__price {
+      grid-area: price;
+    }
+    &__quantity {
+      grid-area: quantity;
+    }
+  }
+}

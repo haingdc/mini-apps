@@ -12,6 +12,8 @@ import terong from '../assets/images/terong.png'
 import vegetables from '../assets/images/vegetables.png';
 import moment from 'moment';
 import { IoClose } from 'react-icons/io5';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import strawberry2 from '../assets/images/ver2/strawberry.png';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
@@ -45,6 +47,9 @@ export function Ministop() {
             <IoClose />
           </div>
         </div>
+        <div className="pos__cart__list">
+          <CartItem />
+        </div>
       </div>
       <div className="pos__list">
         {items.map(n => (
@@ -55,6 +60,21 @@ export function Ministop() {
         ))}
       </div>
       <div className="pos__categories">D</div>
+    </div>
+  );
+}
+
+function CartItem() {
+  return (
+    <div className="cart__item">
+      <img className="cart__item__photo" src={strawberry2} />
+      <div className="cart__item__name">Melon</div>
+      <div className="cart__item__price">$15</div>
+      <div className="cart__item__quantity">
+        <div className="cart__item__minus"> <AiOutlineMinus /> </div>
+        <div className="cart__item__number">1</div>
+        <div className="cart__item__plus"> <AiOutlinePlus /> </div>
+      </div>
     </div>
   );
 }
