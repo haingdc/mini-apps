@@ -1,19 +1,26 @@
 import './styles.scss';
-import apple from '../assets/images/apple.png'
-import cabonhydrate from '../assets/images/cabonhydrate.png'
-import fruits from '../assets/images/fruits.png'
-import jeruk from '../assets/images/jeruk.png'
-import lemon from '../assets/images/lemon.png'
-import melon from '../assets/images/melon.png'
-import pisang from '../assets/images/pisang.png'
-import semangka from '../assets/images/semangka.png'
-import strawberry from '../assets/images/strawberry.png'
-import terong from '../assets/images/terong.png'
+import cabonhydrate from '../assets/images/cabonhydrate.png';
+import fruits from '../assets/images/fruits.png';
+import apple from '../assets/images/apple.png';
+import jeruk from '../assets/images/jeruk.png';
+import lemon from '../assets/images/lemon.png';
+import melon from '../assets/images/melon.png';
+import pisang from '../assets/images/pisang.png';
+import semangka from '../assets/images/semangka.png';
+import strawberry from '../assets/images/strawberry.png';
+import terong from '../assets/images/terong.png';
 import vegetables from '../assets/images/vegetables.png';
 import moment from 'moment';
 import { IoClose } from 'react-icons/io5';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import strawberry2 from '../assets/images/ver2/strawberry.png';
+import apple2 from '../assets/images/version2/apple.png';
+import jeruk2 from '../assets/images/version2/jeruk.png';
+import lemon2 from '../assets/images/version2/lemon.png';
+import melon2 from '../assets/images/version2/melon.png';
+import pisang2 from '../assets/images/version2/pisang.png';
+import semangka2 from '../assets/images/version2/semangka.png';
+import strawberry2 from '../assets/images/version2/strawberry.png';
+import terong2 from '../assets/images/version2/terong.png';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
@@ -48,7 +55,10 @@ export function Ministop() {
           </div>
         </div>
         <div className="pos__cart__list">
-          <CartItem />
+          <CartItem quantity="1" price="$15" src={melon2}>Melon</CartItem>
+          <CartItem quantity="2" price="$7" src={semangka2}>Semangka</CartItem>
+          <CartItem quantity="7" price="$30" src={jeruk2}>Jeruk</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
         </div>
       </div>
       <div className="pos__list">
@@ -64,16 +74,19 @@ export function Ministop() {
   );
 }
 
-function CartItem() {
+function CartItem(props) {
+  var { src, price, quantity, children} = props;
   return (
     <div className="cart__item">
-      <img className="cart__item__photo" src={strawberry2} />
-      <div className="cart__item__name">Melon</div>
-      <div className="cart__item__price">$15</div>
-      <div className="cart__item__quantity">
-        <div className="cart__item__minus"> <AiOutlineMinus /> </div>
-        <div className="cart__item__number">1</div>
-        <div className="cart__item__plus"> <AiOutlinePlus /> </div>
+      <img className="cart__item__photo" src={src} />
+      <div className="cart__item__name">{children}</div>
+      <div className="cart__item__price">{price}</div>
+      <div className="cart__item__quantity-wrapper">
+        <div className="cart__item__quantity">
+          <div className="cart__item__quantity__minus"> <AiOutlineMinus /> </div>
+          <div className="cart__item__quantity__number">{quantity}</div>
+          <div className="cart__item__quantity__plus"> <AiOutlinePlus /> </div>
+        </div>
       </div>
     </div>
   );
