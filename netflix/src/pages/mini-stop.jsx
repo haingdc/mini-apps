@@ -9,8 +9,9 @@ import pisang from '../assets/images/pisang.png'
 import semangka from '../assets/images/semangka.png'
 import strawberry from '../assets/images/strawberry.png'
 import terong from '../assets/images/terong.png'
-import vegetables from '../assets/images/vegetables.png'
+import vegetables from '../assets/images/vegetables.png';
 import moment from 'moment';
+import { IoClose } from 'react-icons/io5';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
@@ -33,12 +34,16 @@ export function Ministop() {
           <div className="order-number">Order No. #005</div>
           <div className="date">{now}</div>
         </div>
-        <input type="text" />
+      </div>
+      <div className="pos__input">
+        <input type="text" placeholder="Enter item code.." />
       </div>
       <div className="pos__cart">
         <div className="pos__cart__header">
-          <div className="post__cart__head">Cart</div>
-          <div className="post__cart__close">X</div>
+          <div className="pos__cart__head">Cart</div>
+          <div className="pos__cart__close">
+            <IoClose />
+          </div>
         </div>
       </div>
       <div className="pos__list">
