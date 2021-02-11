@@ -13,6 +13,7 @@ import vegetables from '../assets/images/vegetables.png';
 import moment from 'moment';
 import { IoClose } from 'react-icons/io5';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { HiDotsHorizontal } from 'react-icons/hi';
 import apple2 from '../assets/images/version2/apple.png';
 import jeruk2 from '../assets/images/version2/jeruk.png';
 import lemon2 from '../assets/images/version2/lemon.png';
@@ -95,7 +96,25 @@ export function Ministop() {
           </div>
         ))}
       </div>
-      <div className="pos__categories">D</div>
+      <div className="pos__categories">
+        <div className="pos__categories__container">
+          <div className="pos__categories__item">
+            <img className="pos__categories__item__photo" src={vegetables} />
+            <div className="pos__categories__item__name">Vegetables</div>
+          </div>
+          <div className="pos__categories__item active">
+            <img className="pos__categories__item__photo" src={fruits} />
+            <div className="pos__categories__item__name">Fresh Fruit</div>
+          </div>
+          <div className="pos__categories__item">
+            <img className="pos__categories__item__photo" src={cabonhydrate} />
+            <div className="pos__categories__item__name">Carbohydrate</div>
+          </div>
+        </div>
+        <div className="pos__categories__dots">
+          <HiDotsHorizontal />
+        </div>
+      </div>
     </div>
   );
 }
