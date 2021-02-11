@@ -22,6 +22,7 @@ import pisang2 from '../assets/images/version2/pisang.png';
 import semangka2 from '../assets/images/version2/semangka.png';
 import strawberry2 from '../assets/images/version2/strawberry.png';
 import terong2 from '../assets/images/version2/terong.png';
+import { useState } from 'react';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
@@ -36,6 +37,7 @@ const items = [
 ];
 
 export function Ministop() {
+  const [selected, setSelected] = useState([]) ;
   var now = moment().format('ddd, DD MMM YYYY, HH:MM A');
   return (
     <div className="pos">
@@ -56,16 +58,19 @@ export function Ministop() {
           </div>
         </div>
         <div className="pos__cart__list">
-          <CartItem quantity="1" price="$15" src={melon2}>Melon</CartItem>
-          <CartItem quantity="2" price="$7" src={semangka2}>Semangka</CartItem>
-          <CartItem quantity="7" price="$30" src={jeruk2}>Jeruk</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
-          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          {selected.map(item => (
+            <CartItem quantity="1" price="$15" src={item.img}>{item.name}</CartItem>
+          ))}
+          {/* <CartItem quantity="1" price="$15" src={melon2}>Melon</CartItem> */}
+          {/* <CartItem quantity="2" price="$7" src={semangka2}>Semangka</CartItem> */}
+          {/* <CartItem quantity="7" price="$30" src={jeruk2}>Jeruk</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
         </div>
         <div className="pos__cart__sumup-wrapper">
           <div className="pos__cart__sumup">
@@ -89,10 +94,12 @@ export function Ministop() {
         </div>
       </div>
       <div className="pos__list">
-        {items.map(n => (
-          <div className="pos__item">
-            <img src={n.img} />
-            <div className="pos__item__name">{n.name}</div>
+        {items.map(item => (
+          <div className="pos__item" onClick={() => {
+            setSelected(list => [...list, item])
+          }}>
+            <img src={item.img} />
+            <div className="pos__item__name">{item.name}</div>
           </div>
         ))}
       </div>
