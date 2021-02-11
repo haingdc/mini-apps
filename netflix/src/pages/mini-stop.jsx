@@ -59,6 +59,32 @@ export function Ministop() {
           <CartItem quantity="2" price="$7" src={semangka2}>Semangka</CartItem>
           <CartItem quantity="7" price="$30" src={jeruk2}>Jeruk</CartItem>
           <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+          <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem>
+        </div>
+        <div className="pos__cart__sumup-wrapper">
+          <div className="pos__cart__sumup">
+            <div className="pos__cart__sumup__name">Sub Total</div>
+            <div className="pos__cart__sumup__value">$43</div>
+            <div className="pos__cart__sumup__name">Tax</div>
+            <div className="pos__cart__sumup__value">$2</div>
+          </div>
+        </div>
+        <div className="pos__cart__actions">
+          <div className="pos__cart__sumup">
+            <div className="pos__cart__sumup__name pos__cart__sumup__name--bigger">Total</div>
+            <div className="pos__cart__sumup__value pos__cart__sumup__value--bigger">$45</div>
+          </div>
+          <div className="pos__cart__check-out-wrapper">
+            <button className="pos__cart__actions__button pos__cart__check-out">Chek out</button>
+          </div>
+          <div className="pos__cart__pending-wrapper">
+          <button className="pos__cart__actions__button pos__cart__pending">Pending</button>
+          </div>
         </div>
       </div>
       <div className="pos__list">
