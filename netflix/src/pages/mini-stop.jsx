@@ -22,7 +22,9 @@ import pisang2 from '../assets/images/version2/pisang.png';
 import semangka2 from '../assets/images/version2/semangka.png';
 import strawberry2 from '../assets/images/version2/strawberry.png';
 import terong2 from '../assets/images/version2/terong.png';
-import { useState } from 'react';
+import { useState, useMemo, useCallback, useLayoutEffect } from 'react';
+import { animated, useTransition, config } from 'react-spring';
+import { useHeight } from '../utils/useHeight';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
@@ -38,7 +40,34 @@ const items = [
 
 export function Ministop() {
   const [selected, setSelected] = useState([]) ;
+  const [displaySizes, setDisplaySizes] = useState({});
+  const setDisplaySize = useCallback(
+    (name, height) => {
+      setDisplaySizes(displaySizes => ({ ...displaySizes, [name]: height }));
+    },
+    [setDisplaySizes]
+  );
   var now = moment().format('ddd, DD MMM YYYY, HH:MM A');
+
+  const selectedMap = useMemo(
+    () =>
+    selected.reduce((hash, item) => ((hash[item.name] = true), hash), {}),
+    [selected]
+  );
+  const selectedTransitions = useTransition(selected, {
+    config: item => ({
+      ...config.stiff,
+      clamp: !selectedMap[item.name]
+    }),
+    from: { opacity: 0, transform: "translate3d(-25%, 0px, 0px)" },
+    enter: item => ({
+      opacity: 1,
+      height: displaySizes[item.name],
+      transform: "translate3d(0%, 0px, 0px)"
+    }),
+    update: item => ({ height: displaySizes[item.name] }),
+    leave: { opacity: 0, height: 0, transform: "translate3d(25%, 0px, 0px)" }
+  });
   return (
     <div className="pos">
       <div className="pos__header">
@@ -58,9 +87,21 @@ export function Ministop() {
           </div>
         </div>
         <div className="pos__cart__list">
-          {selected.map(item => (
-            <CartItem quantity="1" price="$15" src={item.img}>{item.name}</CartItem>
+          {selectedTransitions((styles, item) => (
+            <CartItem
+              quantity="1"
+              price="$15"
+              src={item.img}
+              styles={styles}
+              setDisplaySize={setDisplaySize}
+              item={item}
+            >
+              {item.name}
+            </CartItem>
           ))}
+          {/* {selected.map(item => (
+            <CartItem quantity="1" price="$15" src={item.img}>{item.name}</CartItem>
+          ))} */}
           {/* <CartItem quantity="1" price="$15" src={melon2}>Melon</CartItem> */}
           {/* <CartItem quantity="2" price="$7" src={semangka2}>Semangka</CartItem> */}
           {/* <CartItem quantity="7" price="$30" src={jeruk2}>Jeruk</CartItem> */}
@@ -127,19 +168,27 @@ export function Ministop() {
 }
 
 function CartItem(props) {
-  var { src, price, quantity, children} = props;
+  var { src, price, quantity, children, styles, setDisplaySize, item} = props;
+  var [ref, height] = useHeight();
+  useLayoutEffect(() => {
+    height && setDisplaySize(item.name, height);
+  }, [height]);
   return (
-    <div className="cart__item">
-      <img className="cart__item__photo" src={src} />
-      <div className="cart__item__name">{children}</div>
-      <div className="cart__item__price">{price}</div>
-      <div className="cart__item__quantity-wrapper">
-        <div className="cart__item__quantity">
-          <div className="cart__item__quantity__minus"> <AiOutlineMinus /> </div>
-          <div className="cart__item__quantity__number">{quantity}</div>
-          <div className="cart__item__quantity__plus"> <AiOutlinePlus /> </div>
+    <animated.div style={{ ...styles, overflow: "hidden" }}>
+      <div ref={ref} style={{ marginRight: "10px" }}>
+        <div className="cart__item">
+          <img className="cart__item__photo" src={src} />
+          <div className="cart__item__name">{children}</div>
+          <div className="cart__item__price">{price}</div>
+          <div className="cart__item__quantity-wrapper">
+            <div className="cart__item__quantity">
+              <div className="cart__item__quantity__minus"> <AiOutlineMinus /> </div>
+              <div className="cart__item__quantity__number">{quantity}</div>
+              <div className="cart__item__quantity__plus"> <AiOutlinePlus /> </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 }
