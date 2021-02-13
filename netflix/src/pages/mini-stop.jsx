@@ -28,14 +28,14 @@ import { useHeight } from '../utils/useHeight';
 
 const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
 const items = [
-  { name: 'terong', img: terong },
-  { name: 'apple', img: apple },
-  { name: 'jeruk', img: jeruk },
-  { name: 'lemon', img: lemon },
-  { name: 'melon', img: melon },
-  { name: 'pisang', img: pisang },
-  { name: 'semangka', img: semangka },
-  { name: 'strawberry', img: strawberry },
+  { quantity: 1, name: 'terong'    , img: terong     },
+  { quantity: 1, name: 'apple'     , img: apple      },
+  { quantity: 1, name: 'jeruk'     , img: jeruk      },
+  { quantity: 1, name: 'lemon'     , img: lemon      },
+  { quantity: 1, name: 'melon'     , img: melon      },
+  { quantity: 1, name: 'pisang'    , img: pisang     },
+  { quantity: 1, name: 'semangka'  , img: semangka   },
+  { quantity: 1, name: 'strawberry', img: strawberry },
 ];
 
 export function Ministop() {
@@ -89,7 +89,7 @@ export function Ministop() {
         <div className="pos__cart__list">
           {selectedTransitions((styles, item) => (
             <CartItem
-              quantity="1"
+              quantity={item.quantity}
               price="$15"
               src={item.img}
               styles={styles}
@@ -137,7 +137,13 @@ export function Ministop() {
       <div className="pos__list">
         {items.map(item => (
           <div className="pos__item" onClick={() => {
-            setSelected(list => [...list, item])
+            var [ existItem ] = selected.filter(n => n.name === item.name);
+            if (existItem) {
+              ++existItem.quantity;
+              setSelected(list => [...list])
+            } else {
+              setSelected(list => [...list, item])
+            }
           }}>
             <img src={item.img} />
             <div className="pos__item__name">{item.name}</div>
