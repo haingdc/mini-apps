@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import './styles.scss';
 import cabonhydrate from '../assets/images/cabonhydrate.png';
 import fruits from '../assets/images/fruits.png';
@@ -26,8 +27,28 @@ import { useState, useMemo, useCallback, useLayoutEffect } from 'react';
 import { animated, useTransition, config } from 'react-spring';
 import { useHeight } from '../utils/useHeight';
 
-const photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
-const items = [
+interface Setoid {
+  equals(a: Setoid): boolean;
+}
+
+class Item implements Setoid {
+  id  : string;
+  img : string;
+  name: string;
+  quantity: number;
+  constructor(form: object) {
+    this.id   = R.path(['name'], form) || '';
+    this.img  = R.path(['img'], form) || '';
+    this.name = R.path(['name'], form) || '';
+    this.quantity = R.path(['quantity'], form) || 0;
+  }
+  equals(a: Item): boolean {
+    return a.id === this.id;
+  }
+}
+
+var photos = [terong, apple, jeruk, lemon, melon, pisang, semangka, strawberry];
+var initialItems = [
   { quantity: 1, name: 'terong'    , img: terong     },
   { quantity: 1, name: 'apple'     , img: apple      },
   { quantity: 1, name: 'jeruk'     , img: jeruk      },
@@ -38,12 +59,14 @@ const items = [
   { quantity: 1, name: 'strawberry', img: strawberry },
 ];
 
+var items = R.map(n => new Item(n), initialItems);
+
 export function Ministop() {
-  const [selected, setSelected] = useState([]) ;
+  const [selected, setSelected] = useState<Item[]>([]) ;
   const [displaySizes, setDisplaySizes] = useState({});
   const setDisplaySize = useCallback(
-    (name, height) => {
-      setDisplaySizes(displaySizes => ({ ...displaySizes, [name]: height }));
+    (id, height) => {
+      setDisplaySizes(displaySizes => ({ ...displaySizes, [id]: height }));
     },
     [setDisplaySizes]
   );
@@ -51,21 +74,21 @@ export function Ministop() {
 
   const selectedMap = useMemo(
     () =>
-    selected.reduce((hash, item) => ((hash[item.name] = true), hash), {}),
+    selected.reduce((hash, item) => ((hash[item.id] = true), hash), {}),
     [selected]
   );
   const selectedTransitions = useTransition(selected, {
     config: item => ({
       ...config.stiff,
-      clamp: !selectedMap[item.name]
+      clamp: !selectedMap[item.id]
     }),
     from: { opacity: 0, transform: "translate3d(-25%, 0px, 0px)" },
     enter: item => ({
       opacity: 1,
-      height: displaySizes[item.name],
+      height: displaySizes[item.id],
       transform: "translate3d(0%, 0px, 0px)"
     }),
-    update: item => ({ height: displaySizes[item.name] }),
+    update: item => ({ height: displaySizes[item.id] }),
     leave: { opacity: 0, height: 0, transform: "translate3d(25%, 0px, 0px)" }
   });
   return (
@@ -87,31 +110,26 @@ export function Ministop() {
           </div>
         </div>
         <div className="pos__cart__list">
-          {selectedTransitions((styles, item) => (
-            <CartItem
-              quantity={item.quantity}
-              price="$15"
-              src={item.img}
-              styles={styles}
-              setDisplaySize={setDisplaySize}
-              item={item}
-            >
-              {item.name}
-            </CartItem>
-          ))}
-          {/* {selected.map(item => (
-            <CartItem quantity="1" price="$15" src={item.img}>{item.name}</CartItem>
-          ))} */}
-          {/* <CartItem quantity="1" price="$15" src={melon2}>Melon</CartItem> */}
-          {/* <CartItem quantity="2" price="$7" src={semangka2}>Semangka</CartItem> */}
-          {/* <CartItem quantity="7" price="$30" src={jeruk2}>Jeruk</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
-          {/* <CartItem quantity="1" price="$3" src={strawberry2}>Strawberry</CartItem> */}
+          {selectedTransitions((styles, item) => {
+            function onUpdateQuantity(quantity: number) {
+              var [existItem] = selected.filter(n => n.equals(item));
+              existItem.quantity = quantity;
+              setSelected(list => [...list]);
+            }
+            return (
+              <CartItem
+                quantity={item.quantity}
+                price="$15"
+                src={item.img}
+                styles={styles}
+                setDisplaySize={setDisplaySize}
+                item={item}
+                onUpdateQuantity={onUpdateQuantity}
+              >
+                {item.name}
+              </CartItem>
+            );
+          })}
         </div>
         <div className="pos__cart__sumup-wrapper">
           <div className="pos__cart__sumup">
@@ -137,12 +155,12 @@ export function Ministop() {
       <div className="pos__list">
         {items.map(item => (
           <div className="pos__item" onClick={() => {
-            var [ existItem ] = selected.filter(n => n.name === item.name);
+            var [ existItem ] = selected.filter(n => n.equals(item));
             if (existItem) {
               ++existItem.quantity;
-              setSelected(list => [...list])
+              setSelected(list => [...list]);
             } else {
-              setSelected(list => [...list, item])
+              setSelected(list => [...list, item]);
             }
           }}>
             <img src={item.img} />
@@ -174,10 +192,10 @@ export function Ministop() {
 }
 
 function CartItem(props) {
-  var { src, price, quantity, children, styles, setDisplaySize, item} = props;
+  var { src, price, quantity, children, styles, setDisplaySize, item, onUpdateQuantity } = props;
   var [ref, height] = useHeight();
   useLayoutEffect(() => {
-    height && setDisplaySize(item.name, height);
+    height && setDisplaySize(item.id, height);
   }, [height]);
   return (
     <animated.div style={{ ...styles, overflow: "hidden" }}>
@@ -188,9 +206,9 @@ function CartItem(props) {
           <div className="cart__item__price">{price}</div>
           <div className="cart__item__quantity-wrapper">
             <div className="cart__item__quantity">
-              <div className="cart__item__quantity__minus"> <AiOutlineMinus /> </div>
+              <div className="cart__item__quantity__minus" onClick={() => onUpdateQuantity(quantity - 1)}> <AiOutlineMinus /> </div>
               <div className="cart__item__quantity__number">{quantity}</div>
-              <div className="cart__item__quantity__plus"> <AiOutlinePlus /> </div>
+              <div className="cart__item__quantity__plus" onClick={() => onUpdateQuantity(quantity + 1)}> <AiOutlinePlus /> </div>
             </div>
           </div>
         </div>
