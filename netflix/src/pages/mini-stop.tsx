@@ -112,9 +112,18 @@ export function Ministop() {
         <div className="pos__cart__list">
           {selectedTransitions((styles, item) => {
             function onUpdateQuantity(quantity: number) {
-              var [existItem] = selected.filter(n => n.equals(item));
-              existItem.quantity = quantity;
-              setSelected(list => [...list]);
+              setSelected(list => {
+                var [existItem] = list.filter(n => n.equals(item));
+                existItem.quantity = quantity;
+                return [...list];
+              });
+            }
+
+            function onRemove() {
+              setSelected(list => {
+                var others = list.filter(n => !n.equals(item));
+                return others;
+              });
             }
             return (
               <CartItem
@@ -125,6 +134,7 @@ export function Ministop() {
                 setDisplaySize={setDisplaySize}
                 item={item}
                 onUpdateQuantity={onUpdateQuantity}
+                onRemove={onRemove}
               >
                 {item.name}
               </CartItem>
@@ -155,13 +165,15 @@ export function Ministop() {
       <div className="pos__list">
         {items.map(item => (
           <div className="pos__item" onClick={() => {
-            var [ existItem ] = selected.filter(n => n.equals(item));
-            if (existItem) {
-              ++existItem.quantity;
-              setSelected(list => [...list]);
-            } else {
-              setSelected(list => [...list, item]);
-            }
+            setSelected(list => {
+              var [ existItem ] = list.filter(n => n.equals(item));
+              if (existItem) {
+                ++existItem.quantity;
+                return [...list];
+              } else {
+                return [...list, item];
+              }
+            })
           }}>
             <img src={item.img} />
             <div className="pos__item__name">{item.name}</div>
@@ -192,7 +204,11 @@ export function Ministop() {
 }
 
 function CartItem(props) {
-  var { src, price, quantity, children, styles, setDisplaySize, item, onUpdateQuantity } = props;
+  var {
+    src, price, quantity, children, styles, setDisplaySize, item,
+    onUpdateQuantity,
+    onRemove,
+  } = props;
   var [ref, height] = useHeight();
   useLayoutEffect(() => {
     height && setDisplaySize(item.id, height);
@@ -206,7 +222,14 @@ function CartItem(props) {
           <div className="cart__item__price">{price}</div>
           <div className="cart__item__quantity-wrapper">
             <div className="cart__item__quantity">
-              <div className="cart__item__quantity__minus" onClick={() => onUpdateQuantity(quantity - 1)}> <AiOutlineMinus /> </div>
+              <div className="cart__item__quantity__minus" onClick={() => {
+                var newQuantity = quantity - 1;
+                if (newQuantity > 0) {
+                  onUpdateQuantity(quantity - 1)
+                } else {
+                  onRemove();
+                }
+              }}> <AiOutlineMinus /> </div>
               <div className="cart__item__quantity__number">{quantity}</div>
               <div className="cart__item__quantity__plus" onClick={() => onUpdateQuantity(quantity + 1)}> <AiOutlinePlus /> </div>
             </div>
