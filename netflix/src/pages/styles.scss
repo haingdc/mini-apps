@@ -22,6 +22,11 @@
     padding: 15px 0 0;
     display: flex;
     flex-direction: column;
+    &__header-shadow {
+      height: 1px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05),0 1px 4px rgba(0,0,0,0.05),0 2px 8px rgba(0,0,0,0.05);;
+      margin-top: 12px;
+    }
     &__header {
       display: flex;
       justify-content: space-between;
@@ -44,12 +49,16 @@
         color: #fc5959;
       }
     }
+    &__list-wrapper {
+      overflow: hidden scroll;
+      height: 415px;
+      padding: 0 20px;
+    }
     &__list {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 20px;
-      padding: 0 20px;
+      padding: 20px 0;
     }
     &__sumup-wrapper {
       margin-top: 10px;
@@ -208,6 +217,8 @@
 .cart {
   &__item-wrapper {
     box-shadow: 0px 5px 14px 1px rgba(211, 220, 234, 0.45);
+    flex: 0 0 auto;
+    border-radius: 10px;
   }
   &__item {
     display: grid;
@@ -215,7 +226,6 @@
                           "photo price quantity";
     grid-template-columns: 41px 1fr auto;
     padding: 10px;
-    border-radius: 10px;
     padding: 13px 10px;
     &__photo {
       grid-area: photo;

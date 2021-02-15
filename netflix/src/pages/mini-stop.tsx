@@ -109,37 +109,40 @@ export function Ministop() {
             <IoClose />
           </div>
         </div>
-        <div className="pos__cart__list">
-          {selectedTransitions((styles, item) => {
-            function onUpdateQuantity(quantity: number) {
-              setSelected(list => {
-                var [existItem] = list.filter(n => n.equals(item));
-                existItem.quantity = quantity;
-                return [...list];
-              });
-            }
+        <div className="pos__cart__header-shadow"></div>
+        <div className="pos__cart__list-wrapper">
+          <div className="pos__cart__list">
+            {selectedTransitions((styles, item) => {
+              function onUpdateQuantity(quantity: number) {
+                setSelected(list => {
+                  var [existItem] = list.filter(n => n.equals(item));
+                  existItem.quantity = quantity;
+                  return [...list];
+                });
+              }
 
-            function onRemove() {
-              setSelected(list => {
-                var others = list.filter(n => !n.equals(item));
-                return others;
-              });
-            }
-            return (
-              <CartItem
-                quantity={item.quantity}
-                price="$15"
-                src={item.img}
-                styles={styles}
-                setDisplaySize={setDisplaySize}
-                item={item}
-                onUpdateQuantity={onUpdateQuantity}
-                onRemove={onRemove}
-              >
-                {item.name}
-              </CartItem>
-            );
-          })}
+              function onRemove() {
+                setSelected(list => {
+                  var others = list.filter(n => !n.equals(item));
+                  return others;
+                });
+              }
+              return (
+                <CartItem
+                  quantity={item.quantity}
+                  price="$15"
+                  src={item.img}
+                  styles={styles}
+                  setDisplaySize={setDisplaySize}
+                  item={item}
+                  onUpdateQuantity={onUpdateQuantity}
+                  onRemove={onRemove}
+                >
+                  {item.name}
+                </CartItem>
+              );
+            })}
+          </div>
         </div>
         <div className="pos__cart__sumup-wrapper">
           <div className="pos__cart__sumup">
@@ -214,7 +217,7 @@ function CartItem(props) {
     height && setDisplaySize(item.id, height);
   }, [height]);
   return (
-    <animated.div style={{ ...styles, overflow: "hidden" }}>
+    <animated.div className="cart__item-wrapper" style={{ ...styles, overflow: "hidden" }}>
       <div ref={ref} style={{ marginRight: "10px" }}>
         <div className="cart__item">
           <img className="cart__item__photo" src={src} />
