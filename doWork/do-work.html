@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do Work Branch</title>
+</head>
+<body>
+  <h1>Do work branch</h1>
+  <script>
+    function a() {
+      b();
+    }
+    function b() {
+      c();
+      h();
+    }
+
+    function c() {
+      d();
+      f();
+    }
+
+    function d() {
+      e();
+    }
+
+    function e() {
+      for(let i = 0; i < 1e9; i += Math.random()) { }
+    }
+    function f() {
+      for(let i = 0; i < 1e9; i += Math.random()) { }
+      g();
+    }
+    function g() {
+      for(let i = 0; i < 1e9; i += Math.random()) { }
+    }
+    function h() {
+      f();
+    }
+
+    a();
+  </script>
+</body>
+</html>
