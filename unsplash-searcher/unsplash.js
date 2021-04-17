@@ -12,9 +12,10 @@ function simpleGet(options) {
 
 export function UnsplashSearcher()
 {
-  let   [photos, setPhotos] = React.useState([])
-  let   [query, setQuery]   = React.useState("")
-  const queryInput          = useRef(null)
+  let [photos, setPhotos] = React.useState([])
+  let [query, setQuery]   = React.useState("")
+  let [status, setStatus] = React.useState('initial')
+  const queryInput        = useRef(null)
 
   const numberOfPhotos = 10;
   const url = "https://api.unsplash.com/photos/random/?count=" +
@@ -23,10 +24,33 @@ export function UnsplashSearcher()
   useEffect(() => {
     const photosUrl = query ? `${url}&query=${query}` : url;
 
+    setStatus('loading')
     simpleGet({
       url: photosUrl,
       onSuccess: res => {
-        setPhotos(res.body);
+        const fetchingImages = res.body.map(img => {
+          return new Promise(function (resolve) {
+            const item = {
+              id: img.id,
+              image: img.urls.regular,
+            }
+            const image = new Image()
+            image.src = item.image
+            image.addEventListener('load', function() {
+              item.image = image
+              resolve(item)
+            })
+            image.addEventListener('error', function() {
+              item.image = ''
+              resolve(item)
+            })
+          })
+        })
+        Promise
+        .all(fetchingImages)
+        .then(setPhotos)
+        .then(() => setStatus('done'))
+        // setPhotos(res.body);
       }
     });
   }, [query, url])
@@ -41,44 +65,45 @@ export function UnsplashSearcher()
     'div',
     {
       className: 'box',
-      onSubmit: searchPhotos,
+      onSubmit : searchPhotos,
     },
     [
       React.createElement
-      (
-        'form', { key: 'unsplash-form' },
-        React.createElement
         (
-          'label', null,
-          [
-            'Search Photos on Unsplash',
-            React.createElement
-            (
-              'input',
-              {
-                key: 'unsplash-input',
-                ref: queryInput,
-                placeholder: "Try 'dogs' or 'coffee'!",
-                type: "search",
-                className: "input",
-                defaultValue: "",
-                style: { marginBottom: 20 },
-              }
-            )
-          ]
-        )
-      ),
-      React.createElement
-      (
-        'ul', { key: 'unsplash-result', className: 'photo-grid' },
-        photos.map(photo => {
-          return React.createElement
+          'form', { key: 'unsplash-form' },
+          React.createElement
           (
-            'li', { key: photo.id },
-            React.createElement( 'img', { src: photo.urls.regular } )
+            'label', null,
+            [
+              'Search Photos on Unsplash',
+              React.createElement
+              (
+                'input',
+                {
+                  ref         : queryInput,
+                  key         : 'unsplash-input',
+                  type        : "search",
+                  className   : "input",
+                  defaultValue: "",
+                  placeholder : "Try 'dogs' or 'coffee'!",
+                  style       : { marginBottom: 20 },
+                }
+              )
+            ]
           )
-        })
-      )
+        ),
+      status == 'loading' ? 'Loading...' : undefined,
+      React.createElement
+        (
+          'ul', { key: 'unsplash-result', className: 'photo-grid' },
+          photos.map(photo => {
+            return React.createElement
+            (
+              'li', { key: photo.id },
+              React.createElement( 'img', { src: photo.image.src } )
+            )
+          })
+        )
     ]
   )
 }
