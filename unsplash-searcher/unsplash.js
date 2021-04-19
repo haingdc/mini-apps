@@ -127,6 +127,7 @@ export function UnsplashSearcher()
                     {
                       className: 'search-btn',
                       key: 'unsplash-search-btn',
+                      type: 'button',
                       onClick: function() {
                         search(query)
                       },
