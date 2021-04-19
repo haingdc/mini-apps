@@ -5,17 +5,19 @@ const clientID = "7fCBA2w-hqHKrTOmWd8yL7chs2rXEaT893lUoU7fk3k"
 // const clientID = ''
 
 function simpleGet(options) {
+  const id = createId()
+  console.log(`fetch with id: ${id}`)
   superagent
   .get(options.url)
   .then(function(res) {
+    console.log(`fulfilled with id: ${id}`)
     if (options.onSuccess) options.onSuccess(res)
   })
 }
 
-
-
 export function UnsplashSearcher()
 {
+  const controller = React.useRef(null)
   let [photos, setPhotos] = React.useState([])
   let [query, setQuery]   = React.useState("")
   let [status, setStatus] = React.useState('initial')
@@ -25,13 +27,21 @@ export function UnsplashSearcher()
   const url = "https://api.unsplash.com/photos/random/?count=" +
               numberOfPhotos + "&client_id=" + clientID
 
-  function search(query) {
+  async function search(query) {
+    // create random Id to identity requests
+    const id = createId()
+    // Abort any previous instance of this
+    if (controller.current) controller.current.abort()
+
+    const { signal } = (controller.current = new AbortController())
+
     const photosUrl = query ? `${url}&query=${query}` : url;
 
-    setStatus('loading')
-    simpleGet({
-      url: photosUrl,
-      onSuccess: res => {
+    console.log(`%c fetch with id: ${id}`, 'color: #fdf7e3; border: 2px dashed lightblue;')
+    try {
+      setStatus('loading')
+      const images = await abortable(signal, superagent.get(photosUrl).then(function onSuccess(res)
+      {
         const fetchingImages = res.body.map(img => {
           const item = {
             id: img.id,
@@ -70,13 +80,17 @@ export function UnsplashSearcher()
           return n[1]
         })
         setPhotos(tombstones)
-        Promise
-        .all(imagesP)
-        // .then(setPhotos)
-        .then(() => setStatus('done'))
-        // setPhotos(res.body);
+        return Promise.all(imagesP)
+    }))
+    setStatus('done')
+    console.log(`%c fulfilled with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log(`%c abort with id: ${id}`, 'background-color: #f6f6f6; color: tomato;')
+        return;
       }
-    });
+      throw err
+    }
 
   }
 
@@ -153,4 +167,10 @@ export function UnsplashSearcher()
         )
     ]
   )
+}
+
+function createId() {
+  return Array.from({ length: 10 }, () =>
+        String.fromCharCode(65 + Math.floor(Math.random() * 26))
+      ).join("")
 }

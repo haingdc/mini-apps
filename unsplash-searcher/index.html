@@ -13,6 +13,19 @@
   <script crossorigin src="libraries/react.development.js"></script>
   <script crossorigin src="libraries/react-dom.development.js"></script>
   <script crossorigin src="libraries/superagent@5.1.1.js"></script>
+  <script>
+    async function abortable(signal, promise) {
+      if (signal.aborted) throw new DOMException('AbortError', 'AbortError');
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+          signal.addEventListener('abort', () => {
+            reject(new DOMException('AbortError', 'AbortError'));
+          });
+        }),
+      ]);
+    }
+  </script>
   <script type="module" src="app.js"></script>
 </body>
 </html>
