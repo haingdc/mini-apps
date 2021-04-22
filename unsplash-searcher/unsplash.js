@@ -1,3 +1,4 @@
+// https://unsplash.com/oauth/applications/224017
 const { useState, useEffect, useRef } = React;
 
 // const clientID = "8e31e45f4a0e8959d456ba2914723451b8262337f75bcea2e04ae535491df16d"
@@ -8,7 +9,7 @@ export function UnsplashSearcher()
 {
   const controller          = React.useRef(null)
   let   [photos, setPhotos] = React.useState([])
-  let   [query, setQuery]   = React.useState("")
+  let   [query , setQuery ] = React.useState("")
   let   [status, setStatus] = React.useState('initial')
   const queryInput          = useRef(null)
 
@@ -24,55 +25,18 @@ export function UnsplashSearcher()
 
     const { signal } = (controller.current = new AbortController())
 
-    const photosUrl = query ? `${url}&query=${query}` : url;
+    const unsplashUrl = query ? `${url}&query=${query}` : url;
 
     console.log(`%c fetch with id: ${id}`, 'color: #fdf7e3; border: 2px dashed lightblue;')
     try {
       setStatus('loading')
-      const images = await abortable(signal, superagent.get(photosUrl).then(function onSuccess(res)
-      {
-        const fetchingImages = res.body.map(img => {
-          const item = {
-            id: img.id,
-            image: { src: img.urls.regular },
-          }
-          const itemP = new Promise(function (resolve) {
-            const image = new Image()
-            image.src = item.image.src
-            image.addEventListener('load', function() {
-              item.image = image
-              resolve(item)
-            })
-            image.addEventListener('error', function() {
-              item.image = ''
-              resolve(item)
-            })
-          })
-          return [item, itemP]
-        })
-        const tombstones = fetchingImages.map((n, index) => {
-          n[1].then(image => {
-            setPhotos( prevPhotos => {
-              const newPhotos = [...prevPhotos]
-              newPhotos[index] = image
-              return newPhotos
-              } )
-          })
-          const tombstone = {
-            id: n[0].id,
-            image: { src: '' },
-          }
+      const response = await abortable(signal, superagent.get(unsplashUrl))
 
-          return tombstone
-        })
-        const imagesP = fetchingImages.map(n => {
-          return n[1]
-        })
-        setPhotos(tombstones)
-        return Promise.all(imagesP)
-    }))
-    setStatus('done')
-    console.log(`%c fulfilled with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
+      console.log(`%c onSuccess with id: ${id} by response`, 'color: orange',  response)
+      fetchingImages(response.body)
+
+      setStatus('done')
+      console.log(`%c fulfilled with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
     } catch (err) {
       if (err.name === 'AbortError') {
         console.log(`%c abort with id: ${id}`, 'background-color: #f6f6f6; color: tomato;')
@@ -80,7 +44,44 @@ export function UnsplashSearcher()
       }
       throw err
     }
+  }
 
+  function fetchingImages(imgList) {
+    const fetchingImages = imgList.map(img => {
+      const item = {
+        id: img.id,
+        image: { src: img.urls.regular },
+      }
+      const itemP = new Promise(function (resolve) {
+        const image = new Image()
+        image.src = item.image.src
+        image.addEventListener('load', function() {
+          item.image = image
+          resolve(item)
+        })
+        image.addEventListener('error', function() {
+          item.image = ''
+          resolve(item)
+        })
+      })
+      return [item, itemP]
+    })
+    const tombstones = fetchingImages.map((n, index) => {
+      n[1].then(image => {
+        setPhotos( prevPhotos => {
+          const newPhotos = [...prevPhotos]
+          newPhotos[index] = image
+          return newPhotos
+          } )
+      })
+      const tombstone = {
+        id: n[0].id,
+        image: { src: '' },
+      }
+
+      return tombstone
+    })
+    setPhotos(tombstones)
   }
 
   useEffect(() => {
