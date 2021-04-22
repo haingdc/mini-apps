@@ -4,24 +4,13 @@ const { useState, useEffect, useRef } = React;
 const clientID = "7fCBA2w-hqHKrTOmWd8yL7chs2rXEaT893lUoU7fk3k"
 // const clientID = ''
 
-function simpleGet(options) {
-  const id = createId()
-  console.log(`fetch with id: ${id}`)
-  superagent
-  .get(options.url)
-  .then(function(res) {
-    console.log(`fulfilled with id: ${id}`)
-    if (options.onSuccess) options.onSuccess(res)
-  })
-}
-
 export function UnsplashSearcher()
 {
-  const controller = React.useRef(null)
-  let [photos, setPhotos] = React.useState([])
-  let [query, setQuery]   = React.useState("")
-  let [status, setStatus] = React.useState('initial')
-  const queryInput        = useRef(null)
+  const controller          = React.useRef(null)
+  let   [photos, setPhotos] = React.useState([])
+  let   [query, setQuery]   = React.useState("")
+  let   [status, setStatus] = React.useState('initial')
+  const queryInput          = useRef(null)
 
   const numberOfPhotos = 10;
   const url = "https://api.unsplash.com/photos/random/?count=" +
