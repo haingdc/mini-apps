@@ -33,7 +33,7 @@ export function UnsplashSearcher()
       const response = await abortable(signal, superagent.get(unsplashUrl))
 
       console.log(`%c onSuccess with id: ${id} by response`, 'color: orange',  response)
-      fetchingImages(response.body)
+      fetchingImages(response.body, id, signal)
 
       setStatus('done')
       console.log(`%c fulfilled with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
@@ -46,7 +46,7 @@ export function UnsplashSearcher()
     }
   }
 
-  function fetchingImages(imgList) {
+  function fetchingImages(imgList, id, signal) {
     const fetchingImages = imgList.map(img => {
       const item = {
         id: img.id,
@@ -66,22 +66,43 @@ export function UnsplashSearcher()
       })
       return [item, itemP]
     })
-    const tombstones = fetchingImages.map((n, index) => {
-      n[1].then(image => {
+    const imageTombstones = fetchingImages.map(x => x[0]).map(x => ({ id: x.id, image: { src: '' } }))
+    setPhotos(imageTombstones)
+    const imagePromises   = fetchingImages.map(x => x[1])
+    imagePromises.forEach(async (ip, i) => {
+      try {
+        const image = await abortable(signal, ip)
+        console.log(`image is load for id: ${id}`)
         setPhotos( prevPhotos => {
-          const newPhotos = [...prevPhotos]
-          newPhotos[index] = image
+          const  newPhotos    = [...prevPhotos];
+                 newPhotos[i] = image
           return newPhotos
-          } )
-      })
-      const tombstone = {
-        id: n[0].id,
-        image: { src: '' },
+        })
+      } catch(err) {
+        if (err.name === 'AbortError') {
+          console.log(`image is aborted load for id: ${id}`, 'background-color: #f6f6f6; color: tomato;')
+          return;
+        }
+        throw err
       }
-
-      return tombstone
     })
-    setPhotos(tombstones)
+    // const tombstones = fetchingImages.map((n, index) => {
+    //   n[1].then(image => {
+    //     console.log(`image is load for id: ${id}`)
+    //     setPhotos( prevPhotos => {
+    //       const newPhotos = [...prevPhotos]
+    //       newPhotos[index] = image
+    //       return newPhotos
+    //       } )
+    //   })
+    //   const tombstone = {
+    //     id: n[0].id,
+    //     image: { src: '' },
+    //   }
+
+    //   return tombstone
+    // })
+    // setPhotos(imageTombstones)
   }
 
   useEffect(() => {
