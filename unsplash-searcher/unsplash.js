@@ -27,16 +27,15 @@ export function UnsplashSearcher()
 
     const unsplashUrl = query ? `${url}&query=${query}` : url;
 
-    console.log(`%c fetch with id: ${id}`, 'color: #fdf7e3; border: 2px dashed lightblue;')
+    console.log(`%c get image list with id: ${id}`, 'color: #fdf7e3; border: 2px dashed lightblue;')
     try {
       setStatus('loading')
       const response = await abortable(signal, superagent.get(unsplashUrl))
 
-      console.log(`%c onSuccess with id: ${id} by response`, 'color: orange',  response)
+      console.log(`%c done get image list with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
       fetchingImages(response.body, id, signal)
 
       setStatus('done')
-      console.log(`%c fulfilled with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
     } catch (err) {
       if (err.name === 'AbortError') {
         console.log(`%c abort with id: ${id}`, 'background-color: #f6f6f6; color: tomato;')
@@ -67,8 +66,8 @@ export function UnsplashSearcher()
       return [item, itemP]
     })
     const imageTombstones = fetchingImages.map(x => x[0]).map(x => ({ id: x.id, image: { src: '' } }))
-    setPhotos(imageTombstones)
     const imagePromises   = fetchingImages.map(x => x[1])
+    setPhotos(imageTombstones)
     imagePromises.forEach(async (ip, i) => {
       try {
         const image = await abortable(signal, ip)
@@ -80,29 +79,12 @@ export function UnsplashSearcher()
         })
       } catch(err) {
         if (err.name === 'AbortError') {
-          console.log(`image is aborted load for id: ${id}`, 'background-color: #f6f6f6; color: tomato;')
+          console.log(`%c image is aborted load for id: ${id}`, 'background-color: #f6f6f6; color: tomato;')
           return;
         }
         throw err
       }
     })
-    // const tombstones = fetchingImages.map((n, index) => {
-    //   n[1].then(image => {
-    //     console.log(`image is load for id: ${id}`)
-    //     setPhotos( prevPhotos => {
-    //       const newPhotos = [...prevPhotos]
-    //       newPhotos[index] = image
-    //       return newPhotos
-    //       } )
-    //   })
-    //   const tombstone = {
-    //     id: n[0].id,
-    //     image: { src: '' },
-    //   }
-
-    //   return tombstone
-    // })
-    // setPhotos(imageTombstones)
   }
 
   useEffect(() => {
