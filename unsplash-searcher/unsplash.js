@@ -33,8 +33,9 @@ export function UnsplashSearcher()
       const response = await abortable(signal, superagent.get(unsplashUrl))
 
       console.log(`%c done get image list with id: ${id}`, 'background-color: #f6f6f6; color: #5eba7d;')
-      fetchingImages(response.body, id, signal)
+      await fetchingImages(response.body, id, signal)
 
+      console.log(`status done with id: ${id}`)
       setStatus('done')
     } catch (err) {
       if (err.name === 'AbortError') {
@@ -85,6 +86,7 @@ export function UnsplashSearcher()
         throw err
       }
     })
+    return Promise.all(imagePromises)
   }
 
   useEffect(() => {
