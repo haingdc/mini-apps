@@ -1,0 +1,16 @@
+body {
+  height: 100vh;
+  margin: 0;
+  background: orange;
+  display: grid;
+  place-items: center;
+}
+
+body > div {
+  background: white;
+}
+
+h1 {
+  padding: 1rem;
+  font: 100%/1 system-ui;
+}
