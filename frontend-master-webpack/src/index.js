@@ -1,4 +1,11 @@
 import nav from './nav'
-import { bottom, top } from './footer'
+import { footer } from './footer'
+import makeButton from './button'
+import { makeButtonStyle } from './button-styles'
 
-console.log(nav, bottom, top)
+const button = makeButton('ya button')
+button.style = makeButtonStyle('tomato')
+document.body.appendChild(button)
+document.body.appendChild(footer)
+
+console.log(nav, bottom, top, makeButton('submit'), makeButtonStyle('cyan'))
