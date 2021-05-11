@@ -1,4 +1,6 @@
+import css from './footer.css'
 import { red, blue } from './button-styles'
+console.log({ css})
 
 const top = document.createElement('div')
 top.innerText = 'top of footer'

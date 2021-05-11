@@ -6,7 +6,8 @@
   "scripts": {
     "webpack-dev-server": "webpack-dev-server",
     "webpack": "webpack",
-    "dev": "npm run webpack-dev-server -- --env.mode development --watch",
+    "dev": "npm run webpack-dev-server -- --env.mode development --watch --hot",
+    "devnoserver": "npm run webpack -- --env.mode development --watch",
     "prod": "npm run webpack -- --env.mode production",
     "debugthis": "node --inspect --inspect-brk ./src/index.js",
     "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
