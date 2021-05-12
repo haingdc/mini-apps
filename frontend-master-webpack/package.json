@@ -10,6 +10,8 @@
     "devnoserver": "npm run webpack -- --env.mode development --watch",
     "prod": "npm run webpack -- --env.mode production",
     "prod:typescript": "npm run prod -- --env.presets typescript",
+    "prod:analyze": "npm run prod -- --env.presets analyze",
+    "prod:compress": "npm run prod -- --env.presets compress",
     "debugthis": "node --inspect --inspect-brk ./src/index.js",
     "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
     "debugwebpack": "node --inspect --inspect-brk ./webpack.config.js",
@@ -41,11 +43,12 @@
     "typescript": "^2.9.0-dev.20180506",
     "url-loader": "^1.0.1",
     "webpack": "^4.39.1",
-    "webpack-bundle-analyzer": "^3.4.1",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.1.4",
     "webpack-merge": "^4.1.3",
     "webpack-node-externals": "^1.7.2",
+    "compression-webpack-plugin": "^1.1.11",
     "workbox-webpack-plugin": "^4.3.1"
   },
   "dependencies": {
