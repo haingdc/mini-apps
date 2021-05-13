@@ -25,6 +25,7 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
       },
       output: {
         filename: 'bundle.js',
+        chunkFilename: "[name].lazy-chunk.js",
       },
       devtool: "source-map",
       plugins: [ new HtmlWebpackPlugin(), new webpack.ProgressPlugin() ],

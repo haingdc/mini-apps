@@ -6,10 +6,14 @@ import { makeButtonStyle } from './button-styles'
 import imageUrl from './webpack-logo.jpg'
 import makeImage from './image'
 // import { footer } from './footer'
-const loadFooter = () => import('./footer')
+const loadFooter = () => import(/* webpackChunkName: "footer" */ './footer')
 
 
-const setButtonStyle = (color) => import(`./button-styles/${color}`)
+if (process.env.NODE_ENV === 'development') {
+  const setButtonStyle = (color) => import(/* webpackMode: "lazy-once" */ `./button-styles/${color}`)
+} else {
+  const setButtonStyle = (color) => import(`./button-styles/${color}`)
+}
 // const setButtonStyle = (color) => import(`./button-styles/${color}.js`)
 
 
