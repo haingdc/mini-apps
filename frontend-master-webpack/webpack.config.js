@@ -30,6 +30,6 @@ module.exports = ({ mode, presets } = { mode: 'production', presets: [] }) => {
       plugins: [ new HtmlWebpackPlugin(), new webpack.ProgressPlugin() ],
     },
     modeConfig(mode),
-    presetConfig({ mode, presets }),
+    presets ? presetConfig({ mode, presets }) : undefined,
   )
 }
