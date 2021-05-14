@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="libraries/bulma@0.9.2.css" />
+</head>
+<body>
+  Hello
+  <div id="fruit-list"></div>
+  <script>
+    async function abortable(signal, promise) {
+      if (signal.aborted) throw new DOMException('AbortError', 'AbortError');
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+          signal.addEventListener('abort', () => {
+            reject(new DOMException('AbortError', 'AbortError'));
+          });
+        }),
+      ]);
+    }
+  </script>
+</body>
+</html>
