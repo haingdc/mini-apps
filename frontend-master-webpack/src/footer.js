@@ -1,5 +1,10 @@
 import { red, blue } from './button-styles'
 import './footer.css'
+const getLodash = () => import(
+  /* webpackPreload: true */
+  /* webpackChunkName: "getLodash-preload" */
+  "lodash-es"
+)
 
 const top = document.createElement('div')
 top.innerText = 'top of footer'

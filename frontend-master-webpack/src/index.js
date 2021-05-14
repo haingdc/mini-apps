@@ -8,7 +8,6 @@ import makeImage from './image'
 // import { footer } from './footer'
 const loadFooter = () => import(/* webpackChunkName: "footer" */ './footer')
 
-
 if (process.env.NODE_ENV === 'development') {
   const setButtonStyle = (color) => import(/* webpackMode: "lazy-once" */ `./button-styles/${color}`)
 } else {
