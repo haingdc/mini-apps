@@ -1,3 +1,5 @@
 node_modules
 package-lock.json
 netflix-master
+yarn.lock
+yarn-error.log
