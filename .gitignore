@@ -3,3 +3,4 @@ package-lock.json
 netflix-master
 yarn.lock
 yarn-error.log
+frontend-master-webpack/dist

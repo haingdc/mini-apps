@@ -1,7 +1,7 @@
 const webpackMerge = require('webpack-merge')
 
 const applyPresets = env => {
-  const { presets } = env
+  const presets = env.presets || []
   /** @type {string[]} */
   const mergedPreset = [].concat(...[presets])
   const mergedConfigs = mergedPreset.map(

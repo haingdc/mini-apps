@@ -4,7 +4,7 @@ module.exports = () => ({
   output: {
     filename: 'bunddle.js'
   },
-  devtool: "source-map",
+  devtool: "none",
   module: {
     rules: [
       {
