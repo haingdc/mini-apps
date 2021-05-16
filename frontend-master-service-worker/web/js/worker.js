@@ -1,8 +1,21 @@
 "use strict";
 
-var curNum = 0;
+var curFib = 0;
+
+self.onmessage = onMessage;
 
 // **********************************
+
+function onMessage(evt) {
+	getNextFib()
+}
+
+function getNextFib() {
+	var fibNum = fib(curFib)
+	self.postMessage({ idx: curFib, fib: fibNum })
+	curFib++
+	setTimeout(getNextFib, 0)
+}
 
 function fib(n) {
 	if (n < 2) {
