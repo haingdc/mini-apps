@@ -6,6 +6,17 @@ const getLodash = () => import(
   "lodash-es"
 )
 
+// TODO: these is not preload image. Still research
+const getImage = () => import(
+  /* webpackPreload: true */
+    /* webpackChunkName: "getImage" */
+  './assets/movie-app.jpg'
+)
+
+getImage().then(src => {
+  console.log({ src })
+}).catch(console.error)
+
 const top = document.createElement('div')
 top.innerText = 'top of footer'
 top.style = red
