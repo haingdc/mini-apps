@@ -25,11 +25,13 @@
 		window.addEventListener('online', function online() {
 			offlineIcon.classList.add('hidden')
 			isOnline = true
+			sendStatusUpdate()
 		})
 
 		window.addEventListener('offline', function offline() {
 			offlineIcon.classList.remove('hidden')
 			isOnline = false
+			sendStatusUpdate()
 		})
 	}
 
@@ -42,6 +44,7 @@
 
 		navigator.serviceWorker.addEventListener('controllerchange', function onController() {
 			svcworker = navigator.serviceWorker.controller
+			sendStatusUpdate(svcworker)
 		})
 
 		navigator.serviceWorker.addEventListener('message', onSWMessage)
@@ -49,7 +52,15 @@
 
 	function onSWMessage(evt) {
 		var { data } = evt
+		if (data.requestStatusUpdate) {
+			console.log("Receive status update request from service worker, responding...")
+			sendStatusUpdate(evt.ports && evt.ports[0])
+		}
 
+	}
+
+	function sendStatusUpdate(target) {
+		sendSWMessage({ statusUpdate: { isOnline, isLoggedIn }}, target )
 	}
 
 	function sendSWMessage(msg, target) {
