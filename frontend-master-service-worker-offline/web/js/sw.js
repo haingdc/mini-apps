@@ -1,6 +1,6 @@
 "use strict";
 
-const version    = 4.5
+const version    = 6.5
 var   isOnline   = true
 var   isLoggedIn = false
 var   cacheName  = `ramblings-${version}`
@@ -20,14 +20,15 @@ var urlsToCache = {
 
 }
 
-self.addEventListener( 'install', onInstall )
-self.addEventListener('activate', onActivate)
-self.addEventListener( 'message', onMessage )
+self.addEventListener( 'install' , onInstall  )
+self.addEventListener( 'activate', onActivate )
+self.addEventListener( 'message' , onMessage  )
+self.addEventListener( 'fetch'   , onFetch    )
 
 main().catch(console.error)
 
 async function main() {
-  // console.log(`Service Worker (${version}) is starting...`)
+  console.log(`Service Worker (${version}) is starting...`)
   await sendMessage({ requestStatusUpdate: true })
   await cacheLoggedOutFiles() // if anything is not in the cache, go ahead and get it. If anything is already in the cache, just ignore it
 }
@@ -79,6 +80,35 @@ function onMessage({ data }) {
   if (data.statusUpdate) {
     ({ isOnline, isLoggedIn } = data.statusUpdate)
     console.log(`Service Worker (v${version}) status update, isOnline: ${isOnline}, isLoggedin: ${isLoggedIn}`)
+  }
+}
+
+function onFetch(evt) {
+  evt.respondWith(router(evt.request))
+}
+
+async function router(req) {
+  var url = new URL(req.url)
+  var reqURL = url.pathname
+  var cache = await caches.open(cacheName)
+
+  if(url.origin == location.origin) {
+    let res
+    try {
+      let fetchOptions = {
+        method: req.method,
+        headers: req.headers,
+        credentials: "omit",
+        cache: "no-store",
+      }
+      let res = await fetch(req.url, fetchOptions)
+      if (res && res.ok) {
+        await cache.put(reqURL, res.clone())
+        return res
+      }
+    } catch(err) {}
+    res = await cache.match(reqURL)
+    return res.clone()
   }
 }
 
