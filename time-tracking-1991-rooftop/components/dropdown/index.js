@@ -6,7 +6,7 @@ function Dropdown(props) {
     e('div', { key: 'dropdown', className: 'dropdown' },
       [
         children,
-        e('img', { key: 'chevron down', src: './assets/images/chevron-down.svg' }),
+        e('img', { key: 'chevron down', className: 'dropdown--chevron', src: './assets/images/chevron-down.svg' }),
       ]
     )
   )

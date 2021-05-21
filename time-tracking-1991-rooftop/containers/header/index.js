@@ -1,18 +1,22 @@
-import Dropdown from '../../components/profile-dropdown/index.js'
+import Dropdown from '../../components/dropdown/index.js'
 import { e } from '../../utils/index.js'
 
 function Header() {
   return (
-    e('header', undefined,
+    e('header', { className: 'app-header' },
       [
         e('img', { key: 'left', src: './assets/images/logo.svg' }),
-        e('div', { key: 'right' },
+        e('div', { key: 'right', className: 'right-header' },
           [
-            e('img', { key: 'bell', src: './assets/images/notification.svg' }),
-            e(Dropdown, { key: 'profile dropdown' }, 'Adam Fisherman'),
-            // e('div', { key: 'profile-container' }, [
-            //   e('img', { key: 'left', src: './assets/images/avatar.png' }),
-            // ]),
+            e('img', { key: 'bell', className: 'app__notification', src: './assets/images/notification.svg' }),
+            e(Dropdown, { key: 'profile dropdown' },
+              [
+                e('div', { key: 'profile container', className: 'profile-container' }, [
+                  e('img', { key: 'left', src: './assets/images/avatar.png' }),
+                  'Adam Fisherman',
+                ]),
+              ]
+            ),
           ]
         ),
       ]

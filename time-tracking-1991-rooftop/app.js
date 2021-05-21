@@ -1,5 +1,6 @@
 import { e } from './utils/index.js'
 import Header from './containers/header/index.js'
+import Main   from './containers/main/index.js'
 
 // const {createFactory, createElement: e} = React
 
@@ -8,7 +9,8 @@ function App() {
   (
     'div', null,
     [
-      e(Header, { key: 'header' })
+      e(Header, { key: 'header' } ),
+      e(Main  , { key: 'main'   } ),
     ]
   )
 }

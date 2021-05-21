@@ -1,3 +1,13 @@
+:root {
+  --color-1: #D7E3F1;  /* table border color */
+  --color-2: #273142;
+  --color-3: #9CB2CD;
+}
+
+html * {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
 .photo-grid {
   display: flex;
   flex-wrap: wrap;
@@ -76,6 +86,85 @@ body {
 }
 
 .dropdown {
+  gap: 5px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dropdown--chevron {
+  padding: 0 10px;
+}
+
+.profile-container {
   display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+/* Layout -- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app__notification {
+  padding: 15px;
+}
+
+.table {
+  display: flex;
+  flex: none;  /* make descendants inherit this prop */
+}
+
+.horizontal-line {
+  height: 48px;
+}
+
+.horizontal-line::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  border-bottom: var(--color-1) 1px solid;
+  z-index: 3;
+}
+
+.vertical-line {
+  width: 182px;
+  min-width: 182px;
+  flex: 1 0 auto;
+  border-right: var(--color-1) 1px solid;
+}
+
+.vertical-line--lefty {
+  flex: none;
+  width: 0;
+  min-width: initial;
+}
+
+.cell--14 {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.cell-13 {
+  font-size: 13px;
+}
+
+.cell-11 {
+  font-size: 11px;
+  line-height: 1.46;
+}
+
+.cell--header {
+  height: 48px;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
