@@ -118,6 +118,11 @@ body {
   padding: 15px;
 }
 
+.mother {
+  display: flex;
+  flex: none;
+}
+
 .table {
   display: flex;
   flex: none;  /* make descendants inherit this prop */
@@ -167,4 +172,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#todo {
+  min-width: 90px;
+}
+
+.hour {
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.hour:first-child {
+  height: 48px;
+  border: var(--color-1) 1px solid;
+  border-right: none;
+  border-left: none;
+  padding-right: 15px;
+}
+
+.hour:not(:first-child) {
+  padding-right: 19px;
+  color: var(--color-3);
 }
