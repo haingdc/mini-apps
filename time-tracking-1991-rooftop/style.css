@@ -145,6 +145,7 @@ body {
   min-width: 182px;
   flex: 1 0 auto;
   border-right: var(--color-1) 1px solid;
+  position: relative;
 }
 
 .vertical-line--lefty {
