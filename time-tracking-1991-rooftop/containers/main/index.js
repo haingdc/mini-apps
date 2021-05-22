@@ -22,7 +22,18 @@ var eventsByDay = [
       {
         id: 'ATVPBWQIWR',
         title: 'Tod 1',
-        hour: '12:15'
+        hour: '12:15',
+        color: 'blue',
+        top: 230,
+        height: 50,
+      },
+      {
+        id: 'VAOJCSSKCT',
+        title: 'Coding phase',
+        hour: '13:45',
+        color: 'red',
+        top: 330,
+        height: 80,
       },
     ],
   },
@@ -85,17 +96,20 @@ function Section2() {
                 { key: day.id, className: 'vertical-line' },
                 [
                   e('div', { key: `${day.id}-header`, className: 'cell--header' }, day.id),
-                  // đặt các hình chữ nhật thông tin ở đây
-                  day?.events?.length ?  e('div', { key: day.events[0], style: {
-                    position: 'absolute',
-                    top: '230px',
-                    left: 0,
-                    right: 0,
-                    width: '80%',
-                    background: 'lightblue',
-                    margin: '0 auto',
-                    zIndex: 3,
-                  } }, day.events[0].title) : undefined,
+                  day?.events?.length
+                    ? day.events.map(function renderEvent(event) {
+                        return e(
+                          Event,
+                          {
+                            color : event.color,
+                            height: event.height,
+                            key   : event.id,
+                            top   : event.top,
+                          },
+                          event.title
+                        )
+                      })
+                    : undefined
                 ]
               )
             })
@@ -108,6 +122,52 @@ function Section2() {
 
 export default Main
 
-function Event() {
-  return 'Event'
+function Event(props) {
+  var { top, height } = props
+  const bgrColorLookup = {
+    red   : '#FF7976',
+    blue  : '#538FFF',
+    yellow: '#FEC25A',
+  }
+  var backgroundColor = bgrColorLookup[props.color] || bgrColorLookup.blue
+  return e(
+    'div',
+    {
+      style: {
+        zIndex         : 3,
+        left           : 0,
+        right          : 0,
+        top            : top + 'px',
+        width          : '80%',
+        margin         : '0 auto',
+        position       : 'absolute',
+        height         : height + 'px',
+        color          : '#fff',
+        padding        : '7px',
+        backgroundColor: backgroundColor,
+      }
+    },
+    props.children
+  )
+}
+
+function SillyEvent() {
+  var content = 'Basgram - code review'
+  var hour  = '08:12'
+  var code  = 'PR611'
+  return e(
+    'div',
+    {  },
+    [
+      e('div', { key: 'head', },
+        [
+          // title
+          e('span', { key: 'hour' }, hour),
+          // code
+          e('span', { key: 'code' }, code),
+        ]
+      ),
+      e('div', { key: 'content' }, content),
+    ]
+  )
 }
