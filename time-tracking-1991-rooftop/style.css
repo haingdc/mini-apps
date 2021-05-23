@@ -118,13 +118,14 @@ body {
   padding: 15px;
 }
 
-.mother {
+.scheduler {
   display: flex;
   flex: none;
 }
 
 .table {
   display: flex;
+  position: relative;
   flex: none;  /* make descendants inherit this prop */
 }
 
@@ -175,18 +176,18 @@ body {
   align-items: center;
 }
 
-#todo {
+.column--hour {
   min-width: 90px;
 }
 
-.hour {
+.cell--hour {
   height: 96px;
   display: flex;
   align-items: center;
   justify-content: right;
 }
 
-.hour:first-child {
+.cell--hour:first-child {
   height: 48px;
   border: var(--color-1) 1px solid;
   border-right: none;
@@ -194,7 +195,7 @@ body {
   padding-right: 15px;
 }
 
-.hour:not(:first-child) {
+.cell--hour:not(:first-child) {
   padding-right: 19px;
   color: var(--color-3);
 }
