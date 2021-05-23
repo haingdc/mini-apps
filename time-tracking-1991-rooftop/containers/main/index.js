@@ -12,7 +12,41 @@ function Main() {
 }
 
 function Section1() {
-  return 'Left'
+  var [isActive, setIsActive] = React.useState(false)
+  return e(
+    'div',
+    undefined,
+    [
+      e(
+        'button',
+        {
+          key: 'button',
+          onClick: function showModal() {
+            setIsActive(true)
+          },
+        },
+        'Open modal'
+      ),
+      e(
+        'div', { key: 'modal', className: classNames('modal', { 'is-active': isActive }) },
+        e('div'   , { className: 'modal-background' }),
+        e(
+          'div'   ,
+          { className: 'modal-content' },
+          e('div', { className: 'box' }, 'Hello')
+        ),
+        e(
+          'button',
+          {
+            className: 'modal-close is-large',
+            ariaLabel: 'close',
+            onClick: function hideModal() {
+              setIsActive(false)
+            },
+          }),
+      )
+    ]
+  )
 }
 
 var eventsByDay = [
