@@ -88,6 +88,7 @@ function Section2() {
                 return e('div', { key: `horizontal-line-${id}`, className: 'horizontal-line' }, )
               })
             ),
+            e('div', { key: 'todo-line', className: 'todo-line' }, ),
             e('div', { key: 'lefty vertical line', className: 'vertical-line vertical-line--lefty' }),
             [
               eventsByDay.map(function renderColumns(day) {

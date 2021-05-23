@@ -2,6 +2,8 @@
   --color-1: #D7E3F1;  /* table border color */
   --color-2: #273142;
   --color-3: #9CB2CD;
+  --color-5: #FE443F;
+  --color-6: #fff;
 }
 
 html * {
@@ -188,7 +190,7 @@ body {
 }
 
 .cell--hour:first-child {
-  height: 48px;
+  height: 49px;
   border: var(--color-1) 1px solid;
   border-right: none;
   border-left: none;
@@ -198,4 +200,29 @@ body {
 .cell--hour:not(:first-child) {
   padding-right: 19px;
   color: var(--color-3);
+}
+
+.todo-line {
+  height: 0;
+}
+
+.todo-line::before {
+  content: 'here';
+  position: absolute;
+  top: 585px;
+  z-index: 4;
+  width: 100px;
+  background-color: var(--color-5);
+  color: var(--color-6);
+  left: -100px;
+  padding: 5px;
+}
+
+.todo-line:after {
+  content: '';
+  position: absolute;
+  top: 600px;
+  z-index: 4;
+  width: 100%;
+  border-bottom: var(--color-5) 2px solid;
 }
