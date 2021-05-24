@@ -1,5 +1,6 @@
 import { e } from '../../utils/index.js'
-import Hello from '../../components/hello/index.js'
+
+const Hello = React.lazy(() => import('../../components/hello/index.js'))
 
 function Main() {
   return (
@@ -34,13 +35,21 @@ function Section1() {
         e(
           'div'   ,
           { className: 'modal-content' },
-          e('div', { className: 'box' }, e(Hello))
+          isActive ?
+            e('div', { className: 'box' },
+              e(
+                React.Suspense ,
+                { fallback: e('div', undefined, 'Loading...') },
+                e(Hello)
+              )
+            )
+            : undefined
         ),
         e(
           'button',
           {
             className: 'modal-close is-large',
-            ariaLabel: 'close',
+            ['aria-label']: 'close',
             onClick: function hideModal() {
               setIsActive(false)
             },
