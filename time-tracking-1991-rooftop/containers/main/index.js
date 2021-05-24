@@ -1,4 +1,5 @@
 import { e } from '../../utils/index.js'
+import Hello from '../../components/hello/index.js'
 
 function Main() {
   return (
@@ -33,7 +34,7 @@ function Section1() {
         e(
           'div'   ,
           { className: 'modal-content' },
-          e('div', { className: 'box' }, 'Hello')
+          e('div', { className: 'box' }, e(Hello))
         ),
         e(
           'button',
