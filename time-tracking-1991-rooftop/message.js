@@ -1,0 +1,17 @@
+var NOTES = [
+  'Meeting ms.Pink at Pear habour',
+  'Flying with Pirot pilot',
+  'Swimming with shark',
+  'Bring the guitar to store',
+  'Rehearsal songs at Abbey Road',
+  'On the road to Mexico',
+  'Writing script for Nertheland Director',
+  'see a Family Guys episode',
+  'Cooking Mama',
+  'Drive alone',
+  'Close the eyes and wishing',
+  'Sign to the fans',
+  'Save the water on earth',
+  'No Shower on a week',
+  'Buy shoes for marathon running in Turtles farm',
+];
