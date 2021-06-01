@@ -22,7 +22,7 @@ fn main() {
   println!("Average of these numbers: {}", average_of_nums);
 }
 
-fn sum(numbers: &Vec<i64>) -> i64 {
+fn sum(numbers: &[i64]) -> i64 {
   let mut total = 0;
 
   for num in numbers.iter() {
@@ -32,7 +32,7 @@ fn sum(numbers: &Vec<i64>) -> i64 {
   total
 }
 
-fn product(numbers: &Vec<i64>) -> i64 {
+fn product(numbers: &[i64]) -> i64 {
   let mut total = 1;
 
   for num in numbers.iter() {
@@ -42,7 +42,7 @@ fn product(numbers: &Vec<i64>) -> i64 {
   total
 }
 
-fn average(numbers: &Vec<i64>) -> i64 {
+fn average(numbers: &[i64]) -> i64 {
   let length = numbers.len() as i64;
 
   sum(numbers) / length
