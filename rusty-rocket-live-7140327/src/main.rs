@@ -2,6 +2,8 @@
 
 #[macro_use] extern crate rocket;
 
+#[cfg(test)] mod tests;
+
 #[get("/world")]
 fn world() -> &'static str {
   "Hello, world!"
@@ -25,8 +27,7 @@ fn query_greeting(name : String, salutation: Option<String>) -> String {
   }
 }
 
-fn main() {
-  // rocket::ignite().mount("/api", routes![world]).launch();
+fn rocket() -> rocket::Rocket {
   let cfg = rocket::config::Config::build(rocket::config::Environment::Development)
         .address("127.0.0.1")
         .port(8000)
@@ -38,5 +39,9 @@ fn main() {
     hello_world,
     query_greeting,
     greeting,
-  ]).launch();
+  ])
+}
+
+fn main() {
+  rocket().launch();
 }
