@@ -1,31 +1,11 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
+// IMPORT ROCKET LIBRARY
 #[macro_use] extern crate rocket;
 
+pub mod routes;
+
 #[cfg(test)] mod tests;
-
-#[get("/world")]
-fn world() -> &'static str {
-  "Hello, world!"
-}
-
-#[get("/")]
-fn hello_world() -> &'static str {
-  "Hello, world! from root"
-}
-
-#[get("/<name>")]
-fn greeting(name: String) -> String {
-  format!("Hello {}", name)
-}
-
-#[get("/hello?<name>&<salutation>")]
-fn query_greeting(name : String, salutation: Option<String>) -> String {
-  match salutation {
-    Some(s) => format!("{} {}", s, name),
-    None => format!("Hello {}", name),
-  }
-}
 
 fn rocket() -> rocket::Rocket {
   let cfg = rocket::config::Config::build(rocket::config::Environment::Development)
@@ -35,12 +15,14 @@ fn rocket() -> rocket::Rocket {
         .unwrap();
 
   rocket::custom(cfg).mount("/api", routes![
-    world,
-    hello_world,
-    query_greeting,
-    greeting,
+    routes::index,
+    routes::world,
+    routes::query_greeting,
+    routes::greeting,
+    routes::json_test,
   ])
 }
+
 
 fn main() {
   rocket().launch();
