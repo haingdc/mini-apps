@@ -16,6 +16,10 @@ GET http://localhost:8000/api/hello?name=rainer&salutation=Hi
 GET http://localhost:8000/api/protected
 
 ###
+GET http://localhost:8000/api/sensitive
+x-api-key: "valid_api_key"
+
+###
 GET http://localhost:8000/api/protected
 x-api-key: c2VjcmV0
 

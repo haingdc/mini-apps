@@ -3,6 +3,7 @@
 // IMPORT ROCKET LIBRARY
 #[macro_use] extern crate rocket;
 
+pub mod api_key;
 pub mod routes;
 
 #[cfg(test)] mod tests;
@@ -20,6 +21,7 @@ fn rocket() -> rocket::Rocket {
     routes::query_greeting,
     routes::greeting,
     routes::json_test,
+    routes::sensitive,
   ])
 }
 
