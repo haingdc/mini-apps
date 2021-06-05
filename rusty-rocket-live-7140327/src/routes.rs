@@ -1,7 +1,15 @@
-use rocket::http::{Cookie, Cookies};
-use rocket_contrib::json::Json;
+use rocket::{
+  http::{Cookie, Cookies},
+  response::status::Created,
+  State,
+};
 use std::collections::HashMap;
-use super::api_key;
+use std::sync::atomic::{Ordering};
+
+use rocket_contrib::{
+  json::{Json},
+};
+use super::{api_key, Hero, NewHero, HeroesMap, HeroCount,ID};
 
 #[get("/world")]
 pub fn world() -> &'static str {
@@ -61,4 +69,51 @@ pub fn protected(key: api_key::ApiKey) -> String {
 #[get("/sensitive")]
 pub fn sensitive(_key: api_key::Sensitive) -> &'static str {
     "Sensitive data."
+}
+
+// Rocket processes body data based on argument types. Here we deserialize
+// (`Deserialize` trait from Serde) a `NewHero` into the `hero` argument.
+//    (see https://rocket.rs/v0.4/guide/requests/#json)
+// Note that we return `Created`. It is a wrapping responder that changes the
+// HTTP status code to 201 (created) and responds with the inner responder
+// (in this case JSON).
+//    (see https://rocket.rs/v0.4/guide/responses/#wrapping)
+#[post("/heroes", format = "json", data = "<hero>")]
+pub fn add_hero(
+    hero: Json<NewHero>,
+    heroes_state: State<'_, HeroesMap>,
+    hero_count: State<'_, HeroCount>,
+) -> Created<Json<Hero>> {
+    // Generate unique hero ID
+    let hid = hero_count.0.fetch_add(1, Ordering::Relaxed);
+
+    // Build new hero
+    let new_hero = Hero {
+        id: hid,
+        name: hero.0.name,
+        can_fly: hero.0.can_fly,
+    };
+
+    // Insert new hero in hashmap
+    let mut heroes = heroes_state.write().unwrap();
+    heroes.insert(hid, new_hero.clone());
+
+    // Use uri macro to generate location header
+    //    (see https://rocket.rs/v0.4/guide/responses/#typed-uris)
+    let location = uri!("/api", get_hero: hid);
+    println!("location {}", location.to_string());
+    Created(location.to_string(), Some(Json(new_hero)))
+}
+
+// Note that we return `Option`. `None` would result in 404 (not found).
+#[get("/heroes/<id>")]
+pub fn get_hero(id: ID, heroes_state: State<'_, HeroesMap>) -> Option<Json<Hero>> {
+    let heroes = heroes_state.read().unwrap();
+    heroes.get(&id).map(|h| Json(h.clone()))
+}
+
+#[get("/heroes")]
+pub fn get_all(heroes_state: State<'_, HeroesMap>) -> Json<Vec<Hero>> {
+    let heroes = heroes_state.read().unwrap();
+    Json(heroes.values().map(|v| v.clone()).collect())
 }
