@@ -1,4 +1,4 @@
-use rocket::http::{Cookie, Cookies, private::CookieJar};
+use rocket::http::{Cookie, Cookies};
 use rocket_contrib::json::Json;
 use std::collections::HashMap;
 use super::api_key;
@@ -59,6 +59,6 @@ pub fn protected(key: api_key::ApiKey) -> String {
 }
 
 #[get("/sensitive")]
-pub fn sensitive(key: api_key::Sensitive) -> &'static str {
+pub fn sensitive(_key: api_key::Sensitive) -> &'static str {
     "Sensitive data."
 }
