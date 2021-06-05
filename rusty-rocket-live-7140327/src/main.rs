@@ -21,6 +21,9 @@ fn rocket() -> rocket::Rocket {
     routes::query_greeting,
     routes::greeting,
     routes::json_test,
+    routes::protected,
+    routes::login,
+    routes::session,
     routes::sensitive,
   ])
 }
