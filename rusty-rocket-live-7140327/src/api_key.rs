@@ -12,7 +12,6 @@ pub struct ApiKey(pub String);
 pub enum ApiKeyError {
     MissingKey,
     InvalidKey,
-    BadCountKey,
 }
 
 // We have to implement `FromRequest` trait for `ApiKey`
@@ -41,16 +40,23 @@ fn is_valid(key: &str) -> bool {
 
 pub struct Sensitive(pub String);
 
+#[derive(Debug)]
+pub enum LoginKeyError {
+  Missing,
+  Invalid,
+  BadCount,
+}
+
 impl<'a, 'r> FromRequest<'a, 'r> for Sensitive {
-  type Error = ApiKeyError;
+  type Error = LoginKeyError;
 
   fn from_request(request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
       let keys: Vec<_> = request.headers().get("x-api-key").collect();
       match keys.len() {
-          0 => Outcome::Failure((Status::BadRequest, ApiKeyError::MissingKey)),
+          0 => Outcome::Failure((Status::BadRequest, LoginKeyError::Missing)),
           1 if is_valid(keys[0]) => Outcome::Success(Sensitive(keys[0].to_string())),
-          1 => Outcome::Failure((Status::BadRequest, ApiKeyError::InvalidKey)),
-          _ => Outcome::Failure((Status::BadRequest, ApiKeyError::BadCountKey)),
+          1 => Outcome::Failure((Status::BadRequest, LoginKeyError::Invalid)),
+          _ => Outcome::Failure((Status::BadRequest, LoginKeyError::BadCount)),
       }
   }
 }
