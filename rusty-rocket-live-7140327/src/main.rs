@@ -25,7 +25,7 @@ fn rocket() -> rocket::Rocket {
     routes::world,
     routes::query_greeting,
     routes::greeting,
-    routes::json_test,
+    routes::json,
     routes::protected,
     routes::login,
     routes::session,
@@ -39,6 +39,7 @@ fn rocket() -> rocket::Rocket {
   //    (see https://rocket.rs/v0.4/guide/state/)
     .manage(RwLock::new(HashMap::<ID, Hero>::new()))
     .manage(HeroCount(AtomicUsize::new(1)))
+    .register(catchers![routes::not_found])
 }
 
 

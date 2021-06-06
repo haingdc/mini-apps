@@ -5,10 +5,11 @@ use rocket::{
 };
 use std::collections::HashMap;
 use std::sync::atomic::{Ordering};
-
 use rocket_contrib::{
-  json::{Json},
+  json,
+  json::{Json, JsonValue},
 };
+
 use super::{api_key, Hero, NewHero, HeroesMap, HeroCount,ID};
 
 #[get("/world")]
@@ -36,7 +37,7 @@ pub fn query_greeting(name : String, salutation: Option<String>) -> String {
 
 // return json data
 #[get("/json")]
-pub fn json_test() -> Json<HashMap<String, String>> {
+pub fn json() -> Json<HashMap<String, String>> {
   let mut my_map = HashMap::new();
   my_map.insert(String::from("cheese"), String::from("gouda"));
   my_map.insert(String::from("bread"), String::from("rye"));
@@ -116,4 +117,12 @@ pub fn get_hero(id: ID, heroes_state: State<'_, HeroesMap>) -> Option<Json<Hero>
 pub fn get_all(heroes_state: State<'_, HeroesMap>) -> Json<Vec<Hero>> {
     let heroes = heroes_state.read().unwrap();
     Json(heroes.values().map(|v| v.clone()).collect())
+}
+
+#[catch(404)]
+pub fn not_found() -> JsonValue {
+  json!({
+    "status": "error",
+    "reason": "Resource was not found",
+  })
 }
