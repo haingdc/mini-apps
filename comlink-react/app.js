@@ -48,18 +48,32 @@ ReactDOM.render(
 )
 
 function useTakeALongTimeToAddTwoNumbers(number1, number2) {
+  var    controller   = React.useRef(null);
   var [data, setData] = React.useState({ isCalculating: false, total: undefined });
   var { workerApi } = useWorker()
 
   React.useEffect(
     function calculate() {
-      setData({ isCalculating: true, total: undefined });
+      // abort any previous instance of this
+      if (controller.current)  controller.current.abort();
 
-      workerApi
-        .takeALongTimeToAddTwoNumbers(number1, number2)
-        .then(function updateTotal(total) {
-          setData({ isCalculating: false, total });
-        });
+      try {
+        var { signal } = (controller.current = new AbortController());
+
+        setData({ isCalculating: true, total: undefined });
+
+        abortable(signal, workerApi.takeALongTimeToAddTwoNumbers(number1,number2))
+          .then(function updateTotal(total) {
+            setData({ isCalculating: false, total });
+          })
+          .catch(err => {
+            console.error(`👻 abortable error: ${err}`);
+          });
+      } catch(err) {
+        console.error(`error: ${err}`);
+      }
+
+
     },
     [workerApi, setData, number1, number2]
   );
