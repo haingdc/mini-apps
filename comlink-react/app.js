@@ -1,8 +1,8 @@
 import * as Comlink from "https://unpkg.com/comlink/dist/esm/comlink.mjs";
 
 function App() {
-  var [number1, setNumber1] = React.useState(1);
-  var [number2, setNumber2] = React.useState(2);
+  var [number1, setNumber1] = React.useState(0);
+  var [number2, setNumber2] = React.useState(0);
 
   var total = useTakeALongTimeToAddTwoNumbers(number1, number2);
 
@@ -47,27 +47,12 @@ ReactDOM.render(
   document.querySelector('#fruit-list')
 )
 
-function takeALongTimeToAddTwoNumbers(number1, number2) {
-  console.log('Start to add...');
-  const seconds = 5;
-  const start = new Date().getTime();
-  const delay = seconds * 1000;
-  while (true) {
-      if ((new Date().getTime() - start) > delay) {
-          break;
-      }
-  }
-  const total = number1 + number2;
-  console.log('Finished adding');
-  return total;
-}
-
 function useTakeALongTimeToAddTwoNumbers(number1, number2) {
   var [data, setData] = React.useState({ isCalculating: false, total: undefined });
   var { workerApi } = useWorker()
 
   React.useEffect(
-    function() {
+    function calculate() {
       setData({ isCalculating: true, total: undefined });
 
       workerApi
