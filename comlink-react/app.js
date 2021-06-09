@@ -1,10 +1,21 @@
 import * as Comlink from "https://unpkg.com/comlink/dist/esm/comlink.mjs";
 
 function App() {
-  var [number1, setNumber1] = React.useState(0);
-  var [number2, setNumber2] = React.useState(0);
+  var [  number1, setNumber1  ] = React.useState(0);
+  var [  number2, setNumber2  ] = React.useState(0);
+  var        totalListRef       = React.useRef([]);
 
   var total = useTakeALongTimeToAddTwoNumbers(number1, number2);
+
+  // an total value will push to the list if both conditions match:
+  // condition 1: total must be calculated
+  // condition 2: list is empty Or to avoid duplicate total value is pushed to list due to useState, we need to compare last item and total
+  if (               !total.isCalculating && total.total != undefined                   // condition 1
+                                          &&
+    (!totalListRef.current.length || totalListRef.current.at(-1) != total)  // condition 2
+  ) {
+    totalListRef.current = [...totalListRef.current, total];
+  }
 
   return React.createElement
   (
@@ -38,6 +49,11 @@ function App() {
     ),
     React.createElement('h2', undefined,
       total.isCalculating ? React.createElement('em', undefined, 'Calculating...') : React.createElement('strong', undefined, total.total)
+    ),
+    React.createElement('div', undefined,
+      totalListRef.current.map(function getTotalElement(e, i) {
+        return React.createElement('div', { key: i }, `Total: ${e.total}`)
+      }),
     ),
   )
 }
