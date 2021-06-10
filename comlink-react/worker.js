@@ -3,7 +3,7 @@ importScripts("https://unpkg.com/comlink/dist/umd/comlink.js");
 Comlink.expose({ takeALongTimeToAddTwoNumbers });
 
 function takeALongTimeToAddTwoNumbers(number1, number2) {
-  console.log('Start to add...');
+  console.log(`Start to add... ${number1} + ${number2}`);
   const seconds = 5;
   const start = new Date().getTime();
   const delay = seconds * 1000;
@@ -13,6 +13,6 @@ function takeALongTimeToAddTwoNumbers(number1, number2) {
       }
   }
   const total = number1 + number2;
-  console.log('Finished adding');
+  console.log(`Finished adding ${number1} + ${number2}`);
   return total;
 }
