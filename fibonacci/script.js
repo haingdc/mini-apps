@@ -44,9 +44,9 @@ btn.addEventListener("click", (e) => {
 		return;
 	}
 
-	const startTime = new Date().getTime();
+	const startTime = performance.now();
 	const sum = fib(num);
-	const time = new Date().getTime() - startTime;
+	const time = performance.now() - startTime;
 
 	const resultDiv = document.createElement("div");
 	resultDiv.innerHTML = textCont(num, sum, time);
