@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Make HackerNews Great Again!</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <ul>
+      {{#each this }}
+      <li class="item">
+        <div class="title"><a href="{{ link }}">{{ title }}</a></div>
+        <div class="description">{{{ description }}}</div>
+        <div class="metadata">{{ pub_date }}</div>
+      </li>
+      {{/each}}
+    </ul>
+  </body>
+</html>
