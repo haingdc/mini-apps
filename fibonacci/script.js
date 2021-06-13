@@ -30,10 +30,11 @@ const textCont = (n, fibNum, time) => {
 };
 
 
-const errPar = document.getElementById("error");
-const btn = document.getElementById("submit-btn");
-const input = document.getElementById("number-input");
+const errPar           = document.getElementById("error");
+const btn              = document.getElementById("submit-btn");
+const input            = document.getElementById("number-input");
 const resultsContainer = document.getElementById("results-container");
+const worker					 = new window.Worker('worker.js');
 
 btn.addEventListener("click", (e) => {
 	errPar.textContent = '';
@@ -44,12 +45,14 @@ btn.addEventListener("click", (e) => {
 		return;
 	}
 
-	const startTime = performance.now();
-	const sum = fib(num);
-	const time = performance.now() - startTime;
+	worker.postMessage({ num });
+	worker.onerror = R.identity;
+	worker.onmessage = function message(e) {
+		var { time, fibNum } = e.data;
+		var resultDiv = document.createElement("div");
 
-	const resultDiv = document.createElement("div");
-	resultDiv.innerHTML = textCont(num, sum, time);
-	resultDiv.className = "result-div";
-	resultsContainer.appendChild(resultDiv);
+		resultDiv.innerHTML = textCont(num, fibNum, time);
+		resultDiv.className = "result-div";
+		resultsContainer.appendChild(resultDiv);
+	};
 });
