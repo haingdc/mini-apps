@@ -34,7 +34,6 @@ const errPar           = document.getElementById("error");
 const btn              = document.getElementById("submit-btn");
 const input            = document.getElementById("number-input");
 const resultsContainer = document.getElementById("results-container");
-const worker					 = new window.Worker('worker.js');
 
 btn.addEventListener("click", (e) => {
 	errPar.textContent = '';
@@ -45,6 +44,7 @@ btn.addEventListener("click", (e) => {
 		return;
 	}
 
+	var worker = new window.Worker('worker.js');
 	worker.postMessage({ num });
 	worker.onerror = R.identity;
 	worker.onmessage = function message(e) {
@@ -54,5 +54,6 @@ btn.addEventListener("click", (e) => {
 		resultDiv.innerHTML = textCont(num, fibNum, time);
 		resultDiv.className = "result-div";
 		resultsContainer.appendChild(resultDiv);
+		worker.terminate();
 	};
 });
