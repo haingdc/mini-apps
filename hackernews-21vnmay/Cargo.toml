@@ -15,4 +15,4 @@ rocket_codegen = "0.4.10"
 
 [dependencies.rocket_contrib]
 default-features = false
-features = ["handlebars_templates"]
+features = ["handlebars_templates", "json"]
