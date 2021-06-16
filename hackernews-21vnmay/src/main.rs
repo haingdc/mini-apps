@@ -7,6 +7,7 @@ use std::collections::HashMap;
 use rocket_contrib::{
   templates::Template,
   json::{Json},
+  serve::StaticFiles,
 };
 
 extern crate serde;
@@ -30,7 +31,8 @@ fn main() {
         // .extra("template_dir",  "web/templates")
         .unwrap();
   rocket::custom(cfg)
-    .mount("/", routes![index, json, get_articles])
+  .mount("/", routes![index, json, get_articles])
+  .mount("/public", StaticFiles::from("public"))
     .attach(Template::fairing())
     .launch();
 }
