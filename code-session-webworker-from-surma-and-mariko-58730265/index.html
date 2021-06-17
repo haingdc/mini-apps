@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SuperCharged</title>
+		<style type="text/css">
+			#input {
+				width:0px;
+				height:0px;
+				overflow:hidden;
+			}
+			#input + label {
+				display: inline;
+				background-color:#777;
+				font-family:sans-serif;
+				padding:5px;
+				font-size: 2rem;
+			}
+			#input:focus + label {
+				outline: 5px solid blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<input type="file" accept="image/*" name="input" id="input">
+			<label for="input">Choose File</label>
+		</div>
+
+		<canvas id="preview"></canvas>
+
+		<script>
+			var $input = document.getElementById('input')
+			/** @type {HTMLCanvasElement} */
+			var $preview = document.getElementById('preview')
+			var previewCtx = $preview.getContext('2d')
+			var fileReader = new FileReader()
+			var image = new Image()
+
+			image.addEventListener('load', function onLoadImage(e) {
+				$preview.width = image.width
+				$preview.height = image.height
+				previewCtx.drawImage(image, 0, 0)
+				applyFilter()
+			})
+
+			fileReader.addEventListener('load', function onLoadFile(e) {
+				var base64 = e.target.result
+				image.src = base64
+				console.log(e)
+			})
+
+			$input.addEventListener('change', function onChange(e) {
+				var file = e.target.files[0]
+				fileReader.readAsDataURL(file)
+			})
+
+			function applyFilter() {
+				var imageData = previewCtx.getImageData(0,0, image.width, image.height)
+
+				for (var y= 0; y < image.width; y++) {
+					for (var x= 0; x < image.height; x++) {
+						var index = (y + (x * image.width)) * 4
+						imageData.data[index] = imageData.data[index] * 1.2
+					}
+				}
+
+				previewCtx.putImageData(imageData,0,0)
+			}
+		</script>
+	</body>
+</html>
