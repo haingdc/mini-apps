@@ -33,25 +33,24 @@
 			/** @type {HTMLCanvasElement} */
 			var $preview = document.getElementById('preview')
 			var previewCtx = $preview.getContext('2d')
-			var fileReader = new FileReader()
-			var image = new Image()
+			// var image = new Image()
 
-			image.addEventListener('load', function onLoadImage(e) {
-				$preview.width = image.width
-				$preview.height = image.height
-				previewCtx.drawImage(image, 0, 0)
-				applyFilter()
-			})
+			// image.addEventListener('load', function onLoadImage(e) {
+			// 	$preview.width = image.width
+			// 	$preview.height = image.height
+			// 	previewCtx.drawImage(image, 0, 0)
+			// 	applyFilter()
+			// })
 
-			fileReader.addEventListener('load', function onLoadFile(e) {
-				var base64 = e.target.result
-				image.src = base64
-				console.log(e)
-			})
 
 			$input.addEventListener('change', function onChange(e) {
 				var file = e.target.files[0]
-				fileReader.readAsDataURL(file)
+				createImageBitmap(file)
+					.then((bitmap) => {
+						$preview.width = bitmap.width
+						$preview.height = bitmap.height
+						previewCtx.drawImage(bitmap, 0 ,0)
+					})
 			})
 
 			function applyFilter() {
