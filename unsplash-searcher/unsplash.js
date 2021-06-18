@@ -47,10 +47,25 @@ export function UnsplashSearcher()
   }
 
   function fetchingImages(imgList, id, signal) {
+    /** tuple list [T, Promise<T>]
+     * @type {Array<
+     * [
+     *             { id: string; image: { width: number; height: number}},
+     *    Promise< { id: string; image: { width: number; height: number}} >
+     * ]
+     * >} */
     const fetchingImages = imgList.map(img => {
+      const { width, height, urls: { regular } } = img
+      const urlParams = new URLSearchParams(regular)
+      const regularImg = { width: undefined, height: undefined, src: regular }
+      if (urlParams.get('w')) {
+        regularImg.width = Number.parseInt(urlParams.get('w'), 10)
+        regularImg.height = regularImg.width * height / width
+      }
+
       const item = {
         id: img.id,
-        image: { src: img.urls.regular },
+        image: regularImg,
       }
       const itemP = new Promise(function (resolve) {
         const image = new Image()
@@ -66,7 +81,8 @@ export function UnsplashSearcher()
       })
       return [item, itemP]
     })
-    const imageTombstones = fetchingImages.map(x => x[0]).map(x => ({ id: x.id, image: { src: '' } }))
+    var todo = fetchingImages[0][1]
+    const imageTombstones = fetchingImages.map(x => x[0]).map(item => ({ id: item.id, image: { src: '', width: item.image.width, height: item.image.height } }))
     const imagePromises   = fetchingImages.map(x => x[1])
     setPhotos(imageTombstones)
     imagePromises.forEach(async (ip, i) => {
@@ -137,7 +153,7 @@ export function UnsplashSearcher()
                       className: 'search-btn',
                       key: 'unsplash-search-btn',
                       type: 'button',
-                      onClick: function() {
+                      onClick: function onClickSearchBtn() {
                         search(query)
                       },
                     },
@@ -156,7 +172,7 @@ export function UnsplashSearcher()
             return React.createElement
             (
               'li', { key: photo.id },
-              React.createElement( 'img', { src: photo.image.src } )
+              React.createElement( 'img', { src: photo.image.src, width: photo.image.width / 5, height: photo.image.height / 5 } )
             )
           })
         )

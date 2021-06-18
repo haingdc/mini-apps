@@ -4,13 +4,8 @@
   margin: 0 -8px -8px 0;
 }
 .photo-grid li {
-  height: 20vh;
-  flex-grow: 1;
   margin: 0 8px 8px 0;
   list-style: none;
-}
-.photo-grid li:last-child {
-  flex-grow: 10;
 }
 .photo-grid img {
   max-height: 100%;
