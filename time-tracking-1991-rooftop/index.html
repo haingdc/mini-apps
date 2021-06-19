@@ -39,10 +39,11 @@
 
       return new Promise(function(resolve) {
         var item = {
-          id: uuid.v4(),
+          id   : uuid.v4(),
           title: pickRandom(NOTES),
-          hour: pickRandom(HOURS),
+          hour : pickRandom(HOURS),
           color: pickRandom(COLORS),
+          day  : pickRandom(DAY_NAMES),
         };
         resolve(item);
       });

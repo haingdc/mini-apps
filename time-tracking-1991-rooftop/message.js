@@ -122,4 +122,6 @@ var HOURS = [
   '24:45',
 ];
 
+var DAY_NAMES = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ];
+
 var COLORS = [ 'red', 'blue', 'yellow' ];
