@@ -13,11 +13,13 @@
 <body>
   <div id="fruit-list"></div>
   <script src="./message.js"></script>
-  <script crossorigin src="libraries/react.development.js"          ></script>
-  <script crossorigin src="libraries/react-dom.development.js"      ></script>
-  <script crossorigin src="libraries/superagent@5.1.1.js"           ></script>
   <script crossorigin src="libraries/uuid@8.3.2.js"                 ></script>
   <script crossorigin src="libraries/classnames@2.3.1.js"           ></script>
+  <script crossorigin src="libraries/ramda@0.27.1.min.js"           ></script>
+  <script crossorigin src="libraries/superagent@5.1.1.js"           ></script>
+  <script crossorigin src="libraries/moment@2.29.1.min.js"          ></script>
+  <script crossorigin src="libraries/react.development.js"          ></script>
+  <script crossorigin src="libraries/react-dom.development.js"      ></script>
   <script>
     async function abortable(signal, promise) {
       if (signal.aborted) throw new DOMException('AbortError', 'AbortError');
@@ -29,24 +31,6 @@
           });
         }),
       ]);
-    }
-  </script>
-  <script>
-    function getItem() {
-      function pickRandom(a) {
-        return a[Math.floor(Math.random() * a.length)];
-      }
-
-      return new Promise(function(resolve) {
-        var item = {
-          id   : uuid.v4(),
-          title: pickRandom(NOTES),
-          hour : pickRandom(HOURS),
-          color: pickRandom(COLORS),
-          day  : pickRandom(DAY_NAMES),
-        };
-        resolve(item);
-      });
     }
   </script>
   <script type="module" src="app.js"></script>
