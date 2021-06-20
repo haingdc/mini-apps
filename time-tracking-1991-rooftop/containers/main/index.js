@@ -225,6 +225,7 @@ function Event(props) {
         height         : height + 'px',
         color          : '#fff',
         padding        : '7px',
+        borderRadius   : 3,
         backgroundColor: backgroundColor,
       }
     },
