@@ -3,10 +3,10 @@ use serde::{Serialize, Deserialize};
 use bincode;
 
 fn main() {
-	let point1 = Point {x: 1.0, y: 2.0};
-	let foo = point1;
-	let bar = &point1;
-	println!("point1 {:?}\nfoo {:?}\nbar {:?}", point1, foo, bar);
+	let v = vec![1,2,3];
+	let v_ref = &v;
+	let s = sum(v_ref);
+	println!("sum of {:?}: {}", v_ref, s);
 }
 
 #[derive(Debug)]
@@ -32,4 +32,12 @@ struct Line {
   valid: bool,
   length: f32,
   desc: String
+}
+
+fn sum(vector: &Vec<i32>) -> i32 {
+	let mut sum = 0;
+	for item in vector {
+		sum = sum + item;
+	}
+	sum
 }
