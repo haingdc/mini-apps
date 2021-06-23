@@ -5,7 +5,8 @@ use bincode;
 fn main() {
 	let point1 = Point {x: 1.0, y: 2.0};
 	let foo = point1;
-	println!("point1 {:?}\nfoo {:?}", point1, foo);
+	let bar = &point1;
+	println!("point1 {:?}\nfoo {:?}\nbar {:?}", point1, foo, bar);
 }
 
 #[derive(Debug)]
