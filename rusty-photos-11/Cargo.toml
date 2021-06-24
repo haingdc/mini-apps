@@ -1,0 +1,14 @@
+[package]
+name = "rusty-fast-actix-rest-api-003272100"
+version = "0.1.0"
+edition = "2018"
+authors = ["Hai Nguyen <haingdc@gmail.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+image = "0.23.14"
+getopts = "~0.2.14"
+num = "~0.1.36"
+permutohedron = "~0.2.2"
+primal = "~0.2.3"
