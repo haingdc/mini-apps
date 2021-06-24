@@ -14,4 +14,15 @@ fn main() {
     Some(number) => println!("{}th prime is {}", n, number),
     None => println!("I don't know anything about {}th prime", n),
   }
+
+  println!("{:?}", sieve.factor(2610).unwrap());
+
+  println!("{:?}", num_divisors(2610, &sieve))
+}
+
+fn num_divisors(n: usize, primes: &Sieve) -> Option<usize> {
+  match primes.factor(n) {
+    Ok(factors) => Some(factors.into_iter().fold(1, |acc, (_, x)| acc * (x + 1))) ,
+    Err(_) => None,
+  }
 }
