@@ -41,35 +41,68 @@ limitations under the License.
     #templates {
       display: none;
     }
+    /* custom here */
+    #app {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+      grid-template-areas:
+        'chat_content'
+        'chat_input';
+    }
+    .chat-content {
+      grid-area: chat_content;
+    }
+    .chat-input {
+      grid-area: chat_input;
+      display: flex;
+      padding-top: 10px;
+    }
+    .chat-input input {
+      display: block;
+      flex: 1;
+    }
+    #chat-timeline {
+      position: relative!important;
+    }
   </style>
   <link href='styles/messages.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <div id="templates">
-    <li class="chat-item" data-id="{{id}}">
-      <img class="avatar" width="48" height="48">
-      <div class="bubble">
-        <p></p>
-        <img width="300" height="300">
-        <div class="meta">
-          <time class="posted-date"></time>
-        </div>
+  <div id="app">
+    <div class="chat-content">
+      <div id="templates">
+        <li class="chat-item" data-id="{{id}}">
+          <img class="avatar" width="48" height="48">
+          <div class="bubble">
+            <p></p>
+            <img width="300" height="300">
+            <div class="meta">
+              <time class="posted-date"></time>
+            </div>
+          </div>
+        </li>
+        <li class="chat-item tombstone" data-id="{{id}}">
+          <img class="avatar" width="48" height="48" src="images/unknown.jpg">
+          <div class="bubble">
+            <p></p>
+            <p></p>
+            <p></p>
+            <div class="meta">
+              <time class="posted-date"></time>
+            </div>
+          </div>
+        </li>
       </div>
-    </li>
-    <li class="chat-item tombstone" data-id="{{id}}">
-      <img class="avatar" width="48" height="48" src="images/unknown.jpg">
-      <div class="bubble">
-        <p></p>
-        <p></p>
-        <p></p>
-        <div class="meta">
-          <time class="posted-date"></time>
-        </div>
-      </div>
-    </li>
+      <ul id="chat-timeline">
+      </ul>
+    </div>
+    <div class="chat-input">
+      <input name="message" type="text">
+      <button>Send</button>
+    </div>
   </div>
-  <ul id="chat-timeline">
-  </ul>
   <script src="es6-promise.js"></script>
   <script src="stats.min.js"></script>
   <script src="scripts/infinite-scroll.js"></script>
