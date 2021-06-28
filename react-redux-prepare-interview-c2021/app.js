@@ -92,6 +92,79 @@ function HeroList(props) {
 
 /* HeroList end */
 
+/* Buddy */
+function selectRandomFactNature(state) {
+  return state.random.fact.nature
+}
+
+function selectRandomFictionDev(state) {
+  return state.random.fiction.dev
+}
+
+function selectFirstName(state) {
+  return state.personal.name.first
+}
+
+function selectLastName(state) {
+  return state.personal.name.last
+}
+
+var selectFullName = Reselect.createSelector(
+  selectFirstName,
+  selectLastName,
+  function join(str1, str2) {
+    return `${str1} ${str2}`
+  }
+)
+
+function selectHeight(state) {
+  return state.personal.physical.height
+}
+
+var selectHeightInFeet = Reselect.createSelector(
+  selectHeight,
+  function fromInchtoFeet(v) {
+    return v / 12
+  }
+)
+
+var mapStateToProps_display = Reselect.createStructuredSelector({
+  dev     : selectRandomFictionDev,
+  fullName: selectFullName,
+  height  : selectHeightInFeet,
+  nature  : selectRandomFactNature,
+})
+
+function Display(props) {
+  var { nature, dev, fullName, height } = props
+  return React.createElement('div', undefined,
+    React.createElement('div', undefined,
+      React.createElement('strong', undefined, 'Fact or Fiction'),
+      React.createElement('br'),
+      React.createElement('br'),
+      `Nature: ${nature}`,
+      nature,
+      React.createElement('br'),
+      React.createElement('br'),
+      `Dev: ${dev}`
+    ),
+    React.createElement('br'),
+    React.createElement('br'),
+    React.createElement('br'),
+    React.createElement('div', undefined,
+      React.createElement('strong', undefined, 'Fact or Fiction'),
+      React.createElement('br'),
+      React.createElement('br'),
+      `Full Name: ${fullName}`,
+      React.createElement('br'),
+      `Height: ${height}`
+    ),
+  )
+}
+
+var DisplayRedux = ReactRedux.connect(mapStateToProps_display)(Display)
+/* Buddy end */
+
 /* Reducers start here */
 var initialStateCounter = {
   count  : 0,
@@ -149,14 +222,64 @@ function reducerHeroes(state = initialStateHeroes, action) {
   }
 }
 
+var initialStateBuddy = {
+  db: {
+    info: {
+      name: {
+        first: "Anakin",
+        last: "Skywalker",
+      },
+      physical: {
+        height: 75,
+        weight: "Classified :)",
+        medical: {
+          vacinnated: true,
+          terminalConditions: ["Asthma", "Chronic Burns"],
+        }
+      }
+    }
+  },
+  random: {
+    fact: {
+      nature: "The sky is blue",
+      dev: "Undefined is not a function",
+    },
+    fiction: {
+      nature: "Sharks can drown",
+      dev: "Javascript is Java for scripts",
+    }
+  },
+}
+
+function reducerPerson(state = initialStateBuddy.db.info, action) {
+  switch(action.type) {
+    case 'UPDATE_FIRST_NAME':
+      return {
+        ...state,
+        name: {
+          first: action.payload.firstName,
+          last: state.name.last,
+        },
+      }
+  }
+  return state
+}
+
+function reducerRandom(state = initialStateBuddy.random, action) {
+  return state
+}
+
 var reducers = Redux.combineReducers({
-  counter: reducerCounter,
-  heroes : reducerHeroes,
+  counter : reducerCounter,
+  heroes  : reducerHeroes,
+  personal: reducerPerson,
+  random  : reducerRandom,
 })
 
 /* Reducers end here */
 
-var store = Redux.createStore(reducers, Redux.applyMiddleware(ReduxThunk.default))
+var store = Redux.createStore(reducers, {}, Redux.applyMiddleware(ReduxThunk.default))
+console.log({ store })
 store.dispatch({ type: "INCREMENT" });
 store.dispatch({ type: "INCREMENT" });
 store.dispatch({ type: "DECREMENT" });
@@ -167,10 +290,13 @@ function App() {
   (
     ReactRedux.Provider, { store: store },
     React.createElement(CounterRedux),
-    React.createElement(HeroListRedux)
+    React.createElement(HeroListRedux),
+    React.createElement(DisplayRedux)
   )
 }
 ReactDOM.render(
   React.createElement(App),
   document.querySelector('#fruit-list')
 )
+
+window.store = store
