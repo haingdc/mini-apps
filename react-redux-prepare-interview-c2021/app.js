@@ -1,3 +1,5 @@
+var { all, put, takeEvery } = ReduxSagaEffects
+
 function mapStateToProps(state) {
   return {
     count: state.counter.count,
@@ -19,15 +21,16 @@ var mapDispatchToProps = {
 var CounterRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Counter)
 
 function Counter(props) {
-  var { count, increment, decrement, reset } = props
+  var { count, increment, incrementAsync, decrement, reset } = props
 
   return React.createElement(
     'div', { className: 'counter' },
     React.createElement('h2', undefined, 'Counter'),
     React.createElement('div', undefined,
-      React.createElement('button', { onClick: decrement }, '-'),
-      React.createElement('span', undefined, count),
-      React.createElement('button', { onClick: increment }, '+'),
+      React.createElement('button', { onClick:    decrement   }, '-'),
+      React.createElement('span'  , undefined, count),
+      React.createElement('button', { onClick:    increment   }, '+'),
+      React.createElement('button', { onClick: incrementAsync }, '+\'\''),
     )
   )
 }
@@ -278,7 +281,15 @@ var reducers = Redux.combineReducers({
 
 /* Reducers end here */
 
-var store = Redux.createStore(reducers, {}, Redux.applyMiddleware(ReduxThunk.default))
+var sagaMiddleware = ReduxSaga.default()
+
+var store = Redux.createStore(
+  reducers,
+  {},
+  Redux.applyMiddleware(ReduxThunk.default, sagaMiddleware)
+)
+
+sagaMiddleware.run(helloSaga)
 console.log({ store })
 store.dispatch({ type: "INCREMENT" });
 store.dispatch({ type: "INCREMENT" });
@@ -289,7 +300,7 @@ function App() {
   return React.createElement
   (
     ReactRedux.Provider, { store: store },
-    React.createElement(CounterRedux),
+    React.createElement(CounterRedux, { incrementAsync: () => store.dispatch({ type: 'INCREMENT_ASYNC' }) }),
     React.createElement(HeroListRedux),
     React.createElement(DisplayRedux)
   )
@@ -299,4 +310,30 @@ ReactDOM.render(
   document.querySelector('#fruit-list')
 )
 
-window.store = store
+function* helloSaga() {
+  console.log('Hello Sagas!')
+}
+
+function* incrementAsync() {
+  yield delay(1000)
+  yield put({ type: 'INCREMENT' })
+}
+
+function* watchIncrementAsync() {
+  yield takeEvery('INCREMENT_ASYNC', incrementAsync)
+}
+
+function* rootSaga() {
+  yield AbortController([
+    helloSaga(),
+    watchIncrementAsync(),
+  ])
+}
+
+function delay(ms) {
+  return new Promise(res => setTimeout(res, ms))
+}
+
+window.store          = store
+window.sagaMiddleware = sagaMiddleware
+window.helloSaga      = helloSaga
