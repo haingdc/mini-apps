@@ -1,4 +1,4 @@
-var { all, put, takeEvery } = ReduxSagaEffects
+var { all, call, put, takeEvery } = ReduxSagaEffects
 
 function mapStateToProps(state) {
   return {
@@ -289,12 +289,11 @@ var store = Redux.createStore(
   Redux.applyMiddleware(ReduxThunk.default, sagaMiddleware)
 )
 
-sagaMiddleware.run(helloSaga)
-console.log({ store })
 store.dispatch({ type: "INCREMENT" });
 store.dispatch({ type: "INCREMENT" });
 store.dispatch({ type: "DECREMENT" });
 store.dispatch({ type: "RESET" });
+sagaMiddleware.run(rootSaga)
 
 function App() {
   return React.createElement
@@ -310,21 +309,21 @@ ReactDOM.render(
   document.querySelector('#fruit-list')
 )
 
-function* helloSaga() {
+export function* helloSaga() {
   console.log('Hello Sagas!')
 }
 
-function* incrementAsync() {
-  yield delay(1000)
+export function* incrementAsync() {
+  yield call(delay, 1000)
   yield put({ type: 'INCREMENT' })
 }
 
-function* watchIncrementAsync() {
+export function* watchIncrementAsync() {
   yield takeEvery('INCREMENT_ASYNC', incrementAsync)
 }
 
-function* rootSaga() {
-  yield AbortController([
+export function* rootSaga() {
+  yield all([
     helloSaga(),
     watchIncrementAsync(),
   ])
