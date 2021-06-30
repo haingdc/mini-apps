@@ -39,9 +39,10 @@ function Counter(props) {
 /* HeroList */
 function mapStateToProps_heroes(state) {
   return {
-    items  : state.heroes.items,
-    error  : state.heroes.error,
-    loading: state.heroes.loading,
+    items      : state.heroes.items,
+    error      : state.heroes.error,
+    loading    : state.heroes.loading,
+    loadingPost: state.heroes.loadingPost,
   }
 }
 
@@ -65,8 +66,26 @@ function fetchHeroes() {
   }
 }
 
+function postHero(data) {
+  return fetch(
+    'http://localhost:8000/api/heroes',
+    {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => res.json())
+    .catch(err => {
+      console.error(err)
+      return Promise.reject(err)
+    })
+}
+
 function HeroList(props) {
-  var { error, loading, items, fetchHeroes } = props
+  var { error, loading, items, fetchHeroes, fetchPostHero, loadingPost } = props
   React.useEffect(function callApi() {
     fetchHeroes()
   }, [])
@@ -83,13 +102,16 @@ function HeroList(props) {
   else {
     content = React.createElement('ul', undefined,
       items.map(function mapItem(e) {
-        return React.createElement('li', { key: e.id }, e.name)
+        return React.createElement('li', { key: e.id }, `- ${e.name}`)
       })
     )
   }
   return React.createElement('div', undefined,
-    React.createElement('div', undefined, `* Make sure rust server 'rusty-rocket-live-7140327' is running and we have already called adding api first`),
-    content
+    React.createElement('b', undefined, 'Heroes'),
+    React.createElement('span', undefined, `* Make sure rust server 'rusty-rocket-live-7140327' is running and we have already called adding api first:`),
+    content,
+    React.createElement('button', { onClick: fetchPostHero }, 'Add hero'),
+    React.createElement('span', undefined, loadingPost ? 'status: saving...' : '')
   )
 }
 
@@ -196,6 +218,7 @@ var initialStateHeroes = {
   items  : [],
   loading: false,
   error  : undefined,
+  loaddingPost: false,
 }
 
 function reducerHeroes(state = initialStateHeroes, action) {
@@ -219,6 +242,16 @@ function reducerHeroes(state = initialStateHeroes, action) {
         loading: false,
         error  : action.payload.error,
         items  : [],
+      }
+    case 'POST_HERO_BEGIN':
+      return {
+        ...state,
+        loadingPost: true,
+      }
+    case 'POST_HERO_SUCCESS':
+      return {
+        ...state,
+        loadingPost: false,
       }
     default:
       return state
@@ -300,7 +333,7 @@ function App() {
   (
     ReactRedux.Provider, { store: store },
     React.createElement(CounterRedux, { incrementAsync: () => store.dispatch({ type: 'INCREMENT_ASYNC' }) }),
-    React.createElement(HeroListRedux),
+    React.createElement(HeroListRedux, { fetchPostHero: () => store.dispatch({ type: 'POST_HERO_ASYNC' }) }),
     React.createElement(DisplayRedux)
   )
 }
@@ -322,10 +355,23 @@ export function* watchIncrementAsync() {
   yield takeEvery('INCREMENT_ASYNC', incrementAsync)
 }
 
+export function* postHeroAsync() {
+  yield put({ type: 'POST_HERO_BEGIN' })
+  var data = yield call(postHero, { name: 'Homelander', canFly: true })
+  console.log('result', data)
+  yield put({ type: 'POST_HERO_SUCCESS' })
+  yield
+}
+
+export function* watchPostHeroAsync() {
+  yield takeEvery('POST_HERO_ASYNC', postHeroAsync)
+}
+
 export function* rootSaga() {
   yield all([
     helloSaga(),
     watchIncrementAsync(),
+    watchPostHeroAsync(),
   ])
 }
 

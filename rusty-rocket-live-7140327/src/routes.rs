@@ -10,7 +10,7 @@ use rocket_contrib::{
   json::{Json, JsonValue},
 };
 
-use super::{api_key, Hero, NewHero, HeroesMap, HeroCount,ID};
+use super::{api_key, Hero, NewHero, HeroesMap, HeroCount,ID, CORS2};
 
 #[get("/world")]
 pub fn world() -> &'static str {
@@ -118,6 +118,26 @@ pub fn get_all(heroes_state: State<'_, HeroesMap>) -> Json<Vec<Hero>> {
     let heroes = heroes_state.read().unwrap();
     Json(heroes.values().map(|v| v.clone()).collect())
 }
+
+#[get("/heroList")] /* api to client: react-redux-prepare-interview-c2021 */
+pub fn get_hero_list(heroes_state: State<'_, HeroesMap>) -> Json<HashMap<String, Vec<Hero>>> {
+  let mut my_map = HashMap::new();
+  let heroes = heroes_state.read().unwrap();
+  my_map.insert(String::from("heroes"), heroes.values().map(|v| v.clone()).collect());
+  return Json(my_map);
+}
+
+// #[route(OPTIONS, ('', "/item"))]
+// fn cors_preflight() -> PreflightCORS {
+//   CORS2::preflight("http://host.tld")
+//     .methods(vec![Method::Options, Method::Post])
+//     .headers(vec!["Content-Type"])
+// }
+
+// #[post("/item")]
+// fn cors_demo() -> CORS2<&'static str> {
+//   CORS2::any("This is the response.")
+// }
 
 #[catch(404)]
 pub fn not_found() -> JsonValue {
