@@ -3,10 +3,8 @@ use serde::{Serialize, Deserialize};
 use bincode;
 
 fn main() {
-	let string = "🦀";
-	let length = byte_length(string);
-
-	println!("Bytes in \"{}\": {}", string, length);
+	let alice = Person { name: "Alice", age: 17 };
+	println!("alice: {:?}", alice);
 }
 
 fn byte_length(string: &str) -> usize {
@@ -47,8 +45,9 @@ fn sum(vector: &Vec<i32>) -> i32 {
 }
 
 #[derive(Debug)]
-struct Person {
-	age: i8
+struct Person<'a> {
+	age: i8,
+	name: &'a str,
 }
 
 fn pass_number_by_reference(number: &i8) -> bool {
