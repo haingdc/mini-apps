@@ -48,13 +48,13 @@ function mapStateToProps_heroes(state) {
 
 var mapDispatchToProps_heroes = {
   fetchHeroes() {
-    return fetchHeroes()
+    return fetchHeroesThunk()
   },
 }
 
 var HeroListRedux = ReactRedux.connect(mapStateToProps_heroes, mapDispatchToProps_heroes)(HeroList)
 
-function fetchHeroes() {
+function fetchHeroesThunk() {
   return function getThunkAction(dispatch) {
     dispatch({ type: 'FETCH_HEROES_BEGIN'})
     return fetch('http://localhost:8000/api/heroList')  // call api from rusty-rocket-live-7140327 in mini-apps
@@ -82,6 +82,11 @@ function postHero(data) {
       console.error(err)
       return Promise.reject(err)
     })
+}
+
+function fetchHeroes() {
+  return fetch('http://localhost:8000/api/heroList')  // call api from rusty-rocket-live-7140327 in mini-apps
+      .then(res => res.json())
 }
 
 function HeroList(props) {
@@ -360,6 +365,8 @@ export function* postHeroAsync() {
   var data = yield call(postHero, { name: 'Homelander', canFly: true })
   console.log('result', data)
   yield put({ type: 'POST_HERO_SUCCESS' })
+  var json = yield call(fetchHeroes)
+  yield put({ type: 'FETCH_HEROES_SUCCESS', payload: { heroes: json.heroes } })
   yield
 }
 
