@@ -3,10 +3,14 @@ use serde::{Serialize, Deserialize};
 use bincode;
 
 fn main() {
-	let v = vec![1,2,3];
-	let v_ref = &v;
-	let s = sum(v_ref);
-	println!("sum of {:?}: {}", v_ref, s);
+	let string = "🦀";
+	let length = byte_length(string);
+
+	println!("Bytes in \"{}\": {}", string, length);
+}
+
+fn byte_length(string: &str) -> usize {
+	string.bytes().len()
 }
 
 #[derive(Debug)]
@@ -40,4 +44,21 @@ fn sum(vector: &Vec<i32>) -> i32 {
 		sum = sum + item;
 	}
 	sum
+}
+
+#[derive(Debug)]
+struct Person {
+	age: i8
+}
+
+fn pass_number_by_reference(number: &i8) -> bool {
+	number.is_negative()
+}
+
+fn pass_number_by_value(number: i8) -> bool {
+	number.is_negative()
+}
+
+fn pass_vec_by_reference(vec: &Vec<i8>) -> bool {
+	vec.is_empty()
 }
