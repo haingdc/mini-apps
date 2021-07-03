@@ -73,8 +73,10 @@ function postHero(data) {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify(data),
+      // body: new URLSearchParams(data),
       headers: {
         'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded'
       },
     })
     .then(res => res.json())
@@ -385,7 +387,3 @@ export function* rootSaga() {
 function delay(ms) {
   return new Promise(res => setTimeout(res, ms))
 }
-
-window.store          = store
-window.sagaMiddleware = sagaMiddleware
-window.helloSaga      = helloSaga
