@@ -2,3 +2,9 @@ GET http://localhost:8000/hello/world
 
 ###
 GET http://localhost:8000/hello/delay/4
+
+###
+GET http://localhost:8000/hello/serve_text_file
+
+###
+GET http://localhost:8000/hello/greeting/Hai/30/false
