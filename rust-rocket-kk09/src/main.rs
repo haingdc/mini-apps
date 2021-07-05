@@ -13,6 +13,8 @@ fn rocket() -> _ {
     serve_text_file,
     greeting,
     get_page,
+    foo_bar,
+    everything,
 	])
 }
 
@@ -47,4 +49,14 @@ fn greeting(name: &str, age: u8, cool: bool) -> String {
 #[get("/page/<file..>")]
 async fn get_page(file: PathBuf) -> Option<NamedFile> {
   NamedFile::open(Path::new("static/").join(file)).await.ok()
+}
+
+#[get("/foo/<_>/bar")]
+fn foo_bar() -> &'static str {
+    "Foo _____ bar!"
+}
+
+#[get("/<_..>")]
+fn everything() -> &'static str {
+    "Hey, you're here."
 }

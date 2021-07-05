@@ -1,4 +1,11 @@
+###
 GET http://localhost:8000/hello/world
+
+###
+GET http://localhost:8000/hello/foo/ignore/bar
+
+###
+GET http://localhost:8000/hello/anything/404
 
 ###
 GET http://localhost:8000/hello/delay/4
