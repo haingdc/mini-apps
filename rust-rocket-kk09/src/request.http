@@ -1,4 +1,25 @@
 ###
+GET http://127.0.0.1:8000/?emoji
+
+###
+GET http://127.0.0.1:8000/?name=Rocketeer
+
+###
+GET http://127.0.0.1:8000/?lang=ру
+
+###
+GET http://127.0.0.1:8000/?lang=ру&emoji
+
+###
+GET http://127.0.0.1:8000/?emoji&lang=en
+
+###
+GET http://127.0.0.1:8000/?name=Rocketeer&lang=en
+
+###
+GET http://127.0.0.1:8000/?emoji&name=Rocketeer
+
+###
 GET http://localhost:8000/hello/world
 
 ###
@@ -18,3 +39,9 @@ GET http://localhost:8000/hello/page/parent/data.txt
 
 ###
 GET http://localhost:8000/hello/greeting/Hai/30/false
+
+###
+GET http://localhost:8000/hello/user/1
+
+###
+GET http://localhost:8000/hello/user/string_value

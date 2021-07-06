@@ -5,17 +5,40 @@ use rocket::tokio::task::spawn_blocking;
 use std::io;
 use std::path::{Path, PathBuf};
 
+#[derive(FromFormField)]
+enum Lang {
+  #[field(value = "en")]
+  English,
+  #[field(value = "ru")]
+  #[field(value = "ру")] // not US keyboard
+  Russian
+}
+
+#[derive(FromForm)]
+struct Options<'r> {
+  emoji: bool,
+  name : Option<&'r str>,
+}
+
 #[launch]
 fn rocket() -> _ {
-	rocket::build().mount("/hello", routes![
-		world,
-    delay,
-    serve_text_file,
-    greeting,
-    get_page,
-    foo_bar,
-    everything,
-	])
+	rocket::build()
+    .mount("/", routes![
+      hello,
+    ])
+    .mount("/hello", routes![
+      hello,
+      world,
+      user,
+      user_int,
+      user_str,
+      delay,
+      serve_text_file,
+      greeting,
+      get_page,
+      foo_bar,
+      everything,
+    ])
 }
 
 #[get("/delay/<seconds>")]
@@ -59,4 +82,42 @@ fn foo_bar() -> &'static str {
 #[get("/<_..>")]
 fn everything() -> &'static str {
     "Hey, you're here."
+}
+
+#[get("/user/<id>")]
+fn user(id: usize) -> String {
+  format!("id {} is usize", id)
+}
+
+#[get("/user/<id>", rank = 2)]
+fn user_int(id: isize) -> String {
+  format!("id {} is isize", id)
+}
+
+#[get("/user/<id>", rank = 3)]
+fn user_str(id: &str) -> String {
+  format!("id {} is string", id)
+}
+
+#[get("/?<lang>&<opt..>")]
+fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
+  let mut greeting = String::new();
+
+  if opt.emoji {
+    greeting.push_str("👋");
+  }
+
+  match lang {
+    Some(Lang::Russian) => greeting.push_str("Привет"),
+    Some(Lang::English) => greeting.push_str("Hello"),
+    None                => greeting.push_str("Hey"),
+  }
+
+  if let Some(name) = opt.name {
+    greeting.push_str(", ");
+    greeting.push_str(name);
+  }
+
+  greeting.push('!');
+  greeting
 }
