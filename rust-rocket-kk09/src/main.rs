@@ -5,6 +5,8 @@ use rocket::tokio::task::spawn_blocking;
 use std::io;
 use std::path::{Path, PathBuf};
 
+#[cfg(test)] mod tests;
+
 #[derive(FromFormField)]
 enum Lang {
   #[field(value = "en")]
@@ -104,7 +106,7 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
   let mut greeting = String::new();
 
   if opt.emoji {
-    greeting.push_str("👋");
+    greeting.push_str("👋 ");
   }
 
   match lang {
