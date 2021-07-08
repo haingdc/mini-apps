@@ -1,5 +1,6 @@
 use rocket::local::blocking::Client;
 use rocket::http::{RawStr, Status};
+use super::*;
 
 #[test]
 fn hello() {
@@ -36,4 +37,18 @@ fn hello() {
 		let response = client.get(uri).dispatch();
 		assert_eq!(response.into_string().unwrap(), expected);
 	}
+}
+
+#[test]
+fn test_get_command_from_query_string_no_whitespace() {
+	let actual = get_command_from_query_string("tw");
+	let expected = "tw";
+	assert_eq!(actual, expected);
+}
+
+#[test]
+fn test_get_command_from_query_string_with_whitespace() {
+	let actual = get_command_from_query_string("tw @fbOpenSource");
+	let expected = "tw";
+	assert_eq!(actual, expected);
 }
