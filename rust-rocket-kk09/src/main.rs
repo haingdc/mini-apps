@@ -1,9 +1,12 @@
 #[macro_use] extern crate rocket;
 use rocket::fs::NamedFile;
+use rocket::response::Redirect;
 use rocket::tokio::time::{sleep, Duration};
 use rocket::tokio::task::spawn_blocking;
 use std::io;
 use std::path::{Path, PathBuf};
+
+mod utils;
 
 #[cfg(test)] mod tests;
 
@@ -27,6 +30,7 @@ fn rocket() -> _ {
 	rocket::build()
     .mount("/", routes![
       hello,
+      search,
     ])
     .mount("/hello", routes![
       hello,
@@ -124,16 +128,15 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
   greeting
 }
 
-// #[get("/search?<cmd>")]
-// fn search(cmd: String) -> &'static str {
-//   println!("You typed inn: {}", cmd);
+#[get("/search?<cmd>")]
+fn search(cmd: String) -> Redirect {
+  println!("You typed inn: {}", cmd);
+  let command = utils::get_command_from_query_string(&cmd);
+  let redirect_url = match command {
+    "tw" => String::from("https://twitter.com"),
+      _  => String::from("https://google.com"),
+  };
 
-// }
-
-fn get_command_from_query_string(query_string: &str) -> &str {
-  if query_string.contains(' ') {
-    let index_of_space = query_string.find(' ').unwrap_or(0);
-    return &query_string[..index_of_space];
-  }
-  &query_string
+  Redirect::to(redirect_url)
 }
+
