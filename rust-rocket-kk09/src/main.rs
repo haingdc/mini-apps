@@ -134,7 +134,7 @@ fn search(cmd: String) -> Redirect {
   let command = utils::get_command_from_query_string(&cmd);
   let redirect_url = match command {
     "tw" => String::from("https://twitter.com"),
-      _  => String::from("https://google.com"),
+      _  => utils::google::construct_google_search_url(&cmd),
   };
 
   Redirect::to(redirect_url)
