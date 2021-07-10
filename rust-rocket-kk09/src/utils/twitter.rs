@@ -5,11 +5,22 @@ use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
 const FRAGMENT: &AsciiSet = &CONTROLS.add(b' ').add(b'"').add(b'<').add(b'>').add(b'`');
 
 pub fn construct_twitter_url(query: &str) -> String {
-	String::from("Hello world")
+	if query == "tw" {
+		let twitter_dotcom = "https://twitter.com";
+
+		twitter_dotcom.to_string()
+		// Check if it looks like a Twitter profile
+	} else if &query[..4] == "tw @" {
+		construct_twitter_profile_url(&query[4..])
+	} else {
+		// Assume the other match is "tw sometext"
+		// and search on Twitter
+		construct_twitter_search_url(&query[3..])
+	}
 }
 
 pub fn construct_twitter_profile_url(profile: &str) -> String {
-	String::from("Hello world")
+	format!("https://twitter.com/{}", profile)
 }
 
 pub fn construct_twitter_search_url(query: &str) -> String {

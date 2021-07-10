@@ -45,3 +45,22 @@ GET http://localhost:8000/hello/user/1
 
 ###
 GET http://localhost:8000/hello/user/string_value
+
+# ** Bookmark start ********************
+
+### go to twitter
+http://localhost:8000/search?cmd=tw
+
+### visit a profile
+http://localhost:8000/search?cmd=tw%20@fbOpenSource
+
+### search for tweets
+http://localhost:8000/search?cmd=tw%20rust%20lang
+
+### navigate to Github
+http://localhost:8000/search?cmd=gh
+
+### navigate to Github react repository
+http://localhost:8000/search?cmd=gh%20facebook/react
+
+# ** Bookmark end **********************
