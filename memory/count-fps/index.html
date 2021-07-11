@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/*
+		   Calculate fps in 5 seconds. Browsers will try to have fps equal to Hz of monitors.
+			 If Hz of a monitor is 60hz. Then fps can be about 60
+			 Try change Hz of monitor to see fps will be changed.
+			 Uncomment heavy function to see frames are dropped.
+		 */
+		var duration = 0;
+		var countFrame = 0;
+		var prevTimestamp = performance.now();
+
+		function doEachFrame(timestamp) {
+			let offset = timestamp - prevTimestamp;
+			prevTimestamp = timestamp;
+			duration += offset;
+			if (duration > 5000) {
+				console.log('fps', countFrame / 5)
+				return;
+			}
+
+			++countFrame;
+			requestAnimationFrame(doEachFrame)
+		}
+
+		function handleHeavyLoad() {
+			var offset = performance.now()
+			while(performance.now() - offset < 3000) {}
+		}
+
+		requestAnimationFrame(doEachFrame);
+
+		// uncomment to do heavy thing!
+		// handleHeavyLoad();
+	</script>	
+</body>
+</html>
