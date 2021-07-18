@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      border: 1px solid tomato;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button id="submit">Click</button>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione doloremque nulla laboriosam magni atque voluptatibus tempora, quaerat accusantium, perferendis officia minima quibusdam. Minima ratione nemo sunt ipsum asperiores. A, quia, error nihil porro molestiae perferendis aspernatur aperiam eius at nostrum, quaerat optio modi. Aspernatur dolorem repellendus voluptatem commodi porro natus culpa nobis minus earum debitis, incidunt at veniam facere, amet ducimus dolore totam modi vitae neque obcaecati enim mollitia ad necessitatibus similique. Voluptas veniam deleniti molestiae beatae? Neque alias consequatur eos, ex laboriosam aliquam aperiam id temporibus! Consectetur quae sunt placeat soluta doloremque maxime eos ipsum, incidunt veritatis ullam quo.</p>
+  </div>
+  <script>
+    var app = document.getElementById('app');
+    var button = document.querySelector('#submit');
+    button.addEventListener('click', function onClick() {
+      console.log('click me');
+    });
+
+    var data = [
+      { src: '01.jpg', width: 16344, height: 4491 },
+      { src: '02.jpg', width:  7668, height: 2911 },
+      { src: '03.jpg', width: 04000, height: 1444 },
+      { src: '04.jpg', width: 11559, height: 3156 },
+      { src: '05.jpg', width:  4321, height: 1746 },
+      { src: '06.jpg', width: 11256, height: 3637 },
+      { src: '07.jpg', width:  6000, height: 4000 },
+    ];
+
+    var imagesPromise = data.map(renderImage);
+      Promise
+        .all(imagesPromise)
+        .then(images => {
+          var log = images.map(item => {
+            return { src: item.src, width: item.width, height: item.height, timeToLoad: item.timeToLoad, timeToDecode: item.timeToDecode }
+          });
+          console.log(log);
+          return images;
+        })
+        .then(images => {
+          images.forEach(app.appendChild.bind(app));
+        });
+
+    function renderImage(item) {
+      return new Promise((resolve, reject) => {
+        var { src, width, height } = item;
+        var img   = new Image();
+        img.src   = 'images/large/' + src;
+
+        var time         = performance.now();
+        var time2        = undefined;
+        var timeToLoad   = undefined;
+        var timeToDecode = undefined;
+
+        img.onload  = onLoad;
+        img.onerror = onErrorLoad;
+        img.decode()
+           .then(onDecoded)
+           .catch(onErrorDecode)
+
+        function onLoad() {
+          var now = performance.now();
+          time2 = now;
+          timeToLoad = now - time;
+          img.timeToLoad = timeToLoad;
+        }
+        function onErrorLoad() {
+          img.isFaild = true;
+          reject(img);
+        }
+        function onDecoded() {
+          var now = performance.now();
+          timeToDecode = now - time2
+          img.timeToDecode = timeToDecode;
+          resolve(img);
+        }
+        function onErrorDecode() {
+          img.isFaildDecode = true;
+          reject(img);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
