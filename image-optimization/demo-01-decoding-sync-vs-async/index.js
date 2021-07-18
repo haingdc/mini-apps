@@ -1,7 +1,10 @@
 var app = document.getElementById('app');
+var count = document.getElementById('count');
+var clickNum = 0;
 var button = document.querySelector('#submit');
 button.addEventListener('click', function onClick() {
-  console.log('click me');
+  clickNum++;
+  count.innerText = clickNum;
 });
 
 var data = [
@@ -12,6 +15,19 @@ var data = [
   { src: '05.jpg', width:  4321, height: 1746 },
   { src: '06.jpg', width: 11256, height: 3637 },
   { src: '07.jpg', width:  6000, height: 4000 },
+  { src: '08.jpg', width: 12160, height: 3913 },
+  { src: '09.jpg', width:  5959, height: 3032 },
+  { src: '10.jpg', width:  4740, height: 1830 },
+  { src: '11.jpg', width: 15247, height: 4077 },
+  { src: '12.jpg', width: 11824, height: 3800 },
+  { src: '13.jpg', width: 10145, height: 4871 },
+  { src: '14.jpg', width: 11060, height: 3693 },
+  { src: '15.jpg', width:  8142, height: 2922 },
+  { src: '16.jpg', width:  8175, height: 2898 },
+  { src: '17.jpg', width: 11626, height: 3834 },
+  { src: '18.jpg', width: 30000, height: 2822 },
+  { src: '19.jpg', width: 16382, height: 3628 },
+  { src: '20.jpg', width: 14154, height: 3634 },
 ];
 
 var config = {
@@ -27,6 +43,13 @@ imagesPromise.map(p => {
        return img;
      })
      .then(app.appendChild.bind(app))
+     .catch(err => {
+       console.error(mapItemToLog(err));
+       var { width, height } = err
+       err.width = 300;
+       err.height = 300 * height / width;
+       app.appendChild(err)
+     });
   });
   // Promise
   //   .all(imagesPromise)
@@ -88,8 +111,8 @@ function renderImage(item) {
       var now = performance.now();
       img.__timeToDecode = now - time;
       img.__isDecoded = true;
-      console.log(src, mapItemToLog(img));
       resolve(img);
+      console.log(src, mapItemToLog(img));
     }
     function onErrorDecode() {
       img.__isFaildDecode = true;
