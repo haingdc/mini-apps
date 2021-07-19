@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="libraries/bulma@0.9.2.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <link rel="prefetch" href="../assets/images/cabonhydrate.png" />
+  <link rel="prefetch" href="../assets/images/fruits.png" />
+  <link rel="prefetch" href="../assets/images/apple.png" />
+  <link rel="prefetch" href="../assets/images/jeruk.png" />
+  <link rel="prefetch" href="../assets/images/lemon.png" />
+  <link rel="prefetch" href="../assets/images/melon.png" />
+  <link rel="prefetch" href="../assets/images/pisang.png" />
+  <link rel="prefetch" href="../assets/images/semangka.png" />
+  <link rel="prefetch" href="../assets/images/strawberry.png" />
+  <link rel="prefetch" href="../assets/images/terong.png" />
+  <link rel="prefetch" href="../assets/images/vegetables.png" />
+
+  <div id="fruit-list"></div>
+  <script crossorigin src="libraries/ramda@0.27.1.js"></script>
+  <script crossorigin src="libraries/moment@2.29.1.js"></script>
+  <script crossorigin src="libraries/uuid@8.3.2.js"></script>
+  <script crossorigin src="libraries/react.development.js"></script>
+  <script crossorigin src="libraries/react-dom.development.js"></script>
+  <script crossorigin src="libraries/superagent@5.1.1.js"></script>
+  <script>
+    async function abortable(signal, promise) {
+      if (signal.aborted) throw new DOMException('AbortError', 'AbortError');
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+          signal.addEventListener('abort', () => {
+            reject(new DOMException('AbortError', 'AbortError'));
+          });
+        }),
+      ]);
+    }
+  </script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
