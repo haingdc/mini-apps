@@ -1,3 +1,4 @@
+import useHeight from './useHeight.js'
 class Item {
   constructor(form) {
     this.id       = R.path([  'name'  ], form) || '';
@@ -28,8 +29,48 @@ var initialItems = [
 var items = R.map(n => new Item(n), initialItems);
 
 function App() {
-  var [selected, setSelected] = React.useState([]);
+  var [    selected, setSelected    ] = React.useState([]);
+  var [displaySizes, setDisplaySizes] = React.useState({});
   var now = moment().format('ddd, DD MMM YYYY, HH:MM A');
+
+  var setDisplaySize = React.useCallback(
+    function(id, height) {
+      setDisplaySizes(prev => ({ ...prev, [id]: height }));
+    },
+    [setDisplaySizes]
+  );
+
+  var selectedMap = React.useMemo(
+    function() {
+      return selected.reduce((hash, item) => (hash[item.id], hash), {})
+    },
+    [selected]
+  );
+  var selectedTransitions = ReactSpring.useTransition(selected, {
+    from: { opacity: 0, transform: "translate3d(-25%, 0px, 0px)" },
+    delay: 200,
+    config(item) {
+      console.log('config');
+      return {
+        ...ReactSpring.config.stiff,
+        clamp: !selectedMap[item.id],
+      };
+    },
+    enter(item) {
+      console.log('enter');
+      return {
+        opacity: 1,
+        height: displaySizes[item.id],
+        transform: "translate3d(0%, 0px, 0px)"
+      };
+    },
+    update(item) {
+      console.log('update');
+      return { height: displaySizes[item.id] };
+    },
+    leave: { opacity: 0, height: 0, transform: "translate3d(25%, 0px, 0px)" }
+  });
+
   return React.createElement
   (
     'div', { className: 'pos' },
@@ -50,7 +91,34 @@ function App() {
       React.createElement('div', { className: 'pos__cart__header-shadow' }),
       React.createElement('div', { className: 'pos__cart__list-wrapper' },
         React.createElement('div', { className: 'pos__cart__list' },
-          [] // todo
+          selectedTransitions(function(styles, item) {
+            var { quantity, img: src} = item;
+
+            return React.createElement(CartItem, {
+              price : "$15",
+              src,
+              item,
+              styles ,
+              quantity,
+              setDisplaySize,
+              onUpdateQuantity,
+              onRemove,
+            });
+
+            function onUpdateQuantity(quantity) {
+              setSelected(function(list) {
+                var [existItem] = list.filter(n => n.equals(item));
+                existItem.quantity = quantity;
+                return [...list];
+              });
+            }
+            function onRemove() {
+              setSelected(function(list) {
+                var others = list.filter(n => !n.equals(item));
+                return others;
+              });
+            }
+          })
         ),
       ),
       React.createElement('div', { className: 'pos__cart__sumup-wrapper' },
@@ -116,7 +184,67 @@ function App() {
     ),
   )
 }
+
+function CartItem(props) {
+  var {
+    src, price, quantity, children, styles, setDisplaySize, item,
+    onUpdateQuantity,
+    onRemove,
+  } = props;
+
+  var [ref, height] = useHeight();
+  React.useLayoutEffect(function() {
+    height && setDisplaySize(item.id, height);
+  }, [height]);
+
+  return React.createElement(
+    ReactSpring.animated.div,
+    {
+      className: 'cart__item-wrapper',
+      style: { ...styles, overflow: 'hidden' },
+    },
+    React.createElement('div', { ref, style: {marginRight: '10px'} },
+      React.createElement('div', { className: 'cart__item' },
+        React.createElement('img', { className: 'cart__item__photo', src }),
+        React.createElement('div', { className: 'cart__item__name', children }),
+        React.createElement('div', { className: 'cart__item__price' }, price),
+        React.createElement('div', { className: 'cart__item__quantity-wrapper' },
+          React.createElement('div', { className: 'cart__item__quantity' },
+            React.createElement('div', {
+              className: 'cart__item__quantity__minus',
+              onClick() {
+                var newQuantity = quantity - 1;
+                if (newQuantity > 0) {
+                  onUpdateQuantity(quantity - 1);
+                  return;
+                }
+                onRemove();
+              },
+            }, '-'),
+            React.createElement('div', { className: 'cart__item__quantity__number' }, quantity),
+            React.createElement('div', {
+              className: 'cart__item__quantity__plus',
+              onClick() {
+                onUpdateQuantity(quantity + 1);
+              },
+            }, '+')
+          )
+        )
+      )
+    )
+  );
+}
+
+function lazyTask() {
+  var count = 0;
+  var a = new Date();
+  while((new Date()).getTime() - a.getTime() < 1100) {
+    // wait
+    count += 1;
+  }
+}
+
 ReactDOM.render(
   React.createElement(App),
   document.querySelector('#fruit-list')
-)
+);
