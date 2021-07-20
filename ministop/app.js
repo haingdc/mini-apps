@@ -27,9 +27,11 @@ var initialItems = [
 ];
 
 var items = R.map(n => new Item(n), initialItems);
+// get first four items
+var initialSelected = items.slice(0, 4);
 
 function App() {
-  var [    selected, setSelected    ] = React.useState([]);
+  var [    selected, setSelected    ] = React.useState(initialSelected);
   var [displaySizes, setDisplaySizes] = React.useState({});
   var now = moment().format('ddd, DD MMM YYYY, HH:MM A');
 
