@@ -8,7 +8,7 @@ var NUM_TRANS = [
     },
     trans: {
       range: [0.75, 1],
-      output: [-40, 0],
+      output: [40, 0],
       extrapolate: "clamp"
     }
   },
@@ -21,7 +21,7 @@ var NUM_TRANS = [
     },
     trans: {
       range: [ 0.25, 0.5 ],
-      output: [ -40, 0 ],
+      output: [ 40, 0 ],
       extrapolate: "clamp"
     }
   },
@@ -34,7 +34,7 @@ var NUM_TRANS = [
     },
     trans: {
       range: [ 0, 0.25 ],
-      output: [ -40, 0 ],
+      output: [ 40, 0 ],
       extrapolate: "clamp"
     }
   },
@@ -47,7 +47,7 @@ var NUM_TRANS = [
     },
     trans: {
       range: [ 0.5, 0.75 ],
-      output: [ -40, 0 ],
+      output: [ 40, 0 ],
       extrapolate: "clamp"
     }
   }
@@ -55,6 +55,9 @@ var NUM_TRANS = [
 function App() {
   var [items, setItems] = React.useState(NUM_TRANS)
   var transitions = ReactSpring.useTransition(items, {
+    keys(item) {
+      return item.id;
+    },
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
@@ -69,7 +72,7 @@ function App() {
     if (items.length == 0) {
       setTimeout(() => {
         setItems(NUM_TRANS)
-      }, 20000);
+      }, 2000);
     }
   }, [items]);
 
@@ -85,7 +88,6 @@ function App() {
       var { opacity } = animatedValue;
       return React.createElement(ReactSpring.animated.div,
         {
-          key: item.id,
           style: {
             opacity: opacity.to(item.op),
             transform: opacity
