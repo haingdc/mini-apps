@@ -4,3 +4,10 @@ netflix-master
 yarn.lock
 yarn-error.log
 frontend-master-webpack/dist
+frontend-master-rust/part*/target
+rusty-rocket-live-7140327/target
+rusty-fast-actix-rest-api-003272100/target
+hackernews-21vnmay/target
+rust-update-to-date/target
+rust-rocket-kk09/
+Cargo.lock
