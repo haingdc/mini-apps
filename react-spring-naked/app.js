@@ -1,57 +1,85 @@
-var NUM_TRANS = [
-  {
-    id: undefined,
-    fig: 0,
-    op: {
-      range: [0.75, 1],
-      output: [0, 1]
-    },
-    trans: {
-      range: [0.75, 1],
-      output: [40, 0],
-      extrapolate: "clamp"
-    }
-  },
-  {
-    id: undefined,
-    fig: 1,
-    op: {
-      range: [ 0.25, 0.5 ],
-      output: [ 0, 1 ]
-    },
-    trans: {
-      range: [ 0.25, 0.5 ],
-      output: [ 40, 0 ],
-      extrapolate: "clamp"
-    }
-  },
-  {
-    id: undefined,
-    fig: 2,
-    op: {
-      range: [ 0, 0.25 ],
-      output: [ 0, 1 ]
-    },
-    trans: {
-      range: [ 0, 0.25 ],
-      output: [ 40, 0 ],
-      extrapolate: "clamp"
-    }
-  },
-  {
-    id: undefined,
-    fig: 3,
-    op: {
-      range: [ 0.5, 0.75 ],
-      output: [ 0, 1 ]
-    },
-    trans: {
-      range: [ 0.5, 0.75 ],
-      output: [ 40, 0 ],
-      extrapolate: "clamp"
-    }
-  }
-];
+function getOutput() {
+  var ns = [100, 200, 300, 25, 20];
+  var i = Math.floor(Math.random()*ns.length);
+  var n = ns[i];
+  return [n, 0];
+}
+
+function getRange() {
+  var ns = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75];
+  var i = Math.floor(Math.random()*14);
+  var n = ns[i];
+  return [n, n+0.25];
+}
+
+function getNUM_TRANS(len) {
+  var ns = R.range(0, len);
+  return ns.map(function getNum(n) {
+    var range = getRange();
+    return {
+      id: uuid.v4(),
+      fig: n,
+      op: { range, output: [0,1] },
+      trans: { range, output: getOutput(), extrapolate: "clamp" },
+    };
+  });
+}
+var NUM_TRANS = getNUM_TRANS(10);
+
+// var NUM_TRANS = [
+//   {
+//     id: undefined,
+//     fig: 0,
+//     op: {
+//       range: [0.75, 1],
+//       output: [0, 1]
+//     },
+//     trans: {
+//       range: [0.75, 1],
+//       output: [40, 0],
+//       extrapolate: "clamp"
+//     }
+//   },
+//   {
+//     id: undefined,
+//     fig: 1,
+//     op: {
+//       range: [ 0.25, 0.5 ],
+//       output: [ 0, 1 ]
+//     },
+//     trans: {
+//       range: [ 0.25, 0.5 ],
+//       output: [ 40, 0 ],
+//       extrapolate: "clamp"
+//     }
+//   },
+//   {
+//     id: undefined,
+//     fig: 2,
+//     op: {
+//       range: [ 0, 0.25 ],
+//       output: [ 0, 1 ]
+//     },
+//     trans: {
+//       range: [ 0, 0.25 ],
+//       output: [ 40, 0 ],
+//       extrapolate: "clamp"
+//     }
+//   },
+//   {
+//     id: undefined,
+//     fig: 3,
+//     op: {
+//       range: [ 0.5, 0.75 ],
+//       output: [ 0, 1 ]
+//     },
+//     trans: {
+//       range: [ 0.5, 0.75 ],
+//       output: [ 40, 0 ],
+//       extrapolate: "clamp"
+//     }
+//   }
+// ];
 
 NUM_TRANS = NUM_TRANS.map(num => ({ ...num, id: uuid.v4() }));
 function App() {
@@ -108,10 +136,13 @@ function App() {
 }
 
 /**
- * 
+ * The hook try matching one of the queries to the corresponding value
+ * or fallback to defaultValue.
+ *
  * @param {string[]} queries
  * @param {number[]} values
  * @param {number} defaultValue
+ * @returns {number}
  */
 function useMedia(queries, values, defaultValue) {
   var [value, set] = React.useState(match);
