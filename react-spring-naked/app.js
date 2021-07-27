@@ -1,6 +1,6 @@
 var NUM_TRANS = [
   {
-    id: '7f515601-675a-4fdc-995a-796f41421383',
+    id: undefined,
     fig: 0,
     op: {
       range: [0.75, 1],
@@ -13,7 +13,7 @@ var NUM_TRANS = [
     }
   },
   {
-    id: '39538eec-8be1-4d59-b199-81148a8dd804',
+    id: undefined,
     fig: 1,
     op: {
       range: [ 0.25, 0.5 ],
@@ -26,7 +26,7 @@ var NUM_TRANS = [
     }
   },
   {
-    id: '9540c6a3-9603-4da3-a19d-7fac5a3ef754',
+    id: undefined,
     fig: 2,
     op: {
       range: [ 0, 0.25 ],
@@ -39,7 +39,7 @@ var NUM_TRANS = [
     }
   },
   {
-    id: 'dd1d70c5-88f9-4cf0-88e9-303b14be9db6',
+    id: undefined,
     fig: 3,
     op: {
       range: [ 0.5, 0.75 ],
@@ -52,7 +52,11 @@ var NUM_TRANS = [
     }
   }
 ];
+
+NUM_TRANS = NUM_TRANS.map(num => ({ ...num, id: uuid.v4() }));
 function App() {
+  var columns = useMedia(['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'], [5, 4, 3], 2);
+
   var [items, setItems] = React.useState(NUM_TRANS)
   var transitions = ReactSpring.useTransition(items, {
     keys(item) {
@@ -100,8 +104,38 @@ function App() {
         item.fig
       )
     })
-  )
+  );
 }
+
+/**
+ * 
+ * @param {string[]} queries
+ * @param {number[]} values
+ * @param {number} defaultValue
+ */
+function useMedia(queries, values, defaultValue) {
+  var [value, set] = React.useState(match);
+
+  React.useEffect(function () {
+    window.addEventListener('resize', handler);
+
+    return function free() {
+      return window.removeEventListener('resize', handler);
+    };
+
+    function handler() {
+      return set(match);
+    }
+  }, []);
+
+  return value;
+
+  function match() {
+    var i = queries.findIndex(q => matchMedia(q).matches);
+    return values[i] || defaultValue;
+  }
+}
+
 ReactDOM.render(
   React.createElement(App),
   document.querySelector('#fruit-list')
