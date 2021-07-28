@@ -1,3 +1,5 @@
+import { debounce } from './libraries-esmodule/debounce@1.2.1.js'
+
 function getOutput() {
   var ns = [100, 200, 300, 25, 20];
   var i = Math.floor(Math.random()*ns.length);
@@ -114,6 +116,11 @@ function App() {
         display: 'flex',
       },
     },
+    React.createElement('input', {
+      onChange: debounce(function (evt) {
+        console.log(evt.target.value);
+      }, 200),
+    }),
     // for more details about transition function, reference to
     // https://react-spring.io/hooks/use-transition#mountunmount-single-component-reveals
     transitions(function animate(animatedValue, item, TransitionObj, SiblingPosition) {
@@ -166,6 +173,8 @@ function useMedia(queries, values, defaultValue) {
     return values[i] || defaultValue;
   }
 }
+
+
 
 ReactDOM.render(
   React.createElement(App),
