@@ -1,4 +1,6 @@
 import { debounce } from './libraries-esmodule/debounce@1.2.1.js'
+import useMeasure from './libraries-esmodule/react-use-measure@2.0.4-web.js';
+
 
 function getOutput() {
   var ns = [100, 200, 300, 25, 20];
@@ -28,64 +30,15 @@ function getNUM_TRANS(len) {
 }
 var NUM_TRANS = getNUM_TRANS(10);
 
-// var NUM_TRANS = [
-//   {
-//     id: undefined,
-//     fig: 0,
-//     op: {
-//       range: [0.75, 1],
-//       output: [0, 1]
-//     },
-//     trans: {
-//       range: [0.75, 1],
-//       output: [40, 0],
-//       extrapolate: "clamp"
-//     }
-//   },
-//   {
-//     id: undefined,
-//     fig: 1,
-//     op: {
-//       range: [ 0.25, 0.5 ],
-//       output: [ 0, 1 ]
-//     },
-//     trans: {
-//       range: [ 0.25, 0.5 ],
-//       output: [ 40, 0 ],
-//       extrapolate: "clamp"
-//     }
-//   },
-//   {
-//     id: undefined,
-//     fig: 2,
-//     op: {
-//       range: [ 0, 0.25 ],
-//       output: [ 0, 1 ]
-//     },
-//     trans: {
-//       range: [ 0, 0.25 ],
-//       output: [ 40, 0 ],
-//       extrapolate: "clamp"
-//     }
-//   },
-//   {
-//     id: undefined,
-//     fig: 3,
-//     op: {
-//       range: [ 0.5, 0.75 ],
-//       output: [ 0, 1 ]
-//     },
-//     trans: {
-//       range: [ 0.5, 0.75 ],
-//       output: [ 40, 0 ],
-//       extrapolate: "clamp"
-//     }
-//   }
-// ];
 
 NUM_TRANS = NUM_TRANS.map(num => ({ ...num, id: uuid.v4() }));
 function App() {
   var columns = useMedia(['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'], [5, 4, 3], 2);
+  const [ref, bounds] = useMeasure()
+
+  React.useEffect(function testMeasure() {
+    console.log(bounds);
+  }, []);
 
   var [items, setItems] = React.useState(NUM_TRANS)
   var transitions = ReactSpring.useTransition(items, {
@@ -112,6 +65,8 @@ function App() {
 
   return React.createElement('div',
     {
+      ref,
+      className: 'todo',
       style: {
         display: 'flex',
       },
