@@ -2,7 +2,7 @@ import { debounce } from './libraries-esmodule/debounce@1.2.1.js'
 import useMeasure from './libraries-esmodule/react-use-measure@2.0.4-web.js';
 import data from './data.js';
 
-var { useState, } = React;
+var { useState, useEffect } = React;
 
 /**
  * @param {any[]} items
@@ -11,12 +11,33 @@ var { useState, } = React;
 */
 var flip_indexOf = R.flip(R.indexOf);
 
+var shuffler = R.curry(function(random, list) {
+  var idx = -1;
+  var len = list.length;
+  var position;
+  var result = [];
+  while (++idx < len) {
+      position = Math.floor((idx + 1) * random());
+      result[idx] = result[position];
+      result[position] = list[idx];
+  }
+  return result;
+});
+
+var shuffle = shuffler(Math.random);
+
 function Mansory() {
   var columns = useMedia(['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'], [5,4,3], 2);
   var [ref, { width }] = useMeasure();
   var [items, set] = useState(data);
-  // TODO
-  var [heights, gridItems] = React.useMemo(function() {
+
+  // Hook4: shuffle data every 2 seconds
+  useEffect(function() {
+    var t = setInterval(() => set(shuffle), 2000);
+    return () => clearInterval(t);
+  }, [])
+
+  var [heights, gridItems] = React.useMemo(function layout() {
     var heights = new Array(columns).fill(0);
     var gridItems = items.map(function mapper(child, i) {
       var column = R.pipe( Math.min, flip_indexOf(heights) )(...heights);
