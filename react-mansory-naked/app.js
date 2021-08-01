@@ -32,10 +32,10 @@ function Mansory() {
   var [items, set] = useState(data);
 
   // Hook4: shuffle data every 2 seconds
-  useEffect(function() {
-    var t = setInterval(() => set(shuffle), 2000);
-    return () => clearInterval(t);
-  }, [])
+  // useEffect(function() {
+  //   var t = setInterval(() => set(shuffle), 2000);
+  //   return () => clearInterval(t);
+  // }, []);
 
   var [heights, gridItems] = React.useMemo(function layout() {
     var heights = new Array(columns).fill(0);
@@ -87,7 +87,15 @@ function Mansory() {
 
   return React.createElement('div', { ref, className: 'list', style: { height: Math.max(...heights) }},
     transitions(function animate(animatedValue, item, TransitionObj, SiblingPosition) {
-      return React.createElement(ReactSpring.a.div, { style: animatedValue },
+      return React.createElement(ReactSpring.a.div,
+        {
+          style: animatedValue,
+          onClick: function remove() {
+            set(items => {
+              return items.filter(n => n.css != item.css);
+            });
+          },
+        },
         React.createElement('div', { style: { backgroundImage: `url(${item.css}?auto=compress&dpr=2&h=500&w=500)` }})
       );
     })
