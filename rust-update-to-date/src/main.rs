@@ -1,63 +1,52 @@
-extern crate serde;
-use serde::{Serialize, Deserialize};
-use bincode;
+fn merge_sort(mut arr: Vec<i32>, left: usize, right: usize) -> Vec<i32> {
+	if right - 1 > left {
+		let mid = left + (right - left) / 2;
+		arr = merge_sort(arr, left, mid);
+		arr = merge_sort(arr, mid, right);
+		arr = merge(arr, left, mid, right);
+	}
+	arr
+}
+
+fn merge(mut arr: Vec<i32>, left: usize, mid: usize, right: usize) -> Vec<i32> {
+	let n1 = mid - left;
+	let n2 = right - mid;
+	let mut L1 = arr.clone();
+	let mut L2 = arr.clone();
+	let L = &L1[left..mid];
+	let R = &L2[mid..right];
+	/* merge the temp arrays back into arr[l..r] */
+	let mut i = 0; // initial index of first subarray
+	let mut j = 0; // initial index of second subarray
+	let mut k = left; // initial index of the merged subarray
+	while i < n1 && j < n2 {
+		if L[i] < R[j] {
+			arr[k] = L[i];
+			i = i + 1;
+		}
+		else {
+			arr[k] = R[j];
+			j = j + 1;
+		}
+		k = k + 1;
+	}
+	while i < n1 {
+		arr[k] = L[i];
+		i = i + 1;
+		k = k + 1;
+	}
+	/* Copy the remaining elements of R[], if there are any */
+	while j < n2 {
+		arr[k] = R[j];
+		j = j + 1;
+		k = k + 1;
+	}
+	arr
+}
 
 fn main() {
-	let alice = Person { name: "Alice", age: 17 };
-	println!("alice: {:?}", alice);
-}
-
-fn byte_length(string: &str) -> usize {
-	string.bytes().len()
-}
-
-#[derive(Debug)]
-struct DropMe;
-
-impl Drop for DropMe {
-
-	// drop is called before an instance is dropped
-	fn drop(&mut self) {
-		println!("Dropping!");
-	}
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
-struct Point {
-  x: f32,
-  y: f32
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Line {
-  points: Vec<Point>,
-  valid: bool,
-  length: f32,
-  desc: String
-}
-
-fn sum(vector: &Vec<i32>) -> i32 {
-	let mut sum = 0;
-	for item in vector {
-		sum = sum + item;
-	}
-	sum
-}
-
-#[derive(Debug)]
-struct Person<'a> {
-	age: i8,
-	name: &'a str,
-}
-
-fn pass_number_by_reference(number: &i8) -> bool {
-	number.is_negative()
-}
-
-fn pass_number_by_value(number: i8) -> bool {
-	number.is_negative()
-}
-
-fn pass_vec_by_reference(vec: &Vec<i8>) -> bool {
-	vec.is_empty()
+	let mut arr: Vec<i32> = vec![10, 35, 23, 48, 92, 7, 54];
+	arr = merge_sort(arr.clone(), 0, arr.len());
+	print!("Sorted array is {:?}", arr);
+	print!("{}", 7 / 2)
 }
