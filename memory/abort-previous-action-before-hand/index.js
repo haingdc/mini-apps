@@ -1,4 +1,3 @@
-
 async function abortable(signal, promise) {
   if (signal.aborted) throw new DOMException('AbortError', 'AbortError');
   const lotsOfMemory = new Uint8Array(1000 * 1000 * 100);
