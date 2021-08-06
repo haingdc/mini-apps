@@ -20,5 +20,21 @@ app.use('/data', createProxyMiddleware({
     },
     changeOrigin: true,
 }));
+app.use('/maps/api', createProxyMiddleware({
+    target: 'https://maps.googleapis.com',
+    headers: {
+        accept: "application/json",
+        method: "GET",
+    },
+    changeOrigin: true,
+}))
+app.use('/maps/api/directions', createProxyMiddleware({
+    target: 'https://maps.googleapis.com',
+    headers: {
+        accept: "application/json",
+        method: "GET",
+    },
+    changeOrigin: true,
+}))
 
-app.listen(3001);
+app.listen(8080);
