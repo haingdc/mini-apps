@@ -69,6 +69,7 @@ scope.InfiniteScrollerSource.prototype = {
  *     displayed in the infinite scroll region.
  */
 scope.InfiniteScroller = function(scroller, source) {
+  window['todo'] = this;
   this.anchorItem = {index: 0, offset: 0};
   this.firstAttachedItem_ = 0;
   this.lastAttachedItem_ = 0;
