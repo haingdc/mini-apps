@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			box-sizing: content-box;
+		}
+		body {
+			position: relative;
+		}
+		ul {
+			--height: 20px;
+			display: block;
+			position: relative;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			border: 2px black dotted;
+			height: calc( var(--height) * 6);
+			overflow-y: auto;
+			z-index: -1;
+		}
+		li {
+			--index: 0;
+			position: absolute;
+			width: 100%;
+			height: var(--height);
+			background: red;
+			display: block;
+			top: calc( var(--index) * var(--height));
+		}
+		li:nth-child(2) {
+			--index: 1;
+		}
+		li:nth-child(3) {
+			--index: 2;
+		}
+		li:nth-child(4) {
+			--index: 3;
+		}
+		li:nth-child(5) {
+			--index: 4;
+		}
+		li:nth-child(6) {
+			--index: 5;
+		}
+		li:nth-child(7) {
+			--index: 6;
+		}
+		li:nth-child(8) {
+			--index: 7;
+		}
+		li:nth-child(9) {
+			--index: 8;
+		}
+		li:nth-child(10) {
+			--index: 9;
+		}
+		p {
+			background: green;
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>One</li>
+		<li>Two</li>
+		<li>Three</li>
+		<li>Four</li>
+		<li>Five</li>
+		<li>Six</li>
+		<li>Seven</li>
+		<li>Eight</li>
+		<li>Nine</li>
+		<li>Ten</li>
+	</ul>
+	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, similique ab? Ab, dolores repellat. Velit autem et magnam eos in.</p>
+</body>
+</html>
