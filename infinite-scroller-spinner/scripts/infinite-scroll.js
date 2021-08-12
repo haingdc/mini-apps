@@ -366,7 +366,7 @@ scope.InfiniteScroller.prototype = {
     if (itemsNeeded <= 0)
       return;
     this.requestInProgress_ = true;
-    this.source_.fetch(itemsNeeded)/* .then(this.addContent.bind(this)) */;
+    this.source_.fetch(itemsNeeded).then(this.addContent.bind(this));
   },
 
   /**
