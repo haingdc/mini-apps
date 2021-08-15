@@ -93,7 +93,10 @@ function App() {
         },
         item.fig
       )
-    })
+    }),
+    React.createElement('button', { type: 'button', onClick() {
+      console.log(bounds);
+    } }, 'measure')
   );
 }
 
