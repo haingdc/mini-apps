@@ -16,6 +16,17 @@ function countColumns(children) {
   return col;
 }
 
+/**
+ * Determine column index by item index and columns number.
+ * @param {number} i index of an item
+ * @param {number} cols columns number
+ */
+function getCol(i, cols) {
+  if (cols <= 0) throw new Error(`expect cols must be positive value but get ${cols}`);
+  return i % cols;
+}
+
 export {
   countColumns,
+  getCol,
 };
