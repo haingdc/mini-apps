@@ -36,5 +36,13 @@ app.use('/maps/api/directions', createProxyMiddleware({
     },
     changeOrigin: true,
 }))
+app.use('/get_contacts_fake', createProxyMiddleware({
+    target: 'http://localhost:8000',
+    headers: {
+        accept: "application/json",
+        method: "GET",
+    },
+    changeOrigin: true,
+}))
 
 app.listen(8080);
