@@ -125,7 +125,7 @@ function getItem(id) {
       id: id,
       avatar: Math.floor(Math.random()*NUM_AVATARS),
       self: Math.random() < 0.1,
-      image: Math.random() < 1.0 / 20 ? Math.floor(Math.random()*NUM_IMAGES) : '',
+      image: Math.random() < (1.0 / 20) ? Math.floor(Math.random()*NUM_IMAGES) : '',
       time: new Date(Math.floor(INIT_TIME + id*20*1000 + Math.random()*20*1000)),
       message: pickRandom(MESSAGES)
     }
