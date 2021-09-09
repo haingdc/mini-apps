@@ -2,14 +2,6 @@ import ClickOutsideDetector from './components/behaviors/click-outside-detector/
 
 function App() {
   const [ text, setText ] = React.useState(null);
-  // return(
-  //   <ClickOutsideDetector
-  //      listen
-  //      onClickOutside={() => { setText("clicked outside."); }}
-  //      onClick={() => { setText("clicked inside."); }}
-  //     >
-  //     <h1>{text ? text : "Click inside or outside me."}</h1>
-  //   </ClickOutsideDetector>
   return React.createElement
   (
     ClickOutsideDetector,
