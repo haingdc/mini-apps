@@ -95,26 +95,10 @@
 //     }
 //   }
 // }
-
-
-#[allow(dead_code)]
-pub struct Node {
-  data: u64,
-  next: Option<Box<Node>>,
-  prev: Option<Box<Node>>
-}
-
-#[allow(unused_macros)]
-macro_rules! node {
-  ( $($props:ident : $value:expr),* ) => {
-    Some(Box::new(Node {
-      $($props: $value),*
-    }))
-  }
-}
+use rust_debug::first::List;
 
 #[allow(unused_variables)]
 fn main() {
-  let mut head = node! ( data: 5, next: None, prev: None );
-  let next = node! ( data: 6, next: None, prev: head);
+  let list: List<i32> = List::Cons(1, Box::new(List::Cons(2, Box::new(List::Nil))));
+  println!("{:?}", list);
 }

@@ -1,4 +1,5 @@
-pub enum List {
-  Empty,
-  Elem(i32, List),
+#[derive(Debug)]
+pub enum List<T> {
+  Nil,
+  Cons(T, Box<List<T>>),
 }
