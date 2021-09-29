@@ -95,10 +95,10 @@
 //     }
 //   }
 // }
-use rust_debug::first::List;
+use rust_debug::first;
 
 #[allow(unused_variables)]
 fn main() {
-  let list: List<i32> = List::Cons(1, Box::new(List::Cons(2, Box::new(List::Nil))));
+  let list: first::List<i32> = first::List::Cons(1, Box::new(first::List::Cons(2, Box::new(first::List::Nil))));
   println!("{:?}", list);
 }
