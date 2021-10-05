@@ -1,0 +1,43 @@
+body {
+  margin: 2rem;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.box {
+  max-height: 400px;
+  min-height: 400px;
+  overflow: auto;
+  background: #11052c;
+  color: #fff;
+  padding: 10px;
+}
+
+.message-item {
+  background: grey;
+  border-radius: 4px;
+  width: fit-content;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 8px;
+  margin: 20px 0;
+  align-items: flex-start;
+}
+
+.message-item > time {
+  font-style: italic;
+  font-size: 14px;
+  color: black;
+}
+
+.not-self {
+  margin-left: auto;
+  background-color: #368b85;
+}
+
+.self {
+  margin-right: auto;
+}
