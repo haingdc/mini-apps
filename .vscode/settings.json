@@ -1,0 +1,7 @@
+{
+  // "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Microsoft Edge Canary.app/Contents/MacOS/Microsoft Edge Canary --private-window",
+  // "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Firefox Nightly.app/Contents/MacOS/firefox --profile Pefm url \"https://genk.vn\""
+  // "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Firefox Nightly.app/Contents/MacOS/firefox --profile Pefm --url http://localhost:5500",
+  "liveServer.settings.NoBrowser": false,
+  "workbench.editor.wrapTabs": true,
+}
