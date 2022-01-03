@@ -12,7 +12,6 @@ use rocket_dyn_templates::Template;
 
 extern crate serde;
 #[macro_use] extern crate serde_derive;
-#[macro_use] extern crate serde_json;
 
 
 mod fetch;

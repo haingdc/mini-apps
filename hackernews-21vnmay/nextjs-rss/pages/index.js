@@ -24,7 +24,7 @@ export default function Home(props) {
       direction="horizontal"
       cursor="col-resize"
     >
-      <ul>
+      <ul className="h-screen overflow-auto">
         {
           articles.map(e => (
             <li
