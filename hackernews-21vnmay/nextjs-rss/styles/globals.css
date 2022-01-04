@@ -32,7 +32,8 @@ html {
 }
 
 ul {
-  margin: 0; padding: 10px;
+  margin: 0;
+  padding: 0;
   list-style: none;
   counter-reset: news-item-counter;
 }
@@ -45,7 +46,8 @@ ul li {
 }
 
 ul li:before {
-  content: counter(news-item-counter);
+  /* content: counter(news-item-counter); */
+  content: attr(data-index);
   counter-increment: news-item-counter;
   position: absolute;
   top: 10px; left: 0;
