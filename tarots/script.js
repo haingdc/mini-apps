@@ -10,6 +10,113 @@ function easeLinear(t, b, c, d) {
   return c * t / d + b;
 }
 
+function easeInQuad (t, b, c, d) {
+  return c * (t /= d) * t + b;
+}
+
+function easeOutQuad (t, b, c, d) {
+  return -c * (t /= d) * (t - 2) + b;
+}
+
+function easeInOutQuad (t, b, c, d) {
+  if ((t /= d / 2) < 1) return c / 2 * t * t + b;
+  return -c / 2 * ((--t) * (t - 2) - 1) + b;
+}
+
+function easeInSine (t, b, c, d) {
+  return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
+}
+
+function easeOutSine (t, b, c, d) {
+  return c * Math.sin(t / d * (Math.PI / 2)) + b;
+}
+
+function easeInOutSine (t, b, c, d) {
+  return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
+}
+
+function easeInExpo (t, b, c, d) {
+  return (t == 0) ? b : c * Math.pow(2, 10 * (t / d - 1)) + b;
+}
+
+function easeOutExpo (t, b, c, d) {
+  return (t == d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
+}
+
+function easeInOutExpo (t, b, c, d) {
+  if (t == 0) return b;
+  if (t == d) return b + c;
+  if ((t /= d / 2) < 1) return c / 2 * Math.pow(2, 10 * (t - 1)) + b;
+  return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;
+}
+
+function easeInCirc (t, b, c, d) {
+  return -c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;
+}
+
+function easeOutCirc (t, b, c, d) {
+  return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;
+}
+
+function easeInOutCirc (t, b, c, d) {
+  if ((t /= d / 2) < 1) return -c / 2 * (Math.sqrt(1 - t * t) - 1) + b;
+  return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
+}
+
+function easeInCubic (t, b, c, d) {
+  return c * (t /= d) * t * t + b;
+}
+
+function easeOutCubic (t, b, c, d) {
+  return c * ((t = t / d - 1) * t * t + 1) + b;
+}
+
+function easeInOutCubic (t, b, c, d) {
+  if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+  return c / 2 * ((t -= 2) * t * t + 2) + b;
+}
+
+function easeInQuart (t, b, c, d) {
+  return c * (t /= d) * t * t * t + b;
+}
+
+function easeOutQuart (t, b, c, d) {
+  return -c * ((t = t / d - 1) * t * t * t - 1) + b;
+}
+
+function easeInOutQuart (t, b, c, d) {
+  if ((t /= d / 2) < 1) return c / 2 * t * t * t * t + b;
+  return -c / 2 * ((t -= 2) * t * t * t - 2) + b;
+}
+
+function easeInQuint (t, b, c, d) {
+  return c * (t /= d) * t * t * t * t + b;
+}
+
+// https://spicyyoghurt.com/tools/easing-functions
+const easeFns = {
+  1: easeLinear,
+  2: easeInQuad,
+  3: easeOutQuad,
+  4: easeInOutQuad,
+  5: easeInSine,
+  6: easeOutSine,
+  7: easeInOutSine,
+  8: easeInExpo,
+  9: easeOutExpo,
+  10: easeInOutExpo,
+  11: easeInCirc,
+  12: easeOutCirc,
+  13: easeInOutCirc,
+  14: easeInCubic,
+  15: easeOutCubic,
+  16: easeInOutCubic,
+  17: easeInQuart,
+  18: easeOutQuart,
+  19: easeInOutQuart,
+  20: easeInQuint,
+};
+
 // Initialization
 const images = [
   'RWS_Tarot_02_High_Priestess.jpg',
@@ -26,7 +133,8 @@ const containerPadding = 10;
 const containerGap = 10;
 let itemWidth = 0;
 let containerColumns = 0;
-let debug = true; // toggle to on/off debug mode
+let selectedFn = easeLinear;
+let debug = false; // toggle to on/off debug mode
 let t0 = 0;
 let t2 = 0;
 let dt = 0; // duration debug
@@ -38,8 +146,6 @@ const container = document.getElementById('container');
   container.style.padding = containerPadding + 'px';
 }
 
-const list = document.querySelector('.list');
-
 const anchor = document.createElement('div');
 {
   anchor.style.width = '1px';
@@ -47,7 +153,7 @@ const anchor = document.createElement('div');
   container.appendChild(anchor);
 }
 
-// === create tarot elements which are children of the 'list' element
+// === create tarot elements which are children of the container element
 images.forEach(i => {
   const div = document.createElement('div');
   div.className = 'tarot';
@@ -55,7 +161,7 @@ images.forEach(i => {
   const img = document.createElement('img');
   img.src = './images/' + i;
   div.appendChild(img);
-  list.appendChild(div);
+  container.appendChild(div);
 
   div.style.width = '80%';
 });
@@ -63,6 +169,8 @@ images.forEach(i => {
 const tarots = document.querySelectorAll('.tarot');
 const selectColumns = document.getElementById('select-columns');
 containerColumns = selectColumns.value;
+const selectFns = document.getElementById('select-functions');
+selectedFn = easeFns[selectFns.value];
 
 // === initialize transform_list
 let transform_list = getInitialTransformList();
@@ -108,16 +216,15 @@ function inBetween(t1) {
   if (debug) {
     dt = t2 - t0;
   }
-  console.log('inspect.inBetween', t2, t0);
+  console.log('inspect.inBetween', dt);
   for (let i = 0; i < transform_list.length; i++) {
     const bx = transform_list[i][0][0];
     const by = transform_list[i][0][1];
     const cx = transform_list[i][1][0];
     const cy = transform_list[i][1][1];
-    const x1 = Math.min(easeLinear(dt, bx, cx, animation_duration), cx);
-    const y1 = Math.min(easeLinear(dt, by, cy, animation_duration), cy);
+    const x1 = Math.min(selectedFn(dt, bx, cx, animation_duration), cx);
+    const y1 = Math.min(selectedFn(dt, by, cy, animation_duration), cy);
     tarots[i].style.transform = `translate(${x1}px, ${y1}px)`;
-    t0 = debug ? t2 : t1;
     transform_list[i] = [ [x1, y1], transform_list[i][1] ] ;
     if (x1 === cx && y1 === cy) {
       end_items += 1;
@@ -147,19 +254,12 @@ selectColumns.addEventListener('change', () => {
   requestAnimationFrame(inBetween);
 });
 
-btnBackList.addEventListener('click', () => {
-  for (let i = 0; i < tarots.length; i++) {
-    const item = tarots[i];
-    item.style.width = null;
-    item.style.transform = null;
-
-    list.appendChild(item);
-  }
+selectFns.addEventListener('change', () => {
+  selectedFn = easeFns[selectFns.value];
 });
 
 window.addEventListener('keydown', (e) => {
   if (e.code === 'KeyA' && debug) {
-    console.log('inspect.keyA', t2)
     if (t2 < dt) {
       t2 = Math.min(t2 + 1000 / 60);
     }
