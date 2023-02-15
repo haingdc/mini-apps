@@ -26,7 +26,10 @@ const containerPadding = 10;
 const containerGap = 10;
 let itemWidth = 0;
 let containerColumns = 0;
+let debug = true; // toggle to on/off debug mode
 let t0 = 0;
+let t2 = 0;
+let dt = 0; // duration debug
 
 const btnBackList = document.querySelector('.back-list');
 const container = document.getElementById('container');
@@ -59,11 +62,17 @@ images.forEach(i => {
 
 const tarots = document.querySelectorAll('.tarot');
 const selectColumns = document.getElementById('select-columns');
+containerColumns = selectColumns.value;
 
 // === initialize transform_list
-const transform_list = new Array(tarots.length);
-for (let i = 0; i < transform_list.length; i++) {
-  transform_list[i] = [[0, 0], [0, 0]];
+let transform_list = getInitialTransformList();
+
+function getInitialTransformList() {
+  const list = new Array(tarots.length);
+  for (let i = 0; i < list.length; i++) {
+    list[i] = [[0, 0], [0, 0]];
+  }
+  return list;
 }
 
 function calcDestinationPos() {
@@ -72,6 +81,7 @@ function calcDestinationPos() {
   for (let i = 0; i < tarots.length; i++) {
     const item = tarots[i];
     item.style.width = itemWidth + 'px';
+    item.style.transform = null;
     container.append(item);
   }
 
@@ -94,7 +104,11 @@ function calcDestinationPos() {
 
 function inBetween(t1) {
   let end_items = 0;
-  const dt = t1 - t0;
+  let dt = t1 - t0;
+  if (debug) {
+    dt = t2 - t0;
+  }
+  console.log('inspect.inBetween', t2, t0);
   for (let i = 0; i < transform_list.length; i++) {
     const bx = transform_list[i][0][0];
     const by = transform_list[i][0][1];
@@ -103,12 +117,15 @@ function inBetween(t1) {
     const x1 = Math.min(easeLinear(dt, bx, cx, animation_duration), cx);
     const y1 = Math.min(easeLinear(dt, by, cy, animation_duration), cy);
     tarots[i].style.transform = `translate(${x1}px, ${y1}px)`;
-    t0 = t1;
+    t0 = debug ? t2 : t1;
     transform_list[i] = [ [x1, y1], transform_list[i][1] ] ;
     if (x1 === cx && y1 === cy) {
       end_items += 1;
     }
   }
+
+  if (debug) return;
+
   // === stop loop
   if (end_items === transform_list.length - 1) {
     end_items = 0;
@@ -118,10 +135,15 @@ function inBetween(t1) {
 }
 
 
+
+
 selectColumns.addEventListener('change', () => {
   containerColumns = Number.parseInt(selectColumns.value);
+  transform_list = getInitialTransformList();
   calcDestinationPos();
   t0 = performance.now();
+  t2 = performance.now() + 1000 / 60;
+  dt = t0 + animation_duration;
   requestAnimationFrame(inBetween);
 });
 
@@ -135,15 +157,16 @@ btnBackList.addEventListener('click', () => {
   }
 });
 
-let debug = true;
-let isAnimating = false;
 window.addEventListener('keydown', (e) => {
-  if (e.code === 'KeyA') {
-    scheduleRender(true);
+  if (e.code === 'KeyA' && debug) {
+    console.log('inspect.keyA', t2)
+    if (t2 < dt) {
+      t2 = Math.min(t2 + 1000 / 60);
+    }
+    requestAnimationFrame(inBetween);
   }
 });
 
-function scheduleRender(forceRender) {
-  console.log(transform_list)
+function scheduleRender() {
 }
 
