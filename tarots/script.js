@@ -26,6 +26,7 @@ const containerPadding = 10;
 const containerGap = 10;
 let itemWidth = 0;
 let containerColumns = 0;
+let t0 = 0;
 
 const btnBackList = document.querySelector('.back-list');
 const container = document.getElementById('container');
@@ -59,8 +60,13 @@ images.forEach(i => {
 const tarots = document.querySelectorAll('.tarot');
 const selectColumns = document.getElementById('select-columns');
 
-function layout() {
-  containerColumns = Number.parseInt(selectColumns.value);
+// === initialize transform_list
+const transform_list = new Array(tarots.length);
+for (let i = 0; i < transform_list.length; i++) {
+  transform_list[i] = [[0, 0], [0, 0]];
+}
+
+function calcDestinationPos() {
   itemWidth = (container.offsetWidth - (containerColumns - 1) * containerGap - containerPadding * 2) / containerColumns
 
   for (let i = 0; i < tarots.length; i++) {
@@ -69,81 +75,54 @@ function layout() {
     container.append(item);
   }
 
-  // setTimeout(() => {
-  //   let translateY = 0;
-  //   let translateX = 0;
-  //   let row = 0, col = 0;
-  //   for (let i = 0; i < tarots.length; i++) {
-  //     tarots[i].style.transform = `translate(${translateX}px, ${translateY}px)`
-  //     translateX += tarots[i].offsetWidth + containerGap;
-  //     if (col === containerColumns - 1) {
-  //       col = 0;
-  //       row += 1;
-  //       translateX = 0;
-  //       translateY += tarots[i].offsetHeight + containerGap;
-  //     } else {
-  //       col += 1;
-  //     }
-  //   }
-  // }, 100);
-
-  globalThis.transform_list = new Array(tarots.length);
-  for (let i = 0; i < transform_list.length; i++) {
-    transform_list[i] = [[0, 0], [0, 0]];
-  }
-
-  const calcDestinationPos = () => {
-    let translateX = 0, translateY = 0;
-    let row = 0, col = 0;
-    for (let i = 0; i < tarots.length; i++) {
-      transform_list[i][1] = [translateX, translateY];
-      translateX += tarots[i].offsetWidth + containerGap;
-      if (col === containerColumns - 1) {
-        col = 0;
-        row += 1;
-        translateX = 0;
-        translateY += tarots[i].offsetHeight + containerGap;
-      } else {
-        col += 1;
-      }
+  let translateX = 0, translateY = 0;
+  let row = 0, col = 0;
+  for (let i = 0; i < tarots.length; i++) {
+    transform_list[i][1] = [translateX, translateY];
+    translateX += tarots[i].offsetWidth + containerGap;
+    if (col === containerColumns - 1) {
+      col = 0;
+      row += 1;
+      translateX = 0;
+      translateY += tarots[i].offsetHeight + containerGap;
+    } else {
+      col += 1;
     }
-  };
-
-  let t0 = performance.now();
-
-  const inBetween = () => {
-    requestAnimationFrame(function (t1) {
-      let end_items = 0;
-      const dt = t1 - t0;
-      for (let i = 0; i < transform_list.length; i++) {
-        const bx = transform_list[i][0][0];
-        const by = transform_list[i][0][1];
-        const cx = transform_list[i][1][0];
-        const cy = transform_list[i][1][1];
-        const x1 = Math.min(easeLinear(dt, bx, cx, animation_duration), cx);
-        const y1 = Math.min(easeLinear(dt, by, cy, animation_duration), cy);
-        tarots[i].style.transform = `translate(${x1}px, ${y1}px)`;
-        t0 = t1;
-        transform_list[i] = [ [x1, y1], transform_list[i][1] ] ;
-        if (x1 === cx && y1 === cy) {
-          end_items += 1;
-        }
-      }
-      // === stop loop
-      if (end_items === transform_list.length - 1) {
-        end_items = 0;
-      } else if (end_items < transform_list.length - 1) {
-        inBetween();
-      }
-    });
-  };
-
-  setTimeout(calcDestinationPos, 100);
-  setTimeout(inBetween, 150);
+  }
+  return transform_list;
 }
 
+function inBetween(t1) {
+  let end_items = 0;
+  const dt = t1 - t0;
+  for (let i = 0; i < transform_list.length; i++) {
+    const bx = transform_list[i][0][0];
+    const by = transform_list[i][0][1];
+    const cx = transform_list[i][1][0];
+    const cy = transform_list[i][1][1];
+    const x1 = Math.min(easeLinear(dt, bx, cx, animation_duration), cx);
+    const y1 = Math.min(easeLinear(dt, by, cy, animation_duration), cy);
+    tarots[i].style.transform = `translate(${x1}px, ${y1}px)`;
+    t0 = t1;
+    transform_list[i] = [ [x1, y1], transform_list[i][1] ] ;
+    if (x1 === cx && y1 === cy) {
+      end_items += 1;
+    }
+  }
+  // === stop loop
+  if (end_items === transform_list.length - 1) {
+    end_items = 0;
+  } else if (end_items < transform_list.length - 1) {
+    requestAnimationFrame(inBetween);
+  }
+}
+
+
 selectColumns.addEventListener('change', () => {
-  layout();
+  containerColumns = Number.parseInt(selectColumns.value);
+  calcDestinationPos();
+  t0 = performance.now();
+  requestAnimationFrame(inBetween);
 });
 
 btnBackList.addEventListener('click', () => {
@@ -156,4 +135,15 @@ btnBackList.addEventListener('click', () => {
   }
 });
 
-layout();
+let debug = true;
+let isAnimating = false;
+window.addEventListener('keydown', (e) => {
+  if (e.code === 'KeyA') {
+    scheduleRender(true);
+  }
+});
+
+function scheduleRender(forceRender) {
+  console.log(transform_list)
+}
+
