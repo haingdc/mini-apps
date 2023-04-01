@@ -14,6 +14,13 @@ body {
   padding-right: 16px;
 }
 
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 img {
   max-width: 100%;
 }

@@ -15,6 +15,8 @@ let t2 = 0;
 let dt = 0; // duration debug
 const collapse_gap = 5;
 
+const btnShowLess = container.querySelector('.head__btn--less');
+
 function getInitialTransformList(length) {
   const list = new Array(length);
   for (let i = 0; i < list.length; i++) {
@@ -50,10 +52,22 @@ const data = [
     content: `It's exciting! It's much busier than the last city we lived in. I was working in Seattle for the last 3 years`
   },
   {
+    name: 'Ace',
+    src: 'NH-Ace_poster_sq.webp',
+    content: `This weekend’s project: debugging a performance issue where running
+
+    div​.style.transform = 'translateX(100px)'
+    
+    was triggering a style recalculation for 15K nodes 😨
+    
+    (Guess why)`
+  },
+  {
     name: 'Admiral',
     src: 'NH-Admiral_poster.webp',
     content: `The app we'll be building will be a notes app with a login portal that can register users, as well as log in users and reset passwords and logged in users will be able to view, create, update and delete notes. This article will focus more on the Rust (backend) side and will assume that you have knowledge of using React.js/Next.js for your frontend.`
   },
+  
 
 
 
@@ -115,7 +129,7 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-function expand() {
+function calcExpand() {
   transform_list = getInitialTransformList(items.length);
   // padding_inline_list = getInitialPaddingInlineList(items.length);
 
@@ -126,6 +140,9 @@ function expand() {
 
     item.classList.remove('collapse');
     item.style.height = '';
+    const currentPaddingInline = item.style.paddingInline;
+    item.style.paddingInline = '';
+
 
     transform_list[i][1] = [translateX, translateY];
     // swap
@@ -139,6 +156,8 @@ function expand() {
       row += 1;
       translateX = 0;
       translateY += items[i].offsetHeight + containerGap;
+
+      item.style.paddingInline = currentPaddingInline;
     } else {
       col += 1;
     }
@@ -147,7 +166,7 @@ function expand() {
   return transform_list;
 }
 
-function collapse() {
+function calcCollapse() {
   transform_list = getInitialTransformList(items.length);
   padding_inline_list = getInitialPaddingInlineList(items.length);
 
@@ -194,8 +213,9 @@ function inBetween(t1) {
     requestAnimationFrame(inBetween);
   }
 }
+const STATES = { EXPAND: 'EXPAND', COLLAPSE: 'COLLAPSE' };
 
-let state = 0;
+let state = STATES.COLLAPSE;
 let height = 0;
 let paddingInline = 5;
 let transform_list = getInitialTransformList(items.length);
@@ -209,10 +229,10 @@ function getInitialPaddingInlineList(length) {
   return list;
 }
 
-if (state === 0) {
-  collapse();
+if (state === STATES.COLLAPSE) {
+  calcCollapse();
 } else {
-  expand();
+  calcExpand();
 }
 t0 = performance.now();
 t2 = performance.now() + 1000 / 60;
@@ -220,21 +240,35 @@ dt = t0 + animation_duration;
 requestAnimationFrame(inBetween);
 
 let myReq;
-items.forEach(n => {
-  n.addEventListener('click', function onClick(e) {
-    if (myReq !== undefined) {
-      cancelAnimationFrame(myReq);
-    }
-    if (state === 0) {
-      state = 1;
-      expand();
-    } else {
-      state = 0;
-      collapse();
-    }
-    t0 = performance.now();
-    t2 = performance.now() + 1000 / 60;
-    dt = t0 + animation_duration;
-    myReq = requestAnimationFrame(inBetween);
-  });
-});
+
+btnShowLess.addEventListener('click', collapse);
+if (items[0]) {
+  items[0].addEventListener('click', expand);
+}
+
+function collapse() {
+  if (state === STATES.COLLAPSE) return;
+
+  if (myReq !== undefined) {
+    cancelAnimationFrame(myReq);
+  }
+  state = STATES.COLLAPSE;
+  calcCollapse();
+  t0 = performance.now();
+  t2 = performance.now() + 1000 / 60;
+  dt = t0 + animation_duration;
+  myReq = requestAnimationFrame(inBetween);
+}
+
+function expand() {
+  if (state === STATES.EXPAND) return;
+  if (myReq !== undefined) {
+    cancelAnimationFrame(myReq);
+  }
+  state = STATES.EXPAND;
+  calcExpand();
+  t0 = performance.now();
+  t2 = performance.now() + 1000 / 60;
+  dt = t0 + animation_duration;
+  myReq = requestAnimationFrame(inBetween);
+}
